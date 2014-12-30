@@ -7,8 +7,10 @@ import com.coursepresso.project.repository.MeetingTimeRepository;
 import com.google.common.collect.Lists;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
@@ -16,6 +18,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
@@ -63,6 +66,20 @@ public class NewCourseSectionController implements Initializable {
   private TableColumn roomColumn;
   @FXML
   private TableColumn dayColumn;
+  @FXML
+  private ChoiceBox startTimeChoice;
+  @FXML
+  private ChoiceBox endTimeChoice;
+  @FXML
+  private ChoiceBox roomChoice;
+  @FXML
+  private ChoiceBox dayChoice;
+  @FXML
+  private Button addDayButton;
+  @FXML
+  private Button submitCourseButton;
+  @FXML
+  private Button backToListingButton;
 
   @Inject
   private CourseSectionRepository courseSectionRepository;
@@ -91,15 +108,13 @@ public class NewCourseSectionController implements Initializable {
   }
   
   public void buildView() {
-    // Build table view
-    meetingDayTable = new TableView<>();
-    meetingDayTable.getItems().add(new MeetingDay());
-    
-    // Build time combo boxes
-    ArrayList<MeetingTime> meetingTimes = Lists.newArrayList(
-            meetingTimeRepository.findAll()
+    // Build time choice boxes
+    ObservableList<Date> meetingTimes = FXCollections.observableArrayList(
+        meetingTimeRepository.selectAllMeetingTimes()
     );
-    startTimeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(meetingTimes));
-    endTimeColumn.setCellFactory(ComboBoxTableCell.forTableColumn(meetingTimes));
+    startTimeChoice = new ChoiceBox(meetingTimes);
+    endTimeChoice = new ChoiceBox(meetingTimes);
+    
+    // Build room choice box
   }
 }
