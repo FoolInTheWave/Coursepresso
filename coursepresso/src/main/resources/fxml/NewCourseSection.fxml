@@ -18,7 +18,7 @@
             styleClass="mainFxmlClass" 
             xmlns="http://javafx.com/javafx/8" 
             xmlns:fx="http://javafx.com/fxml/1" 
-            fx:controller="com.coursepresso.project.presenter.NewCourseSectionPresenter">
+            fx:controller="com.coursepresso.project.controller.NewCourseSectionController">
     <stylesheets>
         <URL value="@/styles/Styles.css" />
     </stylesheets>
