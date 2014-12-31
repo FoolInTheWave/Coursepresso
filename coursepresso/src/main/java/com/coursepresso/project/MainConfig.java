@@ -51,7 +51,7 @@ public class MainConfig {
     final DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
     dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-    dataSource.setUrl("jdbc:mysql://160.153.57.72:3306/coursepresso");
+    dataSource.setUrl("jdbc:mysql://160.153.57.72:3306/coursepresso?zeroDateTimeBehavior=convertToNull");
     dataSource.setUsername("crmiller");
     dataSource.setPassword("Mi11er64");
 

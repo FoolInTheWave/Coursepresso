@@ -31,11 +31,11 @@ public class Department implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "department")
   private Set<AccessUser> accessUserSet;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "department")
   private Set<Professor> professorSet;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "department")
   private Set<Course> courseSet;
 
   public Department() {

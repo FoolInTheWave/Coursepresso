@@ -43,7 +43,7 @@ public class AccessUser implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "accessUserId")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "accessUserId")
   private Set<UserGroup> userGroupSet;
   @JoinColumn(name = "department", referencedColumnName = "name")
   @ManyToOne(optional = false)

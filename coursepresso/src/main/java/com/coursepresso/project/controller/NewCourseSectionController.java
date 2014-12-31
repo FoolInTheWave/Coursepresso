@@ -1,12 +1,17 @@
 package com.coursepresso.project.controller;
 
+import com.coursepresso.project.entity.Course;
+import com.coursepresso.project.entity.Department;
+import com.coursepresso.project.repository.CourseRepository;
 import com.coursepresso.project.repository.CourseSectionRepository;
 import com.coursepresso.project.repository.DepartmentRepository;
 import com.coursepresso.project.repository.MeetingTimeRepository;
 import com.coursepresso.project.repository.RoomRepository;
 import com.coursepresso.project.repository.TermRepository;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -77,6 +82,8 @@ public class NewCourseSectionController implements Initializable {
   private Button backToListingButton;
 
   @Inject
+  private CourseRepository courseRepository;
+  @Inject
   private CourseSectionRepository courseSectionRepository;
   @Inject
   private DepartmentRepository departmentRepository;
@@ -104,8 +111,42 @@ public class NewCourseSectionController implements Initializable {
     return root;
   }
   
-  public void save(ActionEvent event) {
+  @FXML
+  private void saveCourseSection(ActionEvent event) {
     // TODO
+  }
+  
+  @FXML
+  private void departmentComboSelect(ActionEvent event) {
+    HashSet<String> courseNumberSet = new HashSet<>();
+    
+    // Get selected department from department combo box
+    System.out.println(departmentCombo.getValue().toString());
+    Department department = departmentRepository.findByName(
+        departmentCombo.getValue().toString()
+    );
+    // Get course set for selected department
+    HashSet<Course> courseSet = new HashSet<>(department.getCourseSet());
+    // Get course number for each course in set
+    for (Course c : courseSet) {
+      courseNumberSet.add(c.getCourseNumber());
+    }
+    
+    // Build course number combo box
+    ObservableList<String> courseNumbers = FXCollections.observableArrayList(
+        courseNumberSet
+    );
+    courseNumberCombo.setItems(courseNumbers);
+    courseNumberCombo.setVisibleRowCount(4);
+  }
+  
+  @FXML
+  private void courseNumberComboSelect(ActionEvent event) {
+    titleField.setText(
+        courseRepository.findOne(
+            courseNumberCombo.getValue().toString()
+        ).getTitle()
+    );
   }
   
   public void buildView() {
@@ -153,4 +194,6 @@ public class NewCourseSectionController implements Initializable {
     dayCombo.setItems(days);
     dayCombo.setVisibleRowCount(4);
   }
+  
+  
 }

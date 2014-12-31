@@ -34,7 +34,7 @@ public class Professor implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "professorId")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "professorId")
   private Set<CourseProfessor> courseProfessorSet;
   @JoinColumn(name = "department", referencedColumnName = "name")
   @ManyToOne(optional = false)

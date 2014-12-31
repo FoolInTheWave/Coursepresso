@@ -30,7 +30,7 @@ public class Privilege implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "privilegeId")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "privilegeId")
   private Set<GroupPrivilege> groupPrivilegeSet;
 
   public Privilege() {

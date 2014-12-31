@@ -22,7 +22,7 @@ public class Term implements Serializable {
   @Basic(optional = false)
   @Column(name = "term")
   private String term;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "term")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "term")
   private Set<CourseSection> courseSectionSet;
 
   public Term() {

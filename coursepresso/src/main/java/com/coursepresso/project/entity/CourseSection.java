@@ -57,9 +57,9 @@ public class CourseSection implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseSectionId")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "courseSectionId")
   private Set<CourseProfessor> courseProfessorSet;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseSectionId")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "courseSectionId")
   private Set<MeetingDay> meetingDaySet;
   @JoinColumn(name = "course_number", referencedColumnName = "course_number")
   @ManyToOne(optional = false)

@@ -36,9 +36,9 @@ public class Room implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomNumber")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "roomNumber")
   private Set<Appliance> applianceSet;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomNumber")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "roomNumber")
   private Set<MeetingDay> meetingDaySet;
 
   public Room() {

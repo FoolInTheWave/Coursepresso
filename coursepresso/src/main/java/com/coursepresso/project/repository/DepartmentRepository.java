@@ -14,6 +14,15 @@ import org.springframework.stereotype.Repository;
 public interface DepartmentRepository extends CrudRepository<Department, Integer> {
   
   /**
+   * Custom FIND method retrieves Department record from the database with a
+   * matching name.
+   * 
+   * @param name The name to match.
+   * @return A Department record as Department object.
+   */
+  Department findByName(String name);
+  
+  /**
    * Custom SELECT method retrieves the name attribute from all Department 
    * records.
    * 
