@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.paint.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="root"
-            fx:controller="com.coursepresso.project.presenter.MainPresenter"
-            xmlns:fx="http://javafx.com/fxml">
+<BorderPane fx:id="root" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.coursepresso.project.controller.MainController">
 
     <!-- Header -->
     <top>
         <VBox spacing="5">
             <styleClass>
-                <String fx:value="header"/>
+                <String fx:value="header" />
             </styleClass>
             <children>
-                <Label text="First Contact">
+                <Label text="Coursepresso" textFill="WHITE">
                     <styleClass>
-                        <String fx:value="label"/>
-                        <String fx:value="title"/>
+                        <String fx:value="label" />
+                        <String fx:value="title" />
                     </styleClass>
                 </Label>
-                <Label text="JavaFX 2.0 Contact Management System">
+                <Label text="Course Schedule Management System" textFill="WHITE">
                     <styleClass>
-                        <String fx:value="label"/>
-                        <String fx:value="tag-line"/>
+                        <String fx:value="label" />
+                        <String fx:value="tag-line" />
                     </styleClass>
                 </Label>
             </children>
@@ -35,7 +34,7 @@
     <center>
         <BorderPane fx:id="contentArea">
             <styleClass>
-                <String fx:value="body"/>
+                <String fx:value="body" />
             </styleClass>
         </BorderPane>
     </center>

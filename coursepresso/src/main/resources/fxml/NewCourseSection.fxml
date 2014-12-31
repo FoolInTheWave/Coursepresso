@@ -18,21 +18,21 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <Label layoutX="14.0" layoutY="14.0" text="Department" />
-                  <ChoiceBox fx:id="departmentChoice" layoutX="14.0" layoutY="41.0" prefHeight="39.0" prefWidth="430.0" />
+                  <ComboBox fx:id="departmentCombo" layoutX="14.0" layoutY="41.0" prefHeight="39.0" prefWidth="430.0" />
                   <Label layoutX="470.0" layoutY="14.0" text="Course Number" />
-                  <ChoiceBox layoutX="470.0" layoutY="41.0" prefHeight="39.0" prefWidth="150.0" />
+                  <ComboBox fx:id="courseNumberCombo" layoutX="470.0" layoutY="41.0" prefHeight="39.0" prefWidth="150.0" />
                   <Label layoutX="648.0" layoutY="14.0" text="Title" />
                   <TextField fx:id="titleField" editable="false" layoutX="648.0" layoutY="41.0" prefHeight="39.0" prefWidth="590.0" />
                   <Label layoutX="14.0" layoutY="102.0" text="Instructor" />
-                  <ChoiceBox fx:id="instructorChoice" layoutX="14.0" layoutY="129.0" prefHeight="39.0" prefWidth="430.0" />
+                  <ComboBox fx:id="instructorCombo" layoutX="14.0" layoutY="129.0" prefHeight="39.0" prefWidth="430.0" />
                   <Label layoutX="470.0" layoutY="102.0" text="Section" />
                   <TextField fx:id="sectionField" editable="false" layoutX="470.0" layoutY="129.0" prefHeight="39.0" prefWidth="115.0" />
                   <Label layoutX="620.0" layoutY="102.0" text="Capacity" />
                   <TextField layoutX="620.0" layoutY="129.0" prefHeight="39.0" prefWidth="115.0" />
                   <Label layoutX="769.0" layoutY="102.0" text="Type" />
-                  <ChoiceBox fx:id="typeChoice" layoutX="769.0" layoutY="129.0" prefHeight="39.0" prefWidth="150.0" />
+                  <ComboBox fx:id="typeCombo" layoutX="769.0" layoutY="129.0" prefHeight="39.0" prefWidth="150.0" />
                   <Label layoutX="955.0" layoutY="102.0" text="Term" />
-                  <ChoiceBox layoutX="955.0" layoutY="129.0" prefHeight="39.0" prefWidth="150.0" />
+                  <ComboBox fx:id="termCombo" layoutX="955.0" layoutY="129.0" prefHeight="39.0" prefWidth="150.0" />
                   <Label layoutX="14.0" layoutY="201.0" text="Start Date" />
                   <DatePicker fx:id="startDatePicker" layoutX="14.0" layoutY="228.0" />
                   <Label layoutX="325.0" layoutY="201.0" text="End Date" />
@@ -48,17 +48,17 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Button fx:id="submitCourseButton" layoutX="15.0" layoutY="645.0" mnemonicParsing="false" text="Submit Course" />
-                  <Button fx:id="backToListingButton" layoutX="181.0" layoutY="645.0" mnemonicParsing="false" text="Back to Listing" />
-                  <ChoiceBox fx:id="startTimeChoice" layoutX="14.0" layoutY="574.0" prefHeight="39.0" prefWidth="180.0" />
-                  <ChoiceBox fx:id="endTimeChoice" layoutX="218.0" layoutY="574.0" prefHeight="39.0" prefWidth="180.0" />
-                  <ChoiceBox fx:id="roomChoice" layoutX="418.0" layoutY="574.0" prefHeight="39.0" prefWidth="150.0" />
-                  <ChoiceBox fx:id="dayChoice" layoutX="590.0" layoutY="574.0" prefWidth="150.0" />
                   <Label layoutX="15.0" layoutY="547.0" text="Start Time" />
+                  <ComboBox fx:id="startTimeCombo" layoutX="15.0" layoutY="568.0" prefHeight="31.0" prefWidth="180.0" />
                   <Label layoutX="218.0" layoutY="547.0" text="End Time" />
+                  <ComboBox fx:id="endTimeCombo" layoutX="219.0" layoutY="568.0" prefWidth="180.0" />
                   <Label layoutX="418.0" layoutY="547.0" text="Room" />
+                  <ComboBox fx:id="roomCombo" layoutX="419.0" layoutY="568.0" prefWidth="150.0" />
                   <Label layoutX="590.0" layoutY="547.0" text="Day" />
-                  <Button fx:id="addDayButton" layoutX="760.0" layoutY="574.0" mnemonicParsing="false" text="Add Day" />
+                  <Button fx:id="addDayButton" layoutX="763.0" layoutY="568.0" mnemonicParsing="false" text="Add Day" />
+                  <ComboBox fx:id="dayCombo" layoutX="591.0" layoutY="568.0" prefWidth="150.0" />
+                  <Button fx:id="submitCourseButton" layoutX="14.0" layoutY="645.0" mnemonicParsing="false" text="Submit Course" />
+                  <Button fx:id="backToListingButton" layoutX="160.0" layoutY="645.0" mnemonicParsing="false" text="Back to Listing" />
                </children>
             </AnchorPane>
         </content>

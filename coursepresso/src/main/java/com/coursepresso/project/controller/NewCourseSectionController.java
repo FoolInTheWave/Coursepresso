@@ -1,14 +1,12 @@
 package com.coursepresso.project.controller;
 
-import com.coursepresso.project.entity.MeetingDay;
-import com.coursepresso.project.entity.MeetingTime;
 import com.coursepresso.project.repository.CourseSectionRepository;
+import com.coursepresso.project.repository.DepartmentRepository;
 import com.coursepresso.project.repository.MeetingTimeRepository;
-import com.google.common.collect.Lists;
+import com.coursepresso.project.repository.RoomRepository;
+import com.coursepresso.project.repository.TermRepository;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,15 +14,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.control.cell.ComboBoxTableCell;
 import javax.inject.Inject;
 
 /**
@@ -37,21 +32,21 @@ public class NewCourseSectionController implements Initializable {
   @FXML
   private Node root;
   @FXML
-  private ChoiceBox departmentChoice;
+  private ComboBox departmentCombo;
   @FXML
-  private ChoiceBox courseNumberChoice;
+  private ComboBox courseNumberCombo;
   @FXML
   private TextField titleField;
   @FXML
-  private ChoiceBox instructorChoice;
+  private ComboBox instructorCombo;
   @FXML
   private TextField sectionField;
   @FXML
   private TextField capacityField;
   @FXML
-  private ChoiceBox typeChoice;
+  private ComboBox typeCombo;
   @FXML
-  private ChoiceBox termChoice;
+  private ComboBox termCombo;
   @FXML
   private DatePicker startDatePicker;
   @FXML
@@ -67,13 +62,13 @@ public class NewCourseSectionController implements Initializable {
   @FXML
   private TableColumn dayColumn;
   @FXML
-  private ChoiceBox startTimeChoice;
+  private ComboBox startTimeCombo;
   @FXML
-  private ChoiceBox endTimeChoice;
+  private ComboBox endTimeCombo;
   @FXML
-  private ChoiceBox roomChoice;
+  private ComboBox roomCombo;
   @FXML
-  private ChoiceBox dayChoice;
+  private ComboBox dayCombo;
   @FXML
   private Button addDayButton;
   @FXML
@@ -84,7 +79,13 @@ public class NewCourseSectionController implements Initializable {
   @Inject
   private CourseSectionRepository courseSectionRepository;
   @Inject
+  private DepartmentRepository departmentRepository;
+  @Inject
   private MeetingTimeRepository meetingTimeRepository;
+  @Inject
+  private RoomRepository roomRepository;
+  @Inject
+  private TermRepository termRepository;
   @Inject
   private MainController mainPresenter;
 
@@ -108,13 +109,48 @@ public class NewCourseSectionController implements Initializable {
   }
   
   public void buildView() {
-    // Build time choice boxes
+    // Build department combo box
+    ObservableList<String> departments = FXCollections.observableArrayList(
+        departmentRepository.selectAllNames()
+    );
+    departmentCombo.setItems(departments);
+    departmentCombo.setVisibleRowCount(4);
+    
+    // Build type combo box
+    ObservableList<String> types = FXCollections.observableArrayList(
+        "LEC", "ONL", "HYB"
+    );
+    typeCombo.setItems(types);
+    typeCombo.setVisibleRowCount(4);
+    
+    // Build term combo box
+    ObservableList<String> terms = FXCollections.observableArrayList(
+        termRepository.selectAllTerms()
+    );
+    termCombo.setItems(terms);
+    termCombo.setVisibleRowCount(4);
+    
+    // Build time combo boxes
     ObservableList<Date> meetingTimes = FXCollections.observableArrayList(
         meetingTimeRepository.selectAllMeetingTimes()
     );
-    startTimeChoice = new ChoiceBox(meetingTimes);
-    endTimeChoice = new ChoiceBox(meetingTimes);
+    startTimeCombo.setItems(meetingTimes);
+    startTimeCombo.setVisibleRowCount(4);
+    endTimeCombo.setItems(meetingTimes);
+    endTimeCombo.setVisibleRowCount(4);
     
-    // Build room choice box
+    // Build room combo box
+    ObservableList<String> roomNumbers = FXCollections.observableArrayList(
+        roomRepository.selectAllRoomNumbers()
+    );
+    roomCombo.setItems(roomNumbers);
+    roomCombo.setVisibleRowCount(4);
+    
+    // Build day combo box
+    ObservableList<String> days = FXCollections.observableArrayList(
+        "M", "T", "W", "TH", "F", "S", "SU"
+    );
+    dayCombo.setItems(days);
+    dayCombo.setVisibleRowCount(4);
   }
 }

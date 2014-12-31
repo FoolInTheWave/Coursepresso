@@ -20,6 +20,6 @@ public interface MeetingTimeRepository extends CrudRepository<MeetingTime, Date>
    * 
    * @return A List of meetingTime attributes as Date objects.
    */
-  @Query("select meeting_time from meeting_time")
+  @Query("SELECT meetingTime FROM MeetingTime")
   List<Date> selectAllMeetingTimes();
 }
