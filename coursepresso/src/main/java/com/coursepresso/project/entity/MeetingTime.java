@@ -1,6 +1,8 @@
 package com.coursepresso.project.entity;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -57,7 +59,9 @@ public class MeetingTime implements Serializable {
 
   @Override
   public String toString() {
-    return "coursepresso.model.MeetingTime[ meetingTime=" + meetingTime + " ]";
+    DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+    String theMeetingTime = dateFormat.format(meetingTime);
+    return theMeetingTime;
   }
 
 }

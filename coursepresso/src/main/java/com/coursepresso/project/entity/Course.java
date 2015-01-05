@@ -2,7 +2,7 @@ package com.coursepresso.project.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -40,12 +40,12 @@ public class Course implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "courseNumber")
-  private Set<CoursePrerequisite> coursePrerequisiteSet;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "prerequisite")
-  private Set<CoursePrerequisite> coursePrerequisiteSet1;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "courseNumber")
-  private Set<CourseSection> courseSectionSet;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseNumber")
+  private List<CoursePrerequisite> coursePrerequisiteList;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "prerequisite")
+  private List<CoursePrerequisite> coursePrerequisiteList1;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseNumber")
+  private List<CourseSection> courseSectionList;
   @JoinColumn(name = "department", referencedColumnName = "name")
   @ManyToOne(optional = false)
   private Department department;
@@ -126,30 +126,30 @@ public class Course implements Serializable {
   }
 
   @XmlTransient
-  public Set<CoursePrerequisite> getCoursePrerequisiteSet() {
-    return coursePrerequisiteSet;
+  public List<CoursePrerequisite> getCoursePrerequisiteList() {
+    return coursePrerequisiteList;
   }
 
-  public void setCoursePrerequisiteSet(Set<CoursePrerequisite> coursePrerequisiteSet) {
-    this.coursePrerequisiteSet = coursePrerequisiteSet;
-  }
-
-  @XmlTransient
-  public Set<CoursePrerequisite> getCoursePrerequisiteSet1() {
-    return coursePrerequisiteSet1;
-  }
-
-  public void setCoursePrerequisiteSet1(Set<CoursePrerequisite> coursePrerequisiteSet1) {
-    this.coursePrerequisiteSet1 = coursePrerequisiteSet1;
+  public void setCoursePrerequisiteList(List<CoursePrerequisite> coursePrerequisiteList) {
+    this.coursePrerequisiteList = coursePrerequisiteList;
   }
 
   @XmlTransient
-  public Set<CourseSection> getCourseSectionSet() {
-    return courseSectionSet;
+  public List<CoursePrerequisite> getCoursePrerequisiteList1() {
+    return coursePrerequisiteList1;
   }
 
-  public void setCourseSectionSet(Set<CourseSection> courseSectionSet) {
-    this.courseSectionSet = courseSectionSet;
+  public void setCoursePrerequisiteSet1(List<CoursePrerequisite> coursePrerequisiteList1) {
+    this.coursePrerequisiteList1 = coursePrerequisiteList1;
+  }
+
+  @XmlTransient
+  public List<CourseSection> getCourseSectionList() {
+    return courseSectionList;
+  }
+
+  public void setCourseSectionSet(List<CourseSection> courseSectionList) {
+    this.courseSectionList = courseSectionList;
   }
 
   public Department getDepartment() {
@@ -183,7 +183,7 @@ public class Course implements Serializable {
 
   @Override
   public String toString() {
-    return "coursepresso.model.Course[ courseNumber=" + courseNumber + " ]";
+    return courseNumber;
   }
 
 }

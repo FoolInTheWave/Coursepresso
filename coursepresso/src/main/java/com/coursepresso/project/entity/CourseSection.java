@@ -2,7 +2,7 @@ package com.coursepresso.project.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -57,10 +57,10 @@ public class CourseSection implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "courseSectionId")
-  private Set<CourseProfessor> courseProfessorSet;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "courseSectionId")
-  private Set<MeetingDay> meetingDaySet;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseSectionId")
+  private List<CourseProfessor> courseProfessorList;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseSectionId")
+  private List<MeetingDay> meetingDayList;
   @JoinColumn(name = "course_number", referencedColumnName = "course_number")
   @ManyToOne(optional = false)
   private Course courseNumber;
@@ -190,21 +190,21 @@ public class CourseSection implements Serializable {
   }
 
   @XmlTransient
-  public Set<CourseProfessor> getCourseProfessorSet() {
-    return courseProfessorSet;
+  public List<CourseProfessor> getCourseProfessorList() {
+    return courseProfessorList;
   }
 
-  public void setCourseProfessorSet(Set<CourseProfessor> courseProfessorSet) {
-    this.courseProfessorSet = courseProfessorSet;
+  public void setCourseProfessorList(List<CourseProfessor> courseProfessorList) {
+    this.courseProfessorList = courseProfessorList;
   }
 
   @XmlTransient
-  public Set<MeetingDay> getMeetingDaySet() {
-    return meetingDaySet;
+  public List<MeetingDay> getMeetingDayList() {
+    return meetingDayList;
   }
 
-  public void setMeetingDaySet(Set<MeetingDay> meetingDaySet) {
-    this.meetingDaySet = meetingDaySet;
+  public void setMeetingDaySet(List<MeetingDay> meetingDayList) {
+    this.meetingDayList = meetingDayList;
   }
 
   public Course getCourseNumber() {

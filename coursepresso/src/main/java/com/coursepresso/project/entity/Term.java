@@ -1,7 +1,7 @@
 package com.coursepresso.project.entity;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -15,34 +15,17 @@ public class Term implements Serializable {
 
   private static final long serialVersionUID = 1L;
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Basic(optional = false)
-  @Column(name = "id")
-  private Integer id;
   @Basic(optional = false)
   @Column(name = "term")
   private String term;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "term")
-  private Set<CourseSection> courseSectionSet;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "term")
+  private List<CourseSection> courseSectionList;
 
   public Term() {
   }
 
-  public Term(Integer id) {
-    this.id = id;
-  }
-
-  public Term(Integer id, String term) {
-    this.id = id;
+  public Term(String term) {
     this.term = term;
-  }
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
   }
 
   public String getTerm() {
@@ -54,18 +37,18 @@ public class Term implements Serializable {
   }
 
   @XmlTransient
-  public Set<CourseSection> getCourseSectionSet() {
-    return courseSectionSet;
+  public List<CourseSection> getCourseSectionList() {
+    return courseSectionList;
   }
 
-  public void setCourseSectionSet(Set<CourseSection> courseSectionSet) {
-    this.courseSectionSet = courseSectionSet;
+  public void setCourseSectionSet(List<CourseSection> courseSectionList) {
+    this.courseSectionList = courseSectionList;
   }
 
   @Override
   public int hashCode() {
     int hash = 0;
-    hash += (id != null ? id.hashCode() : 0);
+    hash += (term != null ? term.hashCode() : 0);
     return hash;
   }
 
@@ -76,8 +59,8 @@ public class Term implements Serializable {
       return false;
     }
     Term other = (Term) object;
-    if ((this.id == null && other.id != null) || 
-        (this.id != null && !this.id.equals(other.id))) {
+    if ((this.term == null && other.term != null) || 
+        (this.term != null && !this.term.equals(other.term))) {
       return false;
     }
     return true;
@@ -85,7 +68,7 @@ public class Term implements Serializable {
 
   @Override
   public String toString() {
-    return "coursepresso.model.Term[ id=" + id + " ]";
+    return term;
   }
 
 }

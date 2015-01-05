@@ -2,7 +2,7 @@ package com.coursepresso.project.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -34,8 +34,8 @@ public class Professor implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "professorId")
-  private Set<CourseProfessor> courseProfessorSet;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "professorId")
+  private List<CourseProfessor> courseProfessorList;
   @JoinColumn(name = "department", referencedColumnName = "name")
   @ManyToOne(optional = false)
   private Department department;
@@ -97,12 +97,12 @@ public class Professor implements Serializable {
   }
 
   @XmlTransient
-  public Set<CourseProfessor> getCourseProfessorSet() {
-    return courseProfessorSet;
+  public List<CourseProfessor> getCourseProfessorList() {
+    return courseProfessorList;
   }
 
-  public void setCourseProfessorSet(Set<CourseProfessor> courseProfessorSet) {
-    this.courseProfessorSet = courseProfessorSet;
+  public void setCourseProfessorSet(List<CourseProfessor> courseProfessorList) {
+    this.courseProfessorList = courseProfessorList;
   }
 
   public Department getDepartment() {
@@ -136,7 +136,7 @@ public class Professor implements Serializable {
 
   @Override
   public String toString() {
-    return "coursepresso.model.Professor[ id=" + id + " ]";
+    return firstName + " " + lastName;
   }
 
 }

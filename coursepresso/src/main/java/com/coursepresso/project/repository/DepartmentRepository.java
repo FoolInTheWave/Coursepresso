@@ -1,9 +1,9 @@
 package com.coursepresso.project.repository;
 
 import com.coursepresso.project.entity.Department;
-import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,23 +11,35 @@ import org.springframework.stereotype.Repository;
  * @author Caleb Miller
  */
 @Repository
-public interface DepartmentRepository extends CrudRepository<Department, Integer> {
+public interface DepartmentRepository extends CrudRepository<Department, String> {
   
   /**
-   * Custom FIND method retrieves Department record from the database with a
-   * matching name.
+   * Custom FIND method retrieves a Department record from the database with an
+   * initialized list of Professor records mapped by a foreign key.
    * 
    * @param name The name to match.
-   * @return A Department record as Department object.
+   * @return A Department record as a Department object.
    */
-  Department findByName(String name);
+  @Query("SELECT d FROM Department d JOIN FETCH d.accessUserList WHERE d.name = (:name)")
+  public Department findByNameAndFetchAccessUserListEagerly(@Param("name") String name);
   
   /**
-   * Custom SELECT method retrieves the name attribute from all Department 
-   * records.
+   * Custom FIND method retrieves a Department record from the database with an
+   * initialized list of Course records mapped by a foreign key.
    * 
-   * @return A List of name attributes as String objects.
+   * @param name The name to match.
+   * @return A Department record as a Department object.
    */
-  @Query("SELECT name FROM Department")
-  List<String> selectAllNames();
+  @Query("SELECT d FROM Department d JOIN FETCH d.courseList WHERE d.name = (:name)")
+  public Department findByNameAndFetchCourseListEagerly(@Param("name") String name);
+  
+  /**
+   * Custom FIND method retrieves a Department record from the database with an
+   * initialized list of Professor records mapped by a foreign key.
+   * 
+   * @param name The name to match.
+   * @return A Department record as a Department object.
+   */
+  @Query("SELECT d FROM Department d JOIN FETCH d.professorList WHERE d.name = (:name)")
+  public Department findByNameAndFetchProfessorListEagerly(@Param("name") String name);
 }

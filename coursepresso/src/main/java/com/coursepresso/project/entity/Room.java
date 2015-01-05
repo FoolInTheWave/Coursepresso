@@ -2,7 +2,7 @@ package com.coursepresso.project.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -36,10 +36,10 @@ public class Room implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "roomNumber")
-  private Set<Appliance> applianceSet;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "roomNumber")
-  private Set<MeetingDay> meetingDaySet;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomNumber")
+  private List<Appliance> applianceList;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomNumber")
+  private List<MeetingDay> meetingDayList;
 
   public Room() {
   }
@@ -107,21 +107,21 @@ public class Room implements Serializable {
   }
 
   @XmlTransient
-  public Set<Appliance> getApplianceSet() {
-    return applianceSet;
+  public List<Appliance> getApplianceList() {
+    return applianceList;
   }
 
-  public void setApplianceSet(Set<Appliance> applianceSet) {
-    this.applianceSet = applianceSet;
+  public void setApplianceSet(List<Appliance> applianceList) {
+    this.applianceList = applianceList;
   }
 
   @XmlTransient
-  public Set<MeetingDay> getMeetingDaySet() {
-    return meetingDaySet;
+  public List<MeetingDay> getMeetingDayList() {
+    return meetingDayList;
   }
 
-  public void setMeetingDaySet(Set<MeetingDay> meetingDaySet) {
-    this.meetingDaySet = meetingDaySet;
+  public void setMeetingDaySet(List<MeetingDay> meetingDayList) {
+    this.meetingDayList = meetingDayList;
   }
 
   @Override
@@ -147,7 +147,7 @@ public class Room implements Serializable {
 
   @Override
   public String toString() {
-    return "coursepresso.model.Room[ roomNumber=" + roomNumber + " ]";
+    return roomNumber;
   }
 
 }

@@ -2,7 +2,7 @@ package com.coursepresso.project.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -30,8 +30,8 @@ public class Privilege implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "privilegeId")
-  private Set<GroupPrivilege> groupPrivilegeSet;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "privilegeId")
+  private List<GroupPrivilege> groupPrivilegeList;
 
   public Privilege() {
   }
@@ -80,12 +80,12 @@ public class Privilege implements Serializable {
   }
 
   @XmlTransient
-  public Set<GroupPrivilege> getGroupPrivilegeSet() {
-    return groupPrivilegeSet;
+  public List<GroupPrivilege> getGroupPrivilegeList() {
+    return groupPrivilegeList;
   }
 
-  public void setGroupPrivilegeSet(Set<GroupPrivilege> groupPrivilegeSet) {
-    this.groupPrivilegeSet = groupPrivilegeSet;
+  public void setGroupPrivilegeSet(List<GroupPrivilege> groupPrivilegeList) {
+    this.groupPrivilegeList = groupPrivilegeList;
   }
 
   @Override

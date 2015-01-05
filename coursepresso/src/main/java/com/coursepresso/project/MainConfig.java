@@ -75,13 +75,13 @@ public class MainConfig {
   }
   
   @Bean
-  public MainController mainPresenter() {
-    return loadPresenter("/fxml/Main.fxml");
+  public MainController mainController() {
+    return loadController("/fxml/Main.fxml");
   }
 
   @Bean
-  public NewCourseSectionController newCourseSectionPresenter() {
-    return loadPresenter("/fxml/NewCourseSection.fxml");
+  public NewCourseSectionController newCourseSectionController() {
+    return loadController("/fxml/NewCourseSection.fxml");
   }
 
   final Properties hibernateProperties() {
@@ -96,7 +96,7 @@ public class MainConfig {
   }
 
   @SuppressWarnings("unchecked")
-  private <T> T loadPresenter(String fxmlFile) {
+  private <T> T loadController(String fxmlFile) {
     try {
       FXMLLoader loader = new FXMLLoader();
       loader.load(getClass().getResourceAsStream(fxmlFile));

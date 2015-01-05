@@ -2,7 +2,7 @@ package com.coursepresso.project.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -43,8 +43,8 @@ public class AccessUser implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "accessUserId")
-  private Set<UserGroup> userGroupSet;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "accessUserId")
+  private List<UserGroup> userGroupList;
   @JoinColumn(name = "department", referencedColumnName = "name")
   @ManyToOne(optional = false)
   private Department department;
@@ -133,12 +133,12 @@ public class AccessUser implements Serializable {
   }
 
   @XmlTransient
-  public Set<UserGroup> getUserGroupSet() {
-    return userGroupSet;
+  public List<UserGroup> getUserGroupList() {
+    return userGroupList;
   }
 
-  public void setUserGroupSet(Set<UserGroup> userGroupSet) {
-    this.userGroupSet = userGroupSet;
+  public void setUserGroupList(List<UserGroup> userGroupList) {
+    this.userGroupList = userGroupList;
   }
 
   public Department getDepartment() {

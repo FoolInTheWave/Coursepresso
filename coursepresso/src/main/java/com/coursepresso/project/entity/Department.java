@@ -2,7 +2,7 @@ package com.coursepresso.project.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
 
@@ -16,10 +16,6 @@ public class Department implements Serializable {
 
   private static final long serialVersionUID = 1L;
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
-  @Basic(optional = false)
-  @Column(name = "id")
-  private Integer id;
   @Basic(optional = false)
   @Column(name = "name")
   private String name;
@@ -31,33 +27,24 @@ public class Department implements Serializable {
   @Column(name = "updated_at")
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
+  private List<AccessUser> accessUserList;
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "department")
-  private Set<AccessUser> accessUserSet;
+  private List<Professor> professorList;
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "department")
-  private Set<Professor> professorSet;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "department")
-  private Set<Course> courseSet;
+  private List<Course> courseList;
 
   public Department() {
   }
 
-  public Department(Integer id) {
-    this.id = id;
+  public Department(String name) {
+    this.name = name;
   }
 
-  public Department(Integer id, String name, Date createdAt, Date updatedAt) {
-    this.id = id;
+  public Department(String name, Date createdAt, Date updatedAt) {
     this.name = name;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
-  }
-
-  public Integer getId() {
-    return id;
-  }
-
-  public void setId(Integer id) {
-    this.id = id;
   }
 
   public String getName() {
@@ -85,36 +72,36 @@ public class Department implements Serializable {
   }
 
   @XmlTransient
-  public Set<AccessUser> getAccessUserSet() {
-    return accessUserSet;
+  public List<AccessUser> getAccessUserList() {
+    return accessUserList;
   }
 
-  public void setAccessUserSet(Set<AccessUser> accessUserSet) {
-    this.accessUserSet = accessUserSet;
-  }
-
-  @XmlTransient
-  public Set<Professor> getProfessorSet() {
-    return professorSet;
-  }
-
-  public void setProfessorSet(Set<Professor> professorSet) {
-    this.professorSet = professorSet;
+  public void setAccessUserList(List<AccessUser> accessUserList) {
+    this.accessUserList = accessUserList;
   }
 
   @XmlTransient
-  public Set<Course> getCourseSet() {
-    return courseSet;
+  public List<Professor> getProfessorList() {
+    return professorList;
   }
 
-  public void setCourseSet(Set<Course> courseSet) {
-    this.courseSet = courseSet;
+  public void setProfessorList(List<Professor> professorList) {
+    this.professorList = professorList;
+  }
+
+  @XmlTransient
+  public List<Course> getCourseList() {
+    return courseList;
+  }
+
+  public void setCourseSet(List<Course> courseList) {
+    this.courseList = courseList;
   }
 
   @Override
   public int hashCode() {
     int hash = 0;
-    hash += (id != null ? id.hashCode() : 0);
+    hash += (name != null ? name.hashCode() : 0);
     return hash;
   }
 
@@ -125,8 +112,8 @@ public class Department implements Serializable {
       return false;
     }
     Department other = (Department) object;
-    if ((this.id == null && other.id != null) || 
-        (this.id != null && !this.id.equals(other.id))) {
+    if ((this.name == null && other.name != null) || 
+        (this.name != null && !this.name.equals(other.name))) {
       return false;
     }
     return true;
@@ -134,7 +121,7 @@ public class Department implements Serializable {
 
   @Override
   public String toString() {
-    return "coursepresso.model.Department[ id=" + id + " ]";
+    return name;
   }
 
 }
