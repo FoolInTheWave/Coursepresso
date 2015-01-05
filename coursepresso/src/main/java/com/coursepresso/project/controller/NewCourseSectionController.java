@@ -7,7 +7,6 @@ import com.coursepresso.project.entity.MeetingTime;
 import com.coursepresso.project.entity.Professor;
 import com.coursepresso.project.entity.Room;
 import com.coursepresso.project.entity.Term;
-import com.coursepresso.project.repository.CourseRepository;
 import com.coursepresso.project.repository.CourseSectionRepository;
 import com.coursepresso.project.repository.DepartmentRepository;
 import com.coursepresso.project.repository.MeetingTimeRepository;
@@ -19,12 +18,8 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -95,8 +90,6 @@ public class NewCourseSectionController implements Initializable {
   private Button backToListingButton;
 
   @Inject
-  private CourseRepository courseRepository;
-  @Inject
   private CourseSectionRepository courseSectionRepository;
   @Inject
   private DepartmentRepository departmentRepository;
@@ -143,27 +136,20 @@ public class NewCourseSectionController implements Initializable {
   
   @FXML
   private void departmentComboSelect(ActionEvent event) {
-    Department department = (Department) departmentCombo.getSelectionModel()
-        .getSelectedItem();
-    
-    // Get course list for selected department
-    ArrayList<Course> courseList = new ArrayList<>(department.getCourseList());
+    Department department = (Department) departmentCombo.getValue();
     
     // Build course number combo box
     ObservableList<Course> courses = FXCollections.observableArrayList(
-        courseList
+        // Get course list for selected department
+        department.getCourseList()
     );
     courseNumberCombo.setItems(courses);
     courseNumberCombo.setVisibleRowCount(4);
     
-    // Get professor list for selected department
-    ArrayList<Professor> professorList = new ArrayList<>(
-        department.getProfessorList()
-    );
-    
     // Build professor combo box
     ObservableList<Professor> professors = FXCollections.observableArrayList(
-        professorList
+        // Get professor list for selected department
+        department.getProfessorList()
     );
     instructorCombo.setItems(professors);
     instructorCombo.setVisibleRowCount(4);
@@ -171,10 +157,12 @@ public class NewCourseSectionController implements Initializable {
   
   @FXML
   private void courseNumberComboSelect(ActionEvent event) {
-    Course course = (Course) courseNumberCombo.getSelectionModel()
-        .getSelectedItem();
+    Course course = (Course) courseNumberCombo.getValue();
     
-    titleField.setText(course.getTitle());
+    if (course != null)
+      titleField.setText(course.getTitle());
+    else
+      titleField.setText("");
   }
   
   @FXML
@@ -197,11 +185,7 @@ public class NewCourseSectionController implements Initializable {
   public void buildView() {
     // Build department combo box
     ObservableList<Department> departments = FXCollections.observableArrayList(
-        // Sort department list by name
-        Lists.newArrayList(departmentRepository.findAll()).stream()
-            .sorted((d1, d2) -> d1.getName()
-                .compareTo(d2.getName()))
-            .collect(Collectors.toList())
+        Lists.newArrayList(departmentRepository.findAll())
     );
     departmentCombo.setItems(departments);
     departmentCombo.setVisibleRowCount(4);
@@ -215,22 +199,14 @@ public class NewCourseSectionController implements Initializable {
     
     // Build term combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
-        // Sort term list by term
-        Lists.newArrayList(termRepository.findAll()).stream()
-            .sorted((t1, t2) -> t1.getTerm()
-                .compareTo(t2.getTerm()))
-            .collect(Collectors.toList())
+        Lists.newArrayList(termRepository.findAll())
     );
     termCombo.setItems(terms);
     termCombo.setVisibleRowCount(4);
     
     // Build time combo boxes
     ObservableList<MeetingTime> meetingTimes = FXCollections.observableArrayList(
-        // Sort meeting time list by meeting time
-        Lists.newArrayList(meetingTimeRepository.findAll()).stream()
-            .sorted((m1, m2) -> m1.getMeetingTime()
-                .compareTo(m2.getMeetingTime()))
-            .collect(Collectors.toList())
+        Lists.newArrayList(meetingTimeRepository.findAll())
     );
     startTimeCombo.setItems(meetingTimes);
     startTimeCombo.setVisibleRowCount(4);
@@ -239,11 +215,7 @@ public class NewCourseSectionController implements Initializable {
     
     // Build room combo box
     ObservableList<Room> roomNumbers = FXCollections.observableArrayList(
-        // Sort room list by room
-        Lists.newArrayList(roomRepository.findAll()).stream()
-            .sorted((r1, r2) -> r1.getRoomNumber()
-                .compareTo(r2.getRoomNumber()))
-            .collect(Collectors.toList())
+        Lists.newArrayList(roomRepository.findAll())
     );
     roomCombo.setItems(roomNumbers);
     roomCombo.setVisibleRowCount(4);
