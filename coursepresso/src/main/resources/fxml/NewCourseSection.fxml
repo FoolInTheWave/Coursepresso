@@ -23,42 +23,43 @@
                   <ComboBox fx:id="courseNumberCombo" layoutX="470.0" layoutY="41.0" onAction="#courseNumberComboSelect" prefHeight="39.0" prefWidth="150.0" />
                   <Label layoutX="648.0" layoutY="14.0" text="Title" />
                   <TextField fx:id="titleField" editable="false" layoutX="648.0" layoutY="41.0" prefHeight="39.0" prefWidth="590.0" />
-                  <Label layoutX="14.0" layoutY="102.0" text="Instructor" />
-                  <ComboBox fx:id="instructorCombo" layoutX="14.0" layoutY="129.0" prefHeight="39.0" prefWidth="430.0" />
-                  <Label layoutX="470.0" layoutY="102.0" text="Section" />
-                  <TextField fx:id="sectionField" editable="false" layoutX="470.0" layoutY="129.0" prefHeight="39.0" prefWidth="115.0" />
-                  <Label layoutX="620.0" layoutY="102.0" text="Capacity" />
-                  <TextField fx:id="capacityField" layoutX="620.0" layoutY="129.0" prefHeight="39.0" prefWidth="115.0" />
-                  <Label layoutX="769.0" layoutY="102.0" text="Type" />
-                  <ComboBox fx:id="typeCombo" layoutX="769.0" layoutY="129.0" prefHeight="39.0" prefWidth="150.0" />
-                  <Label layoutX="955.0" layoutY="102.0" text="Term" />
-                  <ComboBox fx:id="termCombo" layoutX="955.0" layoutY="129.0" prefHeight="39.0" prefWidth="150.0" />
-                  <Label layoutX="14.0" layoutY="201.0" text="Start Date" />
-                  <DatePicker fx:id="startDatePicker" layoutX="14.0" layoutY="228.0" />
-                  <Label layoutX="325.0" layoutY="201.0" text="End Date" />
-                  <DatePicker fx:id="endDatePicker" layoutX="325.0" layoutY="228.0" />
-                  <TableView fx:id="meetingDayTable" layoutX="14.0" layoutY="301.0" prefHeight="234.0" prefWidth="1222.0">
+                  <Label layoutX="638.0" layoutY="462.0" text="Instructor" />
+                  <ComboBox fx:id="instructorCombo" layoutX="639.0" layoutY="489.0" prefHeight="39.0" prefWidth="430.0" />
+                  <Label layoutX="15.0" layoutY="102.0" text="Section" />
+                  <TextField fx:id="sectionField" editable="false" layoutX="15.0" layoutY="129.0" prefHeight="39.0" prefWidth="80.0" />
+                  <Label layoutX="120.0" layoutY="102.0" text="Capacity" />
+                  <TextField fx:id="capacityField" editable="false" layoutX="120.0" layoutY="129.0" prefHeight="39.0" prefWidth="80.0" />
+                  <Label layoutX="225.0" layoutY="102.0" text="Type" />
+                  <ComboBox fx:id="typeCombo" layoutX="225.0" layoutY="129.0" prefHeight="39.0" prefWidth="115.0" />
+                  <Label layoutX="368.0" layoutY="102.0" text="Term" />
+                  <ComboBox fx:id="termCombo" layoutX="368.0" layoutY="129.0" prefHeight="39.0" prefWidth="115.0" />
+                  <Label layoutX="509.0" layoutY="102.0" text="Start Date" />
+                  <DatePicker fx:id="startDatePicker" layoutX="509.0" layoutY="129.0" />
+                  <Label layoutX="796.0" layoutY="102.0" text="End Date" />
+                  <DatePicker fx:id="endDatePicker" layoutX="796.0" layoutY="129.0" />
+                  <TableView fx:id="meetingDayTable" layoutX="15.0" layoutY="216.0" prefHeight="234.0" prefWidth="1222.0">
                     <columns>
-                      <TableColumn fx:id="startTimeColumn" prefWidth="101.0" text="Start Time" />
-                      <TableColumn fx:id="endTimeColumn" minWidth="6.0" prefWidth="93.0" text="End Time" />
-                      <TableColumn fx:id="roomColumn" minWidth="0.0" prefWidth="67.0" text="Room" />
-                      <TableColumn fx:id="dayColumn" minWidth="6.0" prefWidth="108.0" text="Day" />
+                      <TableColumn fx:id="startTimeColumn" editable="false" prefWidth="101.0" text="Start Time" />
+                      <TableColumn fx:id="endTimeColumn" editable="false" minWidth="6.0" prefWidth="93.0" text="End Time" />
+                      <TableColumn fx:id="roomColumn" editable="false" minWidth="0.0" prefWidth="67.0" text="Room" />
+                      <TableColumn fx:id="dayColumn" editable="false" minWidth="6.0" prefWidth="108.0" text="Day" />
+                        <TableColumn fx:id="instructorColumn" editable="false" prefWidth="75.0" text="Instructor" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Label layoutX="15.0" layoutY="547.0" text="Start Time" />
-                  <ComboBox fx:id="startTimeCombo" layoutX="15.0" layoutY="568.0" prefHeight="31.0" prefWidth="180.0" />
-                  <Label layoutX="218.0" layoutY="547.0" text="End Time" />
-                  <ComboBox fx:id="endTimeCombo" layoutX="219.0" layoutY="568.0" prefWidth="180.0" />
-                  <Label layoutX="418.0" layoutY="547.0" text="Room" />
-                  <ComboBox fx:id="roomCombo" layoutX="419.0" layoutY="568.0" prefWidth="150.0" />
-                  <Label layoutX="590.0" layoutY="547.0" text="Day" />
-                  <Button fx:id="addDayButton" layoutX="763.0" layoutY="568.0" mnemonicParsing="false" onAction="#addDayButtonClick" text="Add Day" />
-                  <ComboBox fx:id="dayCombo" layoutX="591.0" layoutY="568.0" prefWidth="150.0" />
-                  <Button fx:id="submitCourseButton" layoutX="14.0" layoutY="645.0" mnemonicParsing="false" text="Submit Course" />
-                  <Button fx:id="backToListingButton" layoutX="160.0" layoutY="645.0" mnemonicParsing="false" text="Back to Listing" />
+                  <Label layoutX="14.0" layoutY="462.0" text="Start Time" />
+                  <ComboBox fx:id="startTimeCombo" layoutX="13.0" layoutY="489.0" prefHeight="31.0" prefWidth="150.0" />
+                  <Label layoutX="181.0" layoutY="462.0" text="End Time" />
+                  <ComboBox fx:id="endTimeCombo" layoutX="181.0" layoutY="489.0" prefWidth="150.0" />
+                  <Label layoutX="349.0" layoutY="462.0" text="Room" />
+                  <ComboBox fx:id="roomCombo" layoutX="349.0" layoutY="489.0" prefWidth="150.0" />
+                  <Label layoutX="517.0" layoutY="462.0" text="Day" />
+                  <Button fx:id="addDayButton" layoutX="1087.0" layoutY="489.0" mnemonicParsing="false" onAction="#addDayButtonClick" text="Add Day" />
+                  <ComboBox fx:id="dayCombo" layoutX="519.0" layoutY="489.0" prefWidth="100.0" />
+                  <Button fx:id="submitCourseButton" layoutX="12.0" layoutY="574.0" mnemonicParsing="false" text="Submit Course" />
+                  <Button fx:id="backToListingButton" layoutX="175.0" layoutY="574.0" mnemonicParsing="false" text="Back to Listing" />
                </children>
             </AnchorPane>
         </content>

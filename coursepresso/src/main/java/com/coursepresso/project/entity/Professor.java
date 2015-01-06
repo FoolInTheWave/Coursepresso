@@ -136,7 +136,7 @@ public class Professor implements Serializable {
 
   @Override
   public String toString() {
-    return firstName + " " + lastName;
+    return lastName + ", " + firstName;
   }
 
 }
