@@ -33,18 +33,14 @@ public class Course implements Serializable {
   @Column(name = "academic_level")
   private String academicLevel;
   @Basic(optional = false)
-  @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
-  @Basic(optional = false)
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseNumber")
   private List<CoursePrerequisite> coursePrerequisiteList;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "prerequisite")
   private List<CoursePrerequisite> coursePrerequisiteList1;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseNumber")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "courseNumber")
   private List<CourseSection> courseSectionList;
   @JoinColumn(name = "department", referencedColumnName = "name")
   @ManyToOne(optional = false)
@@ -58,14 +54,12 @@ public class Course implements Serializable {
   }
 
   public Course(String courseNumber, String title, int credits, 
-          String description, String academicLevel, Date createdAt, 
-          Date updatedAt) {
+          String description, String academicLevel, Date updatedAt) {
     this.courseNumber = courseNumber;
     this.title = title;
     this.credits = credits;
     this.description = description;
     this.academicLevel = academicLevel;
-    this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
 
@@ -107,14 +101,6 @@ public class Course implements Serializable {
 
   public void setAcademicLevel(String academicLevel) {
     this.academicLevel = academicLevel;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
   }
 
   public Date getUpdatedAt() {

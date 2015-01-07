@@ -27,11 +27,7 @@ public class Professor implements Serializable {
   @Column(name = "last_name")
   private String lastName;
   @Basic(optional = false)
-  @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
-  @Basic(optional = false)
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "professorId")
@@ -47,12 +43,11 @@ public class Professor implements Serializable {
     this.id = id;
   }
 
-  public Professor(Integer id, String firstName, String lastName, Date createdAt,
-          Date updatedAt) {
+  public Professor(Integer id, String firstName, String lastName, 
+      Date updatedAt) {
     this.id = id;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
 
@@ -80,14 +75,6 @@ public class Professor implements Serializable {
     this.lastName = lastName;
   }
 
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
-  }
-
   public Date getUpdatedAt() {
     return updatedAt;
   }
@@ -101,7 +88,7 @@ public class Professor implements Serializable {
     return courseProfessorList;
   }
 
-  public void setCourseProfessorSet(List<CourseProfessor> courseProfessorList) {
+  public void setCourseProfessorList(List<CourseProfessor> courseProfessorList) {
     this.courseProfessorList = courseProfessorList;
   }
 

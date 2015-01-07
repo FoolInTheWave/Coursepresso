@@ -25,7 +25,7 @@ public class CourseSection implements Serializable {
   private int sectionNumber;
   @Basic(optional = false)
   @Column(name = "available")
-  private int available;
+  private boolean available;
   @Basic(optional = false)
   @Column(name = "capacity")
   private int capacity;
@@ -46,15 +46,11 @@ public class CourseSection implements Serializable {
   @Temporal(TemporalType.DATE)
   private Date startDate;
   @Basic(optional = false)
-  @Column(name = "last_date")
+  @Column(name = "end_date")
   @Temporal(TemporalType.DATE)
-  private Date lastDate;
+  private Date endDate;
   @Basic(optional = false)
-  @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
-  @Basic(optional = false)
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseSectionId")
@@ -75,10 +71,9 @@ public class CourseSection implements Serializable {
     this.id = id;
   }
 
-  public CourseSection(Integer id, int sectionNumber, int available,
+  public CourseSection(Integer id, int sectionNumber, boolean available,
           int capacity, int seatsAvailable, String status, int studentCount,
-          String type, Date startDate, Date lastDate, Date createdAt,
-          Date updatedAt) {
+          String type, Date startDate, Date endDate, Date updatedAt) {
     this.id = id;
     this.sectionNumber = sectionNumber;
     this.available = available;
@@ -88,8 +83,7 @@ public class CourseSection implements Serializable {
     this.studentCount = studentCount;
     this.type = type;
     this.startDate = startDate;
-    this.lastDate = lastDate;
-    this.createdAt = createdAt;
+    this.endDate = endDate;
     this.updatedAt = updatedAt;
   }
 
@@ -109,11 +103,11 @@ public class CourseSection implements Serializable {
     this.sectionNumber = sectionNumber;
   }
 
-  public int getAvailable() {
+  public boolean getAvailable() {
     return available;
   }
 
-  public void setAvailable(int available) {
+  public void setAvailable(boolean available) {
     this.available = available;
   }
 
@@ -165,20 +159,12 @@ public class CourseSection implements Serializable {
     this.startDate = startDate;
   }
 
-  public Date getLastDate() {
-    return lastDate;
+  public Date getEndDate() {
+    return endDate;
   }
 
-  public void setLastDate(Date lastDate) {
-    this.lastDate = lastDate;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
+  public void setEndDate(Date endDate) {
+    this.endDate = endDate;
   }
 
   public Date getUpdatedAt() {
@@ -246,8 +232,10 @@ public class CourseSection implements Serializable {
 
   @Override
   public String toString() {
-    return String.format("CourseSection[id=%d, courseNumber='%s', sectionNumber=%d]", 
-            id, courseNumber.getCourseNumber(), sectionNumber);
+    return String.format(
+        "CourseSection[id=%d, courseNumber='%s', sectionNumber=%d]", 
+        id, courseNumber.getCourseNumber(), sectionNumber
+    );
   }
 
 }

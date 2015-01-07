@@ -30,11 +30,7 @@ public class MeetingDay implements Serializable {
   @Temporal(TemporalType.TIME)
   private Date endTime;
   @Basic(optional = false)
-  @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
-  @Basic(optional = false)
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @JoinColumn(name = "course_section_id", referencedColumnName = "id")
@@ -43,6 +39,9 @@ public class MeetingDay implements Serializable {
   @JoinColumn(name = "room_number", referencedColumnName = "room_number")
   @ManyToOne(optional = false)
   private Room roomNumber;
+  @JoinColumn(name = "term", referencedColumnName = "term")
+  @ManyToOne(optional = false)
+  private Term term;
 
   public MeetingDay() {
   }
@@ -52,12 +51,11 @@ public class MeetingDay implements Serializable {
   }
 
   public MeetingDay(Integer id, String day, Date startTime, Date endTime,
-          Date createdAt, Date updatedAt) {
+          Date updatedAt) {
     this.id = id;
     this.day = day;
     this.startTime = startTime;
     this.endTime = endTime;
-    this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
 
@@ -93,14 +91,6 @@ public class MeetingDay implements Serializable {
     this.endTime = endTime;
   }
 
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
-  }
-
   public Date getUpdatedAt() {
     return updatedAt;
   }
@@ -123,6 +113,14 @@ public class MeetingDay implements Serializable {
 
   public void setRoomNumber(Room roomNumber) {
     this.roomNumber = roomNumber;
+  }
+  
+  public Term getTerm() {
+    return term;
+  }
+
+  public void setTerm(Term term) {
+    this.term = term;
   }
 
   @Override

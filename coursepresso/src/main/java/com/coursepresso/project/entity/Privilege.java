@@ -23,11 +23,7 @@ public class Privilege implements Serializable {
   @Column(name = "name")
   private String name;
   @Basic(optional = false)
-  @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
-  @Basic(optional = false)
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "privilegeId")
@@ -40,10 +36,9 @@ public class Privilege implements Serializable {
     this.id = id;
   }
 
-  public Privilege(Integer id, String name, Date createdAt, Date updatedAt) {
+  public Privilege(Integer id, String name, Date updatedAt) {
     this.id = id;
     this.name = name;
-    this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
 
@@ -61,14 +56,6 @@ public class Privilege implements Serializable {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
   }
 
   public Date getUpdatedAt() {

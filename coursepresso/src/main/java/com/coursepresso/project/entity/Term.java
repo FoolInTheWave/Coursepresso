@@ -1,6 +1,7 @@
 package com.coursepresso.project.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlTransient;
@@ -18,14 +19,21 @@ public class Term implements Serializable {
   @Basic(optional = false)
   @Column(name = "term")
   private String term;
+  @Basic(optional = false)
+  @Column(name = "updated_at", insertable = false, updatable = false)
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date updatedAt;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "term")
   private List<CourseSection> courseSectionList;
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "term")
+  private List<MeetingDay> meetingDayList;
 
   public Term() {
   }
 
-  public Term(String term) {
+  public Term(String term, Date updatedAt) {
     this.term = term;
+    this.updatedAt = updatedAt;
   }
 
   public String getTerm() {
@@ -35,14 +43,31 @@ public class Term implements Serializable {
   public void setTerm(String term) {
     this.term = term;
   }
+  
+  public Date getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(Date updatedAt) {
+    this.updatedAt = updatedAt;
+  }
 
   @XmlTransient
   public List<CourseSection> getCourseSectionList() {
     return courseSectionList;
   }
 
-  public void setCourseSectionSet(List<CourseSection> courseSectionList) {
+  public void setCourseSectionList(List<CourseSection> courseSectionList) {
     this.courseSectionList = courseSectionList;
+  }
+  
+  @XmlTransient
+  public List<MeetingDay> getMeetingDayList() {
+    return meetingDayList;
+  }
+
+  public void setMeetingDayList(List<MeetingDay> meetingDayList) {
+    this.meetingDayList = meetingDayList;
   }
 
   @Override

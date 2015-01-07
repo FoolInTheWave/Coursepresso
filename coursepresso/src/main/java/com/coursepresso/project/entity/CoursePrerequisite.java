@@ -19,11 +19,7 @@ public class CoursePrerequisite implements Serializable {
   @Column(name = "id")
   private Integer id;
   @Basic(optional = false)
-  @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
-  @Basic(optional = false)
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @JoinColumn(name = "course_number", referencedColumnName = "course_number")
@@ -40,9 +36,8 @@ public class CoursePrerequisite implements Serializable {
     this.id = id;
   }
 
-  public CoursePrerequisite(Integer id, Date createdAt, Date updatedAt) {
+  public CoursePrerequisite(Integer id, Date updatedAt) {
     this.id = id;
-    this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
 
@@ -52,14 +47,6 @@ public class CoursePrerequisite implements Serializable {
 
   public void setId(Integer id) {
     this.id = id;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
   }
 
   public Date getUpdatedAt() {

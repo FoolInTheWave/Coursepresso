@@ -19,11 +19,7 @@ public class UserGroup implements Serializable {
   @Column(name = "id")
   private Integer id;
   @Basic(optional = false)
-  @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
-  @Basic(optional = false)
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @JoinColumn(name = "access_group_id", referencedColumnName = "id")
@@ -40,9 +36,8 @@ public class UserGroup implements Serializable {
     this.id = id;
   }
 
-  public UserGroup(Integer id, Date createdAt, Date updatedAt) {
+  public UserGroup(Integer id, Date updatedAt) {
     this.id = id;
-    this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
 
@@ -52,14 +47,6 @@ public class UserGroup implements Serializable {
 
   public void setId(Integer id) {
     this.id = id;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
   }
 
   public Date getUpdatedAt() {

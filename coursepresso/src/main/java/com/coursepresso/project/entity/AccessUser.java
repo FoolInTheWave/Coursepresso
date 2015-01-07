@@ -36,11 +36,7 @@ public class AccessUser implements Serializable {
   @Column(name = "last_name")
   private String lastName;
   @Basic(optional = false)
-  @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
-  @Basic(optional = false)
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "accessUserId")
@@ -57,14 +53,13 @@ public class AccessUser implements Serializable {
   }
 
   public AccessUser(Integer id, String username, String email, String password,
-          String firstName, String lastName, Date createdAt, Date updatedAt) {
+          String firstName, String lastName, Date updatedAt) {
     this.id = id;
     this.username = username;
     this.email = email;
     this.password = password;
     this.firstName = firstName;
     this.lastName = lastName;
-    this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
 
@@ -114,14 +109,6 @@ public class AccessUser implements Serializable {
 
   public void setLastName(String lastName) {
     this.lastName = lastName;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
   }
 
   public Date getUpdatedAt() {

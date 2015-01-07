@@ -4,6 +4,7 @@ com\coursepresso\project\repository\DepartmentRepository.class
 com\coursepresso\project\entity\CourseSection.class
 com\coursepresso\project\repository\PrivilegeRepository.class
 com\coursepresso\project\entity\AccessGroup.class
+com\coursepresso\project\helper\DateHelper.class
 com\coursepresso\project\repository\UserGroupRepository.class
 com\coursepresso\project\entity\Appliance.class
 com\coursepresso\project\entity\Department.class

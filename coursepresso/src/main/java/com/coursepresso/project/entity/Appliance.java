@@ -22,11 +22,7 @@ public class Appliance implements Serializable {
   @Column(name = "type")
   private String type;
   @Basic(optional = false)
-  @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
-  @Basic(optional = false)
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @JoinColumn(name = "room_number", referencedColumnName = "room_number")
@@ -40,10 +36,9 @@ public class Appliance implements Serializable {
     this.id = id;
   }
 
-  public Appliance(Integer id, String type, Date createdAt, Date updatedAt) {
+  public Appliance(Integer id, String type, Date updatedAt) {
     this.id = id;
     this.type = type;
-    this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
 
@@ -61,14 +56,6 @@ public class Appliance implements Serializable {
 
   public void setType(String type) {
     this.type = type;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
   }
 
   public Date getUpdatedAt() {

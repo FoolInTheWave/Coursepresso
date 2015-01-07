@@ -29,11 +29,7 @@ public class Room implements Serializable {
   @Column(name = "type")
   private String type;
   @Basic(optional = false)
-  @Column(name = "created_at")
-  @Temporal(TemporalType.TIMESTAMP)
-  private Date createdAt;
-  @Basic(optional = false)
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomNumber")
@@ -49,12 +45,11 @@ public class Room implements Serializable {
   }
 
   public Room(String roomNumber, String building, int capacity, String type,
-          Date createdAt, Date updatedAt) {
+          Date updatedAt) {
     this.roomNumber = roomNumber;
     this.building = building;
     this.capacity = capacity;
     this.type = type;
-    this.createdAt = createdAt;
     this.updatedAt = updatedAt;
   }
 
@@ -88,14 +83,6 @@ public class Room implements Serializable {
 
   public void setType(String type) {
     this.type = type;
-  }
-
-  public Date getCreatedAt() {
-    return createdAt;
-  }
-
-  public void setCreatedAt(Date createdAt) {
-    this.createdAt = createdAt;
   }
 
   public Date getUpdatedAt() {

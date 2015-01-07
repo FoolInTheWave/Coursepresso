@@ -1,6 +1,7 @@
 package com.coursepresso.project.controller;
 
 import com.coursepresso.project.entity.Course;
+import com.coursepresso.project.entity.CourseProfessor;
 import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.entity.Department;
 import com.coursepresso.project.entity.MeetingDay;
@@ -8,18 +9,21 @@ import com.coursepresso.project.entity.MeetingTime;
 import com.coursepresso.project.entity.Professor;
 import com.coursepresso.project.entity.Room;
 import com.coursepresso.project.entity.Term;
-import com.coursepresso.project.repository.CourseRepository;
 import com.coursepresso.project.repository.CourseSectionRepository;
 import com.coursepresso.project.repository.DepartmentRepository;
 import com.coursepresso.project.repository.MeetingTimeRepository;
 import com.coursepresso.project.repository.RoomRepository;
 import com.coursepresso.project.repository.TermRepository;
+import com.coursepresso.project.helper.DateHelper;
+import com.coursepresso.project.repository.CourseProfessorRepository;
+import com.coursepresso.project.repository.MeetingDayRepository;
 
 import com.google.common.collect.Lists;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -28,6 +32,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -53,8 +59,6 @@ public class NewCourseSectionController implements Initializable {
   @FXML
   private TextField titleField;
   @FXML
-  private ComboBox instructorCombo;
-  @FXML
   private TextField sectionField;
   @FXML
   private TextField capacityField;
@@ -77,8 +81,6 @@ public class NewCourseSectionController implements Initializable {
   @FXML
   private TableColumn<MeetingDay, String> dayColumn;
   @FXML
-  private TableColumn<MeetingDay, String> instructorColumn;
-  @FXML
   private ComboBox startTimeCombo;
   @FXML
   private ComboBox endTimeCombo;
@@ -87,18 +89,32 @@ public class NewCourseSectionController implements Initializable {
   @FXML
   private ComboBox dayCombo;
   @FXML
+  private TableView<Professor> instructorTable;
+  @FXML
+  private TableColumn<Professor, String> lastNameColumn;
+  @FXML
+  private TableColumn<Professor, String> firstNameColumn;
+  @FXML
+  private TableColumn<Professor, String> departmentColumn;
+  @FXML
+  private ComboBox instructorCombo;
+  @FXML
   private Button addDayButton;
+  @FXML
+  private Button addInstructorButton;
   @FXML
   private Button submitCourseButton;
   @FXML
   private Button backToListingButton;
 
   @Inject
-  private CourseRepository courseRepository;
-  @Inject
   private CourseSectionRepository courseSectionRepository;
   @Inject
+  private CourseProfessorRepository courseProfessorRepository;
+  @Inject
   private DepartmentRepository departmentRepository;
+  @Inject
+  private MeetingDayRepository meetingDayRepository;
   @Inject
   private MeetingTimeRepository meetingTimeRepository;
   @Inject
@@ -109,6 +125,7 @@ public class NewCourseSectionController implements Initializable {
   private MainController mainPresenter;
   
   private ObservableList<MeetingDay> meetingDays;
+  private ObservableList<Professor> instructors;
 
   /**
    * Initializes the controller class.
@@ -138,13 +155,18 @@ public class NewCourseSectionController implements Initializable {
     );
     roomColumn.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
     dayColumn.setCellValueFactory(new PropertyValueFactory<>("day"));
-    // A meeting day needs to be associated with one professor and a professor will
-    // have a list of possibly many meeting days
-    instructorColumn.setCellValueFactory(new PropertyValueFactory<>("professor"));
     
     // Initialize the meeting day observable list and table view
     meetingDays = FXCollections.observableArrayList();
     meetingDayTable.setItems(meetingDays);
+    
+    lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+    firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+    departmentColumn.setCellValueFactory(new PropertyValueFactory<>("department"));
+    
+    // Initialize the instructor observable list and table view
+    instructors = FXCollections.observableArrayList();
+    instructorTable.setItems(instructors);
   }
   
   public Node getView() {
@@ -154,62 +176,45 @@ public class NewCourseSectionController implements Initializable {
   @FXML
   private void saveCourseSection(ActionEvent event) {
     CourseSection courseSection = new CourseSection();
+    ArrayList<CourseProfessor> courseProfessors = new ArrayList<>();
+    CourseProfessor courseProfessor;
     
     courseSection.setCourseNumber((Course) courseNumberCombo.getValue());
-    // CourseProfessorList
-  }
-  
-  @FXML
-  private void departmentComboSelect(ActionEvent event) {
-    Department department = (Department) departmentCombo.getValue();
+    courseSection.setSectionNumber(Integer.parseInt(sectionField.getText()));
+    courseSection.setAvailable(true);
+    courseSection.setCapacity(Integer.parseInt(capacityField.getText()));
+    courseSection.setSeatsAvailable(courseSection.getCapacity());
+    courseSection.setStatus("Open");
+    courseSection.setTerm((Term) termCombo.getValue());
+    courseSection.setStudentCount(0);
+    courseSection.setType(typeCombo.getValue().toString());
+    // Save LocalDate as Date
+    courseSection.setStartDate(DateHelper.asDate(startDatePicker.getValue()));
+    courseSection.setEndDate(DateHelper.asDate(endDatePicker.getValue()));
     
-    // Build course number combo box
-    ObservableList<Course> courses = FXCollections.observableArrayList(
-        // Get course list for selected department
-        department.getCourseList()
-    );
-    courseNumberCombo.setItems(courses);
-    courseNumberCombo.setVisibleRowCount(4);
+    courseSection = courseSectionRepository.save(courseSection);
     
-    // Build professor combo box
-    ObservableList<Professor> professors = FXCollections.observableArrayList(
-        // Get professor list for selected department
-        department.getProfessorList()
-    );
-    instructorCombo.setItems(professors);
-    instructorCombo.setVisibleRowCount(4);
-  }
-  
-  @FXML
-  private void courseNumberComboSelect(ActionEvent event) {
-    Course course = (Course) courseNumberCombo.getValue();
-    
-    if (course != null) {
-      // Get course with course section list
-      course = 
-          courseRepository.findByCourseNumberAndFetchCourseSectionListEagerly(
-              course.getCourseNumber()
-          );
-      
-      titleField.setText(course.getTitle());
-      
-      if (course.getCourseSectionList() != null) {
-        // Set the section number field with the next available number
-        sectionField.setText(
-            Integer.toString(
-                course.getCourseSectionList().stream()
-                    .min((cs1, cs2) -> Integer.compare(
-                        cs1.getSectionNumber(), 
-                        cs2.getSectionNumber()
-                    )).get().getSectionNumber() + 1
-            )
-        );
-      }
+    // Save MeetingDays for CourseSection
+    for (MeetingDay day : meetingDays) {
+      day.setCourseSectionId(courseSection);
+      day.setTerm(courseSection.getTerm());
     }
-    else {
-      titleField.setText("");
-      sectionField.setText("");
+    meetingDayRepository.save(meetingDays);
+    
+    // Save CourseProfessors for CourseSection
+    for (Professor professor : instructors) {
+      courseProfessor = new CourseProfessor();
+      courseProfessor.setCourseSectionId(courseSection);
+      courseProfessor.setProfessorId(professor);
+      courseProfessors.add(courseProfessor);
     }
+    courseProfessorRepository.save(courseProfessors);
+    
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Course Section Saved");
+    alert.setHeaderText(null);
+    alert.setContentText("The course section has been saved successfully!");
+    alert.showAndWait();
   }
   
   @FXML
@@ -245,6 +250,65 @@ public class NewCourseSectionController implements Initializable {
     endTimeCombo.setValue(null);
     roomCombo.setValue(null);
     dayCombo.setValue(null);
+    instructorCombo.setValue(null);
+  }
+  
+  @FXML
+  private void addInstructorButtonClick(ActionEvent event) {
+    if (instructorCombo.getValue() != null &&
+        instructors.contains((Professor) instructorCombo.getValue()) == false) {
+      instructors.add((Professor) instructorCombo.getValue());
+    }
+  }
+  
+  @FXML
+  private void departmentComboSelect(ActionEvent event) {
+    Department department = (Department) departmentCombo.getValue();
+    
+    // Build course number combo box
+    ObservableList<Course> courses = FXCollections.observableArrayList(
+        // Get course list for selected department
+        department.getCourseList()
+    );
+    courseNumberCombo.setItems(courses);
+    courseNumberCombo.setVisibleRowCount(4);
+    
+    // Build professor combo box
+    ObservableList<Professor> professors = FXCollections.observableArrayList(
+        // Get professor list for selected department
+        department.getProfessorList()
+    );
+    instructorCombo.setItems(professors);
+    instructorCombo.setVisibleRowCount(4);
+  }
+  
+  @FXML
+  private void courseNumberComboSelect(ActionEvent event) {
+    Course course = (Course) courseNumberCombo.getValue();
+    
+    if (course != null) {
+      titleField.setText(course.getTitle());
+      
+      if (!course.getCourseSectionList().isEmpty()) {
+        // Set the section number field with the next available number
+        sectionField.setText(
+            Integer.toString(
+                course.getCourseSectionList().stream()
+                    .max((cs1, cs2) -> Integer.compare(
+                        cs1.getSectionNumber(), 
+                        cs2.getSectionNumber()
+                    )).get().getSectionNumber() + 1
+            )
+        );
+      }
+      else {
+        sectionField.setText("1");
+      }
+    }
+    else {
+      titleField.setText(null);
+      sectionField.setText(null);
+    }
   }
   
   public void buildView() {
