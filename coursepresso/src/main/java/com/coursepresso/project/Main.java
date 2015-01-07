@@ -18,7 +18,7 @@ public class Main extends Application {
             new AnnotationConfigApplicationContext(MainConfig.class);
     
     MainController mainPresenter = context.getBean(MainController.class);
-    mainPresenter.showNewCourseSection();
+    mainPresenter.showLogin();
     
     Scene scene = new Scene(mainPresenter.getView(), 1440, 900);
     scene.getStylesheets().add("styles/Styles.css");

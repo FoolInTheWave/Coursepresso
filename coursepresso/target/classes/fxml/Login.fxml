@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.LoginController">
+  <stylesheets>
+    <URL value="@/styles/Styles.css" />
+  </stylesheets>
+   <children>
+      <TitledPane fx:id="root" alignment="TOP_LEFT" animated="false" layoutX="14.0" layoutY="14.0" prefHeight="800.0" prefWidth="1280.0" text="Login" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="656.0" prefWidth="997.0">
+               <children>
+                  <VBox alignment="CENTER" fillWidth="false" layoutX="497.0" layoutY="221.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label layoutX="445.0" layoutY="238.0" prefHeight="21.0" prefWidth="285.0" text="Username:" />
+                        <TextField fx:id="usernameField" layoutX="522.0" layoutY="233.0" prefHeight="31.0" prefWidth="285.0" promptText="Username" />
+                        <Label layoutX="447.0" layoutY="281.0" prefWidth="285.0" text="Password:" />
+                        <PasswordField fx:id="passwordField" layoutX="522.0" layoutY="276.0" prefHeight="31.0" prefWidth="285.0" promptText="Password" />
+                        <Button fx:id="loginButton" layoutX="632.0" layoutY="324.0" mnemonicParsing="false" onAction="#loginButtonClick" text="Login" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+   </children>
+</AnchorPane>

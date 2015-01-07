@@ -14,14 +14,20 @@ public class MainController {
   private BorderPane contentArea;
 
   @Inject
-  private NewCourseSectionController newCourseSectionPresenter;
+  private NewCourseSectionController newCourseSectionController;
+  @Inject
+  private LoginController loginController;
 
   public Parent getView() {
     return root;
   }
   
   public void showNewCourseSection() {
-    newCourseSectionPresenter.buildView();
-    contentArea.setCenter(newCourseSectionPresenter.getView());
+    newCourseSectionController.buildView();
+    contentArea.setCenter(newCourseSectionController.getView());
+  }
+  
+  public void showLogin() {
+    contentArea.setCenter(loginController.getView());
   }
 }

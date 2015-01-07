@@ -8,6 +8,7 @@ com\coursepresso\project\helper\DateHelper.class
 com\coursepresso\project\repository\UserGroupRepository.class
 com\coursepresso\project\entity\Appliance.class
 com\coursepresso\project\entity\Department.class
+com\coursepresso\project\DataSourceConfig.class
 com\coursepresso\project\entity\Privilege.class
 com\coursepresso\project\repository\CourseProfessorRepository.class
 com\coursepresso\project\entity\Course.class
@@ -15,6 +16,7 @@ com\coursepresso\project\repository\AccessGroupRepository.class
 com\coursepresso\project\controller\NewCourseSectionController.class
 com\coursepresso\project\entity\MeetingTime.class
 com\coursepresso\project\repository\TermRepository.class
+com\coursepresso\project\ControllerConfig.class
 com\coursepresso\project\repository\MeetingDayRepository.class
 com\coursepresso\project\repository\GroupPrivilegeRepository.class
 com\coursepresso\project\entity\CourseProfessor.class
@@ -26,6 +28,7 @@ com\coursepresso\project\repository\CourseRepository.class
 com\coursepresso\project\repository\ApplianceRepository.class
 com\coursepresso\project\repository\CoursePrerequisiteRepository.class
 com\coursepresso\project\entity\GroupPrivilege.class
+com\coursepresso\project\controller\LoginController.class
 com\coursepresso\project\entity\Professor.class
 com\coursepresso\project\entity\MeetingDay.class
 com\coursepresso\project\controller\MainController.class
