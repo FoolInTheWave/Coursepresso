@@ -7,7 +7,12 @@ package com.coursepresso.project.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javax.inject.Inject;
 
 /**
  * FXML Controller class
@@ -15,13 +20,26 @@ import javafx.fxml.Initializable;
  * @author steev_000
  */
 public class CourseSearchController implements Initializable {
-
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+  @FXML
+  private Node root;
+  @FXML
+  private Label DepartmentLabel;
+  @FXML
+  private ComboBox<?> DepartmentCombo;
+  
+  @Inject
+  private MainController mainController;
+  
+  /**
+   * Initializes the controller class.
+   */
+  @Override
+  public void initialize(URL url, ResourceBundle rb) {
+    // TODO
+  }    
+  
+  public Node getView() {
+    return root;
+  }
     
 }

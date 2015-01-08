@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javax.inject.Inject;
 
@@ -32,6 +33,16 @@ public class MenuController implements Initializable {
   private Button displayConflictsButton;
   @FXML
   private Button newScheduleButton;
+  @FXML
+  private Label displayConflictsLabel;
+  @FXML
+  private Label searchCoursesLabel;
+  @FXML
+  private Label newCourseLabel;
+  @FXML
+  private Label newScheduleLabel;  
+  @FXML
+  private Label headerLabel;
   
   @Inject
   private MainController mainController;

@@ -23,6 +23,8 @@ public class MainController {
   private ScheduleSelectionController scheduleSelectionController;
   @Inject
   private ConflictController conflictController;
+  @Inject
+  private CourseSearchController courseSearchController;
 
   public Parent getView() {
     return root;
@@ -47,5 +49,9 @@ public class MainController {
   
   public void showConflict() {
     contentArea.setCenter(conflictController.getView());
+  }
+  
+  public void showCourseSearch() {
+    contentArea.setCenter(courseSearchController.getView());
   }
 }

@@ -1,5 +1,6 @@
 package com.coursepresso.project;
 
+import com.coursepresso.project.controller.CourseSearchController;
 import com.coursepresso.project.controller.LoginController;
 import com.coursepresso.project.controller.MainController;
 import com.coursepresso.project.controller.MenuController;
@@ -34,6 +35,11 @@ public class ControllerConfig {
   @Bean
   public MenuController menuController() {
     return loadController("/fxml/Menu.fxml");
+  }
+  
+  @Bean
+  public CourseSearchController courseSearchController() {
+    return loadController("/fxml/CourseSearch.fxml");
   }
   
   @SuppressWarnings("unchecked")
