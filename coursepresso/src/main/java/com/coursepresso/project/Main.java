@@ -20,7 +20,7 @@ public class Main extends Application {
     MainController mainPresenter = context.getBean(MainController.class);
     mainPresenter.showLogin();
     
-    Scene scene = new Scene(mainPresenter.getView(), 1440, 900);
+    Scene scene = new Scene(mainPresenter.getView(), 1280, 900);
     scene.getStylesheets().add("styles/Styles.css");
     
     stage.setScene(scene);

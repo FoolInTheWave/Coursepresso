@@ -1,10 +1,12 @@
 package com.coursepresso.project;
 
 import com.coursepresso.project.controller.CourseSearchController;
+import com.coursepresso.project.controller.ConflictController;
 import com.coursepresso.project.controller.LoginController;
 import com.coursepresso.project.controller.MainController;
 import com.coursepresso.project.controller.MenuController;
 import com.coursepresso.project.controller.NewCourseSectionController;
+import com.coursepresso.project.controller.ScheduleSelectionController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import org.springframework.context.annotation.Bean;
@@ -33,6 +35,11 @@ public class ControllerConfig {
   }
   
   @Bean
+  public ConflictController conflictController() {
+    return loadController("/fxml/Conflict.fxml");
+  }
+  
+  @Bean
   public MenuController menuController() {
     return loadController("/fxml/Menu.fxml");
   }
@@ -40,6 +47,11 @@ public class ControllerConfig {
   @Bean
   public CourseSearchController courseSearchController() {
     return loadController("/fxml/CourseSearch.fxml");
+  }
+    
+  @Bean
+  public ScheduleSelectionController scheduleSelectionController() {
+    return loadController("/fxml/ScheduleSelection.fxml");
   }
   
   @SuppressWarnings("unchecked")
