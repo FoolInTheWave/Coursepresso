@@ -17,6 +17,8 @@ public class MainController {
   private NewCourseSectionController newCourseSectionController;
   @Inject
   private LoginController loginController;
+  @Inject
+  private MenuController menuController;
 
   public Parent getView() {
     return root;
@@ -29,5 +31,9 @@ public class MainController {
   
   public void showLogin() {
     contentArea.setCenter(loginController.getView());
+  }
+  
+  public void showMenu() {
+    contentArea.setCenter(menuController.getView());
   }
 }
