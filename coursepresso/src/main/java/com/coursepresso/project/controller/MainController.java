@@ -19,6 +19,10 @@ public class MainController {
   private LoginController loginController;
   @Inject
   private MenuController menuController;
+  @Inject
+  private ScheduleSelectionController scheduleSelectionController;
+  @Inject
+  private ConflictController conflictController;
 
   public Parent getView() {
     return root;
@@ -35,5 +39,13 @@ public class MainController {
   
   public void showMenu() {
     contentArea.setCenter(menuController.getView());
+  }
+
+  public void showScheduleSelection() {
+    contentArea.setCenter(scheduleSelectionController.getView());
+  }
+  
+  public void showConflict() {
+    contentArea.setCenter(conflictController.getView());
   }
 }
