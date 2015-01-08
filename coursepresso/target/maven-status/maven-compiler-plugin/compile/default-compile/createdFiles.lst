@@ -30,6 +30,7 @@ com\coursepresso\project\repository\CoursePrerequisiteRepository.class
 com\coursepresso\project\entity\GroupPrivilege.class
 com\coursepresso\project\controller\LoginController.class
 com\coursepresso\project\entity\Professor.class
+com\coursepresso\project\controller\MenuController.class
 com\coursepresso\project\entity\MeetingDay.class
 com\coursepresso\project\controller\MainController.class
 com\coursepresso\project\entity\AccessUser.class
