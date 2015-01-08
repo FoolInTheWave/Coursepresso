@@ -1,5 +1,6 @@
 package com.coursepresso.project;
 
+import com.coursepresso.project.controller.ConflictController;
 import com.coursepresso.project.controller.LoginController;
 import com.coursepresso.project.controller.MainController;
 import com.coursepresso.project.controller.NewCourseSectionController;
@@ -28,6 +29,11 @@ public class ControllerConfig {
   @Bean
   public LoginController loginController() {
     return loadController("/fxml/Login.fxml");
+  }
+  
+  @Bean
+  public ConflictController conflictController() {
+    return loadController("/fxml/Conflict.fxml");
   }
   
   @SuppressWarnings("unchecked")
