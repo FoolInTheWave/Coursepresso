@@ -53,7 +53,7 @@ public class ScheduleSelectionController implements Initializable {
   
   @FXML
   private void backButtonClick() {
-    //mainController.showMenu();
+    mainController.showMenu();
   }
   
 }

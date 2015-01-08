@@ -105,7 +105,7 @@ public class NewCourseSectionController implements Initializable {
   @FXML
   private Button submitCourseButton;
   @FXML
-  private Button backToListingButton;
+  private Button backButton;
 
   @Inject
   private CourseSectionRepository courseSectionRepository;
@@ -259,6 +259,11 @@ public class NewCourseSectionController implements Initializable {
         && instructors.contains((Professor) instructorCombo.getValue()) == false) {
       instructors.add((Professor) instructorCombo.getValue());
     }
+  }
+  
+  @FXML
+  private void backButtonClick(ActionEvent event) {
+    mainController.showMenu();
   }
 
   @FXML

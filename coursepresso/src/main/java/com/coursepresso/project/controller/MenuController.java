@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.coursepresso.project.controller;
 
 import java.net.URL;
@@ -12,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.TitledPane;
 import javax.inject.Inject;
 
 /**
@@ -35,21 +29,30 @@ public class MenuController implements Initializable {
   
   @Inject
   private MainController mainController;
+  
+  public Node getView() {
+    return root;
+  }
+    
   /**
    * Initializes the controller class.
+   * 
+   * @param url
+   * @param rb
    */
   @Override
   public void initialize(URL url, ResourceBundle rb) {
       // TODO
-  }    
-    
-  public Node getView() {
-    return root;
   }
   
   @FXML
   private void newCourseButtonClick(ActionEvent event) {
     mainController.showNewCourseSection();
   }
-    
+  
+  @FXML
+  private void displayConflictsButtonClick(ActionEvent event) {
+    mainController.showScheduleSelection();
+  }
+  
 }
