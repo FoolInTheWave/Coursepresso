@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.coursepresso.project.controller.MenuController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.MenuController">
     <stylesheets>
         <URL value="@/styles/Styles.css" />
     </stylesheets>
@@ -37,7 +37,7 @@
                         <Font size="21.0" />
                      </font>
                   </Button>
-                  <Button fx:id="displayConflictsButton" layoutX="43.0" layoutY="439.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="240.0" text="Display Conflicts">
+                  <Button fx:id="displayConflictsButton" layoutX="43.0" layoutY="439.0" mnemonicParsing="false" onAction="#displayConflictsButtonClick" prefHeight="61.0" prefWidth="240.0" text="Display Conflicts">
                      <font>
                         <Font size="21.0" />
                      </font>
