@@ -126,6 +126,10 @@ public class NewCourseSectionController implements Initializable {
 
   private ObservableList<MeetingDay> meetingDays;
   private ObservableList<Professor> instructors;
+  
+  public Node getView() {
+    return root;
+  }
 
   /**
    * Initializes the controller class.
@@ -167,10 +171,6 @@ public class NewCourseSectionController implements Initializable {
     // Initialize the instructor observable list and table view
     instructors = FXCollections.observableArrayList();
     instructorTable.setItems(instructors);
-  }
-
-  public Node getView() {
-    return root;
   }
 
   @FXML
