@@ -8,12 +8,9 @@ import java.util.Date;
 
 /**
  *
- * @author Brice Roncace
- * Publish Site: stackoverflow.com
- * Publish Date: 12/05/14
+ * @author Caleb Miller
  * 
- * This class includes methods to convert LocalDate and LocalDateTime objects to
- * Date objects and vice versa.
+ * This class includes utility methods for Date conversions and Date methods.
  */
 public class DateHelper {
   
@@ -38,5 +35,10 @@ public class DateHelper {
     return Instant.ofEpochMilli(date.getTime())
         .atZone(ZoneId.systemDefault())
         .toLocalDateTime();
+  }
+  
+  public static boolean isOverlapping(Date start1, Date end1, Date start2, 
+      Date end2) {
+    return start1.before(end2) && start2.before(end1);
   }
 }
