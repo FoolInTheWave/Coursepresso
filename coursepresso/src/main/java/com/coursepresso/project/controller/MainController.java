@@ -52,6 +52,7 @@ public class MainController {
   }
   
   public void showCourseSearch() {
+    courseSearchController.buildView();
     contentArea.setCenter(courseSearchController.getView());
   }
 }

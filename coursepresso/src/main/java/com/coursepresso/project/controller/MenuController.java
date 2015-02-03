@@ -63,7 +63,12 @@ public class MenuController implements Initializable {
   
   @FXML
   private void displayConflictsButtonClick(ActionEvent event) {
-    mainController.showScheduleSelection();
+    mainController.showConflict();
+  }
+  
+  @FXML
+  private void displayCourseSearchButtonClick(ActionEvent event) {
+    mainController.showCourseSearch();
   }
   
 }

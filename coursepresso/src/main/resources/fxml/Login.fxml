@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -22,7 +23,10 @@
                         <TextField fx:id="usernameField" layoutX="522.0" layoutY="233.0" prefHeight="31.0" prefWidth="285.0" promptText="Username" />
                         <Label layoutX="447.0" layoutY="281.0" prefWidth="285.0" text="Password:" />
                         <PasswordField fx:id="passwordField" layoutX="522.0" layoutY="276.0" prefHeight="31.0" prefWidth="285.0" promptText="Password" />
-                        <Button fx:id="loginButton" layoutX="632.0" layoutY="324.0" mnemonicParsing="false" onAction="#loginButtonClick" text="Login" />
+                        <Button fx:id="loginButton" layoutX="632.0" layoutY="324.0" mnemonicParsing="false" onAction="#loginButtonClick" prefHeight="39.0" prefWidth="220.0" text="Login">
+                           <VBox.margin>
+                              <Insets top="20.0" />
+                           </VBox.margin></Button>
                      </children>
                   </VBox>
                </children>

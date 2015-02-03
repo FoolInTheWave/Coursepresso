@@ -17,7 +17,7 @@
         <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="searchCoursesButton" layoutX="43.0" layoutY="120.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="240.0" text="Search Courses">
+                  <Button fx:id="searchCoursesButton" layoutX="43.0" layoutY="120.0" mnemonicParsing="false" onAction="#displayCourseSearchButtonClick" prefHeight="61.0" prefWidth="240.0" text="Search Courses">
                      <font>
                         <Font size="21.0" />
                      </font>
