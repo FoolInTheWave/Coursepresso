@@ -26,8 +26,8 @@
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Button fx:id="backButton" layoutX="14.0" layoutY="651.0" mnemonicParsing="false" onAction="#backButtonClick" text="Back" />
-                  <Button fx:id="submitButton" layoutX="95.0" layoutY="651.0" mnemonicParsing="false" text="Submit" />
+                  <Button fx:id="backButton" layoutX="405.0" layoutY="662.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="39.0" prefWidth="220.0" text="Back" />
+                  <Button fx:id="submitButton" layoutX="655.0" layoutY="662.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="220.0" text="Submit" />
                </children>
             </AnchorPane>
         </content>

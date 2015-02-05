@@ -7,6 +7,7 @@ com\coursepresso\project\repository\CourseProfessorRepository.class
 com\coursepresso\project\entity\Course.class
 com\coursepresso\project\controller\NewCourseSectionController.class
 com\coursepresso\project\repository\TermRepository.class
+com\coursepresso\project\controller\SearchResultsController.class
 com\coursepresso\project\ControllerConfig.class
 com\coursepresso\project\repository\MeetingDayRepository.class
 com\coursepresso\project\controller\CourseSearchController.class

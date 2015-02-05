@@ -93,6 +93,11 @@ public class CourseSearchController implements Initializable {
   private void backButtonClick(ActionEvent event) {
     mainController.showMenu();
   }
+  
+  @FXML
+  private void searchButtonClick(ActionEvent event) {
+    mainController.showSearchResults();
+  }
 
   @FXML
   void courseNumberComboSelect(ActionEvent event) {
@@ -137,11 +142,6 @@ public class CourseSearchController implements Initializable {
 
   @FXML
   void creditsComboSelect(ActionEvent event) {
-
-  }
-
-  @FXML
-  void searchButtonClick(ActionEvent event) {
 
   }
 

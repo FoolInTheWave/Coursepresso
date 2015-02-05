@@ -7,6 +7,7 @@ import com.coursepresso.project.controller.MainController;
 import com.coursepresso.project.controller.MenuController;
 import com.coursepresso.project.controller.NewCourseSectionController;
 import com.coursepresso.project.controller.ScheduleSelectionController;
+import com.coursepresso.project.controller.SearchResultsController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import org.springframework.context.annotation.Bean;
@@ -52,6 +53,11 @@ public class ControllerConfig {
   @Bean
   public ScheduleSelectionController scheduleSelectionController() {
     return loadController("/fxml/ScheduleSelection.fxml");
+  }
+  
+  @Bean
+  public SearchResultsController searchResultsController() {
+    return loadController("/fxml/SearchResults.fxml");
   }
   
   @SuppressWarnings("unchecked")
