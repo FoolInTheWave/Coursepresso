@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.net.*?>
 <?import java.util.*?>
@@ -29,10 +30,10 @@
                   <Label layoutX="196.0" layoutY="374.0" text="Line Number" />
                   <TextField fx:id="lineNumberText" layoutX="196.0" layoutY="397.0" prefHeight="39.0" prefWidth="150.0" />
                   <Label layoutX="424.0" layoutY="374.0" text="Days" />
-                  <CheckBox fx:id="mondayCheckbox" layoutX="424.0" layoutY="408.0" mnemonicParsing="false" text="Monday" />
-                  <CheckBox fx:id="tuesdayCheckbox" layoutX="518.0" layoutY="408.0" mnemonicParsing="false" text="Tuesday" />
-                  <CheckBox fx:id="wednesdayCheckbox" layoutX="615.0" layoutY="408.0" mnemonicParsing="false" text="Wednesday" />
-                  <CheckBox fx:id="thursdayCheckbox" layoutX="729.0" layoutY="408.0" mnemonicParsing="false" text="Thursday" />
+                  <CheckBox fx:id="mondayCheckbox" layoutX="375.0" layoutY="408.0" mnemonicParsing="false" text="Monday" />
+                  <CheckBox fx:id="tuesdayCheckbox" layoutX="481.0" layoutY="408.0" mnemonicParsing="false" text="Tuesday" />
+                  <CheckBox fx:id="wednesdayCheckbox" layoutX="586.0" layoutY="408.0" mnemonicParsing="false" text="Wednesday" />
+                  <CheckBox fx:id="thursdayCheckbox" layoutX="721.0" layoutY="408.0" mnemonicParsing="false" text="Thursday" />
                   <CheckBox fx:id="fridayCheckbox" layoutX="835.0" layoutY="408.0" mnemonicParsing="false" text="Friday" />
                   <ComboBox fx:id="creditsCombo" layoutX="935.0" layoutY="401.0" onAction="#creditsComboSelect" prefHeight="39.0" prefWidth="150.0" />
                   <Label layoutX="935.0" layoutY="377.0" text="Credits" />

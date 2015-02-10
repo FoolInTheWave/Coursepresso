@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.coursepresso.project.controller;
 
 import com.coursepresso.project.entity.Course;
@@ -26,6 +21,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javax.inject.Inject;
 
 /**
@@ -37,6 +33,8 @@ public class CourseSearchController implements Initializable {
 
   @FXML
   private Node root;
+  @FXML
+  private AnchorPane titledPaneAnchor;
   @FXML
   private CheckBox wednesdayCheckbox;
   @FXML
@@ -93,9 +91,35 @@ public class CourseSearchController implements Initializable {
   private void backButtonClick(ActionEvent event) {
     mainController.showMenu();
   }
-  
+
   @FXML
   private void searchButtonClick(ActionEvent event) {
+    // Build query based on user input
+    if (departmentCombo.getValue() != null)
+      ; // Add predicate
+    if (termCombo.getValue() != null)
+      ; //Add predicate
+    if (courseLevelCombo.getValue() != null)
+      ; // Add predicate
+    if (courseNumberCombo.getValue() != null)
+      ; // Add predicate
+    if (instructorCombo.getValue() != null)
+      ; // Add predicate
+    if (lineNumberText.getText() != null)
+      ; // Add predicate
+    if (mondayCheckbox.isSelected())
+      ; // Add predicate
+    if (tuesdayCheckbox.isSelected())
+      ; // Add predicate
+    if (wednesdayCheckbox.isSelected())
+      ; // Add predicate
+    if (thursdayCheckbox.isSelected())
+      ; // Add predicate
+    if (fridayCheckbox.isSelected())
+      ; // Add predicate
+    if (creditsCombo.getValue() != null)
+      ; // Add predicate
+
     mainController.showSearchResults();
   }
 
@@ -110,16 +134,16 @@ public class CourseSearchController implements Initializable {
 
     // Build course number combo box
     ObservableList<Course> courses = FXCollections.observableArrayList(
-            // Get course list for selected department
-            department.getCourseList()
+        // Get course list for selected department
+        department.getCourseList()
     );
     courseNumberCombo.setItems(courses);
     courseNumberCombo.setVisibleRowCount(4);
 
     // Build professor combo box
     ObservableList<Professor> professors = FXCollections.observableArrayList(
-            // Get professor list for selected department
-            department.getProfessorList()
+        // Get professor list for selected department
+        department.getProfessorList()
     );
     instructorCombo.setItems(professors);
     instructorCombo.setVisibleRowCount(4);
@@ -148,25 +172,25 @@ public class CourseSearchController implements Initializable {
   public void buildView() {
     // Build department combo box
     ObservableList<Department> departments = FXCollections.observableArrayList(
-            Lists.newArrayList(departmentRepository.findAll())
+        Lists.newArrayList(departmentRepository.findAll())
     );
     departmentCombo.setItems(departments);
     departmentCombo.setVisibleRowCount(4);
-    
+
     // Build term combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
         Lists.newArrayList(termRepository.findAll())
     );
     termCombo.setItems(terms);
     termCombo.setVisibleRowCount(4);
-    
+
     // Build type combo box
     ObservableList<String> levels = FXCollections.observableArrayList(
         "100", "200", "300", "400"
     );
     courseLevelCombo.setItems(levels);
     courseLevelCombo.setVisibleRowCount(4);
-    
+
     // Build type combo box
     ObservableList<String> credits = FXCollections.observableArrayList(
         "1", "2", "3", "4"

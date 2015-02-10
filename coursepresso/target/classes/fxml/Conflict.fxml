@@ -29,8 +29,8 @@
                      </columnResizePolicy>
                   </TableView>
                   <Button fx:id="backButton" layoutX="282.0" layoutY="643.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="39.0" prefWidth="220.0" text="Back" />
-                  <Button fx:id="resolveManuallyButton" layoutX="529.0" layoutY="643.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="220.0" text="Resolve Conflicts Manually" />
-                  <Button fx:id="resolveAutomaticButton" layoutX="776.0" layoutY="643.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="220.0" text="Resolve Conflicts Automatically" />
+                  <Button fx:id="resolveManuallyButton" layoutX="529.0" layoutY="643.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="220.0" text="Resolve Manually" />
+                  <Button fx:id="resolveAutomaticButton" layoutX="776.0" layoutY="643.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="220.0" text="Resolve Automatically" />
                </children>
             </AnchorPane>
         </content>
