@@ -71,4 +71,9 @@ public class MenuController implements Initializable {
     mainController.showCourseSearch();
   }
   
+  @FXML
+  private void displayNewScheduleButtonClick(ActionEvent event) {
+    mainController.showNewSchedule();
+  }
+  
 }

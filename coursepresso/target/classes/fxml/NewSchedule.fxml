@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.coursepresso.project.controller.NewScheduleController">
+    <stylesheets>
+        <URL value="@/styles/Styles.css" />
+    </stylesheets>
+   <children>
+      <TitledPane fx:id="root" animated="false" layoutX="149.0" layoutY="44.0" prefHeight="800.0" prefWidth="1280.0" text="Create Course Schedule" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <ComboBox fx:id="semesterCombo" layoutX="463.0" layoutY="220.0" prefHeight="39.0" prefWidth="150.0" />
+                  <ComboBox fx:id="yearCombo" layoutX="666.0" layoutY="220.0" prefHeight="39.0" prefWidth="150.0" />
+                  <Label layoutX="463.0" layoutY="193.0" text="Semester" />
+                  <Label layoutX="666.0" layoutY="193.0" text="Year" />
+                  <Button fx:id="backButton" layoutX="407.0" layoutY="329.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="39.0" prefWidth="220.0" text="Back" />
+                  <Button fx:id="createScheduleButton" layoutX="651.0" layoutY="329.0" mnemonicParsing="false" onAction="#createScheduleButtonClick" prefHeight="39.0" prefWidth="220.0" text="Create Schedule" />
+               </children>
+            </AnchorPane>
+        </content>
+      </TitledPane>
+   </children>
+</AnchorPane>

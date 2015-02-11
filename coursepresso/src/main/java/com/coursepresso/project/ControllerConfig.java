@@ -6,6 +6,7 @@ import com.coursepresso.project.controller.LoginController;
 import com.coursepresso.project.controller.MainController;
 import com.coursepresso.project.controller.MenuController;
 import com.coursepresso.project.controller.NewCourseSectionController;
+import com.coursepresso.project.controller.NewScheduleController;
 import com.coursepresso.project.controller.ScheduleSelectionController;
 import com.coursepresso.project.controller.SearchResultsController;
 import java.io.IOException;
@@ -58,6 +59,11 @@ public class ControllerConfig {
   @Bean
   public SearchResultsController searchResultsController() {
     return loadController("/fxml/SearchResults.fxml");
+  }
+  
+  @Bean
+  public NewScheduleController newScheduleController() {
+    return loadController("/fxml/NewSchedule.fxml");
   }
   
   @SuppressWarnings("unchecked")

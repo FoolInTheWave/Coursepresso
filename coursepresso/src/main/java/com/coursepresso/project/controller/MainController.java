@@ -27,7 +27,9 @@ public class MainController {
   private CourseSearchController courseSearchController;
   @Inject
   private SearchResultsController searchResultsController;
-
+  @Inject
+  private NewScheduleController newScheduleController;
+  
   public Parent getView() {
     return root;
   }
@@ -61,5 +63,10 @@ public class MainController {
   public void showSearchResults() {
     searchResultsController.buildView();
     contentArea.setCenter(searchResultsController.getView());
+  }
+  
+  public void showNewSchedule() {
+    newScheduleController.buildView();
+    contentArea.setCenter(newScheduleController.getView());
   }
 }
