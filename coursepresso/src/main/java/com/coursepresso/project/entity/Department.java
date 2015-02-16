@@ -29,6 +29,8 @@ public class Department implements Serializable {
   private List<Professor> professorList;
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "department")
   private List<Course> courseList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
+  private List<CourseSection> courseSectionList;
 
   public Department() {
   }
@@ -81,8 +83,17 @@ public class Department implements Serializable {
     return courseList;
   }
 
-  public void setCourseSet(List<Course> courseList) {
+  public void setCourseList(List<Course> courseList) {
     this.courseList = courseList;
+  }
+  
+  @XmlTransient
+  public List<CourseSection> getCourseSectionList() {
+    return courseSectionList;
+  }
+
+  public void setCoursSectioneList(List<CourseSection> courseSectionList) {
+    this.courseSectionList = courseSectionList;
   }
 
   @Override

@@ -17,25 +17,25 @@
          <content>
             <AnchorPane prefHeight="743.0" prefWidth="1278.0">
                <children>
-                  <TableView layoutX="33.0" layoutY="33.0" maxHeight="647.0" maxWidth="1213.0" prefHeight="647.0" prefWidth="1213.0">
+                  <TableView fx:id="courseSectionTable" layoutX="33.0" layoutY="33.0" maxHeight="647.0" maxWidth="1213.0" prefHeight="628.0" prefWidth="1213.0">
                     <columns>
-                        <TableColumn fx:id="lineNumCell" prefWidth="54.0" resizable="false" text="Line No." />
-                      <TableColumn fx:id="courseNumCell" resizable="false" text="Course #" />
-                      <TableColumn fx:id="courseNameCell" prefWidth="282.0" resizable="false" text="Course Name" />
-                        <TableColumn fx:id="professorCell" minWidth="5.0" prefWidth="246.0" resizable="false" text="Professor" />
-                        <TableColumn fx:id="daysCell" prefWidth="84.0" resizable="false" text="Days" />
-                        <TableColumn fx:id="startTimeCell" prefWidth="107.0" resizable="false" text="Start Time" />
-                        <TableColumn fx:id="endTimeCell" prefWidth="102.0" resizable="false" text="End Time" />
-                        <TableColumn fx:id="roomNumCell" minWidth="0.0" prefWidth="97.0" resizable="false" text="Room" />
-                        <TableColumn fx:id="studentsCell" minWidth="0.0" prefWidth="78.0" resizable="false" text="Students" />
-                        <TableColumn fx:id="capacityCell" prefWidth="82.0" resizable="false" text="Capacity" />
+                        <TableColumn fx:id="lineNumColumn" prefWidth="54.0" resizable="false" text="Line #" />
+                      <TableColumn fx:id="courseNumColumn" resizable="false" text="Course #" />
+                      <TableColumn fx:id="courseNameColumn" prefWidth="282.0" resizable="false" text="Course Name" />
+                        <TableColumn fx:id="professorColumn" minWidth="5.0" prefWidth="246.0" resizable="false" text="Professor" />
+                        <TableColumn fx:id="daysColumn" prefWidth="84.0" resizable="false" text="Days" />
+                        <TableColumn fx:id="startTimeColumn" prefWidth="107.0" resizable="false" text="Start Time" />
+                        <TableColumn fx:id="endTimeColumn" prefWidth="102.0" resizable="false" text="End Time" />
+                        <TableColumn fx:id="roomNumColumn" minWidth="0.0" prefWidth="97.0" resizable="false" text="Room" />
+                        <TableColumn fx:id="studentsColumn" minWidth="0.0" prefWidth="78.0" resizable="false" text="Students" />
+                        <TableColumn fx:id="capacityColumn" prefWidth="82.0" resizable="false" text="Capacity" />
                     </columns>
                      <columnResizePolicy>
                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                      </columnResizePolicy>
                   </TableView>
-                  <Button fx:id="backButton" layoutX="400.0" layoutY="702.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="39.0" prefWidth="220.0" text="Back" />
-                  <Button fx:id="modifySectionButton" layoutX="658.0" layoutY="702.0" mnemonicParsing="false" onAction="#modifySectionButtonClick" prefHeight="39.0" prefWidth="220.0" text="Modify Section" />
+                  <Button fx:id="backButton" layoutX="400.0" layoutY="670.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="39.0" prefWidth="220.0" text="Back" />
+                  <Button fx:id="modifySectionButton" layoutX="658.0" layoutY="670.0" mnemonicParsing="false" onAction="#modifySectionButtonClick" prefHeight="39.0" prefWidth="220.0" text="Modify Section" />
                </children>
             </AnchorPane>
          </content>

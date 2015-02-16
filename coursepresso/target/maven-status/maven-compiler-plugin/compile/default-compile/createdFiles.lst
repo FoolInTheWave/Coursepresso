@@ -3,7 +3,6 @@ com\coursepresso\project\entity\AccessGroup.class
 com\coursepresso\project\repository\UserGroupRepository.class
 com\coursepresso\project\entity\Department.class
 com\coursepresso\project\entity\Privilege.class
-com\coursepresso\project\repository\CourseProfessorRepository.class
 com\coursepresso\project\entity\Course.class
 com\coursepresso\project\controller\NewCourseSectionController.class
 com\coursepresso\project\repository\TermRepository.class
@@ -22,6 +21,7 @@ com\coursepresso\project\entity\MeetingDay.class
 com\coursepresso\project\entity\AccessUser.class
 com\coursepresso\project\repository\RoomRepository.class
 com\coursepresso\project\entity\Term.class
+com\coursepresso\project\MainPreloader.class
 com\coursepresso\project\repository\CourseSectionRepository.class
 com\coursepresso\project\repository\MeetingTimeRepository.class
 com\coursepresso\project\entity\CourseSection.class

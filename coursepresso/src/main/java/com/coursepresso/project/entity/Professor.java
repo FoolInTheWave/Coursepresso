@@ -31,7 +31,7 @@ public class Professor implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "professorId")
-  private List<CourseProfessor> courseProfessorList;
+  private List<CourseSection> courseSectionList;
   @JoinColumn(name = "department", referencedColumnName = "name")
   @ManyToOne(optional = false)
   private Department department;
@@ -84,12 +84,12 @@ public class Professor implements Serializable {
   }
 
   @XmlTransient
-  public List<CourseProfessor> getCourseProfessorList() {
-    return courseProfessorList;
+  public List<CourseSection> getCourseSectionList() {
+    return courseSectionList;
   }
 
-  public void setCourseProfessorList(List<CourseProfessor> courseProfessorList) {
-    this.courseProfessorList = courseProfessorList;
+  public void setCourseSectionList(List<CourseSection> courseSectionList) {
+    this.courseSectionList = courseSectionList;
   }
 
   public Department getDepartment() {

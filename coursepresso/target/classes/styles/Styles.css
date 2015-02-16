@@ -1,17 +1,25 @@
 .header {
-    -fx-padding: 20;
-    -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #007 0%, #00d 100%);
-    -fx-text-fill: white;
+  -fx-padding: 20;
+  -fx-background-color: linear-gradient(from 0% 0% to 0% 100%, #007 0%, #00d 100%);
+  -fx-text-fill: white;
 }
 
 .header .title {
-    -fx-font: 18pt "Tahoma Bold";
+  -fx-font: 18pt "Tahoma Bold";
 }
 
 .header .tag-line {
-    -fx-font: 12pt "Tahoma Bold";
+  -fx-font: 12pt "Tahoma Bold";
 }
 
 .body {
-    -fx-padding: 20;
+  -fx-padding: 20;
+}
+
+.table-view .column-header{
+  -fx-font-size: 14;
+}
+
+.table-cell {
+  -fx-font-size: 12px;
 }

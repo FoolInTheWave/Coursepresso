@@ -20,21 +20,20 @@ import org.springframework.transaction.PlatformTransactionManager;
 public class DataSourceConfig {
   
   @Bean
-  public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-    final LocalContainerEntityManagerFactoryBean entityManagerFactory
-        = new LocalContainerEntityManagerFactoryBean();
+  public EntityManagerFactory entityManagerFactory() {
 
-    entityManagerFactory.setDataSource(dataSource());
-    entityManagerFactory.setPackagesToScan(
-        new String[]{"com.coursepresso.project.entity"}
-    );
+    HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+    vendorAdapter.setGenerateDdl(true);
 
-    final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+    LocalContainerEntityManagerFactoryBean factory = 
+        new LocalContainerEntityManagerFactoryBean();
+    factory.setJpaVendorAdapter(vendorAdapter);
+    factory.setPackagesToScan("com.coursepresso.project.entity");
+    factory.setDataSource(dataSource());
+    factory.setJpaProperties(hibernateProperties());
+    factory.afterPropertiesSet();
 
-    entityManagerFactory.setJpaVendorAdapter(vendorAdapter);
-    entityManagerFactory.setJpaProperties(hibernateProperties());
-
-    return entityManagerFactory;
+    return factory.getObject();
   }
 
   @Bean

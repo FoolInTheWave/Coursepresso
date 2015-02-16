@@ -1,7 +1,6 @@
 package com.coursepresso.project.controller;
 
 import com.coursepresso.project.entity.Course;
-import com.coursepresso.project.entity.CourseProfessor;
 import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.entity.Department;
 import com.coursepresso.project.entity.MeetingDay;
@@ -15,7 +14,6 @@ import com.coursepresso.project.repository.MeetingTimeRepository;
 import com.coursepresso.project.repository.RoomRepository;
 import com.coursepresso.project.repository.TermRepository;
 import com.coursepresso.project.helper.DateHelper;
-import com.coursepresso.project.repository.CourseProfessorRepository;
 import com.coursepresso.project.repository.MeetingDayRepository;
 
 import com.google.common.collect.Lists;
@@ -23,7 +21,6 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -89,19 +86,9 @@ public class NewCourseSectionController implements Initializable {
   @FXML
   private ComboBox dayCombo;
   @FXML
-  private TableView<Professor> instructorTable;
-  @FXML
-  private TableColumn<Professor, String> lastNameColumn;
-  @FXML
-  private TableColumn<Professor, String> firstNameColumn;
-  @FXML
-  private TableColumn<Professor, String> departmentColumn;
-  @FXML
   private ComboBox instructorCombo;
   @FXML
   private Button addDayButton;
-  @FXML
-  private Button addInstructorButton;
   @FXML
   private Button submitCourseButton;
   @FXML
@@ -109,8 +96,6 @@ public class NewCourseSectionController implements Initializable {
 
   @Inject
   private CourseSectionRepository courseSectionRepository;
-  @Inject
-  private CourseProfessorRepository courseProfessorRepository;
   @Inject
   private DepartmentRepository departmentRepository;
   @Inject
@@ -125,7 +110,6 @@ public class NewCourseSectionController implements Initializable {
   private MainController mainController;
 
   private ObservableList<MeetingDay> meetingDays;
-  private ObservableList<Professor> instructors;
   
   public Node getView() {
     return root;
@@ -163,21 +147,11 @@ public class NewCourseSectionController implements Initializable {
     // Initialize the meeting day observable list and table view
     meetingDays = FXCollections.observableArrayList();
     meetingDayTable.setItems(meetingDays);
-
-    lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-    firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-    departmentColumn.setCellValueFactory(new PropertyValueFactory<>("department"));
-
-    // Initialize the instructor observable list and table view
-    instructors = FXCollections.observableArrayList();
-    instructorTable.setItems(instructors);
   }
 
   @FXML
   private void submitCourseButtonClick(ActionEvent event) {
     CourseSection courseSection = new CourseSection();
-    ArrayList<CourseProfessor> courseProfessors = new ArrayList<>();
-    CourseProfessor courseProfessor;
 
     courseSection.setCourseNumber((Course) courseNumberCombo.getValue());
     courseSection.setSectionNumber(Integer.parseInt(sectionField.getText()));
@@ -191,6 +165,8 @@ public class NewCourseSectionController implements Initializable {
     // Save LocalDate as Date
     courseSection.setStartDate(DateHelper.asDate(startDatePicker.getValue()));
     courseSection.setEndDate(DateHelper.asDate(endDatePicker.getValue()));
+    courseSection.setDepartment((Department) departmentCombo.getValue());
+    courseSection.setProfessorId((Professor) instructorCombo.getValue());
 
     courseSection = courseSectionRepository.save(courseSection);
 
@@ -200,15 +176,6 @@ public class NewCourseSectionController implements Initializable {
       day.setTerm(courseSection.getTerm());
     }
     meetingDayRepository.save(meetingDays);
-
-    // Save CourseProfessors for CourseSection
-    for (Professor professor : instructors) {
-      courseProfessor = new CourseProfessor();
-      courseProfessor.setCourseSectionId(courseSection);
-      courseProfessor.setProfessorId(professor);
-      courseProfessors.add(courseProfessor);
-    }
-    courseProfessorRepository.save(courseProfessors);
 
     Alert alert = new Alert(AlertType.INFORMATION);
     alert.setTitle("Course Section Saved");
@@ -250,15 +217,6 @@ public class NewCourseSectionController implements Initializable {
     endTimeCombo.setValue(null);
     roomCombo.setValue(null);
     dayCombo.setValue(null);
-    instructorCombo.setValue(null);
-  }
-
-  @FXML
-  private void addInstructorButtonClick(ActionEvent event) {
-    if (instructorCombo.getValue() != null
-        && instructors.contains((Professor) instructorCombo.getValue()) == false) {
-      instructors.add((Professor) instructorCombo.getValue());
-    }
   }
   
   @FXML

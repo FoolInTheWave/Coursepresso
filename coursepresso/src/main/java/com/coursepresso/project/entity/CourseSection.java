@@ -54,8 +54,6 @@ public class CourseSection implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseSectionId")
-  private List<CourseProfessor> courseProfessorList;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseSectionId")
   private List<MeetingDay> meetingDayList;
   @JoinColumn(name = "course_number", referencedColumnName = "course_number")
   @ManyToOne(optional = false)
@@ -63,6 +61,12 @@ public class CourseSection implements Serializable {
   @JoinColumn(name = "term", referencedColumnName = "term")
   @ManyToOne(optional = false)
   private Term term;
+  @JoinColumn(name = "department", referencedColumnName = "name")
+  @ManyToOne(optional = false)
+  private Department department;
+  @JoinColumn(name = "professor_id", referencedColumnName = "id")
+  @ManyToOne(optional = false)
+  private Professor professorId;
 
   public CourseSection() {
   }
@@ -176,20 +180,11 @@ public class CourseSection implements Serializable {
   }
 
   @XmlTransient
-  public List<CourseProfessor> getCourseProfessorList() {
-    return courseProfessorList;
-  }
-
-  public void setCourseProfessorList(List<CourseProfessor> courseProfessorList) {
-    this.courseProfessorList = courseProfessorList;
-  }
-
-  @XmlTransient
   public List<MeetingDay> getMeetingDayList() {
     return meetingDayList;
   }
 
-  public void setMeetingDaySet(List<MeetingDay> meetingDayList) {
+  public void setMeetingDayList(List<MeetingDay> meetingDayList) {
     this.meetingDayList = meetingDayList;
   }
 
@@ -207,6 +202,22 @@ public class CourseSection implements Serializable {
 
   public void setTerm(Term term) {
     this.term = term;
+  }
+  
+  public Department getDepartment() {
+    return department;
+  }
+
+  public void setDepartment(Department department) {
+    this.department = department;
+  }
+  
+  public Professor getProfessorId() {
+    return professorId;
+  }
+
+  public void setProfessorId(Professor professorId) {
+    this.professorId = professorId;
   }
 
   @Override

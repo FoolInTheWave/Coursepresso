@@ -13,9 +13,9 @@
         <URL value="@/styles/Styles.css" />
     </stylesheets>
    <children>
-      <TitledPane alignment="TOP_LEFT" animated="false" prefHeight="800.0" prefWidth="1280.0" text="Course Search" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <TitledPane fx:id="root" alignment="TOP_LEFT" animated="false" prefHeight="800.0" prefWidth="1280.0" text="Course Search" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <content>
-          <AnchorPane fx:id="root" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1280.0">
+          <AnchorPane fx:id="titledPaneAnchor" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1280.0">
                <children>
                   <ComboBox fx:id="courseNumberCombo" layoutX="424.0" layoutY="297.0" onAction="#courseNumberComboSelect" prefHeight="39.0" prefWidth="150.0" />
                   <Label layoutX="424.0" layoutY="273.0" text="Course Number" />
@@ -29,7 +29,7 @@
                   <Label layoutX="655.0" layoutY="273.0" text="Instructor" />
                   <Label layoutX="196.0" layoutY="374.0" text="Line Number" />
                   <TextField fx:id="lineNumberText" layoutX="196.0" layoutY="397.0" prefHeight="39.0" prefWidth="150.0" />
-                  <Label layoutX="424.0" layoutY="374.0" text="Days" />
+                  <Label layoutX="375.0" layoutY="374.0" text="Days" />
                   <CheckBox fx:id="mondayCheckbox" layoutX="375.0" layoutY="408.0" mnemonicParsing="false" text="Monday" />
                   <CheckBox fx:id="tuesdayCheckbox" layoutX="481.0" layoutY="408.0" mnemonicParsing="false" text="Tuesday" />
                   <CheckBox fx:id="wednesdayCheckbox" layoutX="586.0" layoutY="408.0" mnemonicParsing="false" text="Wednesday" />
