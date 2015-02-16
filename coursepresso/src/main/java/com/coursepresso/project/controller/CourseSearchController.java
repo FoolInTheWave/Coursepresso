@@ -1,15 +1,18 @@
 package com.coursepresso.project.controller;
 
 import com.coursepresso.project.entity.Course;
+import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.entity.Department;
+import com.coursepresso.project.entity.MeetingDay;
 import com.coursepresso.project.entity.Professor;
 import com.coursepresso.project.entity.Term;
-import com.coursepresso.project.repository.CourseProfessorRepository;
 import com.coursepresso.project.repository.CourseSectionRepository;
 import com.coursepresso.project.repository.DepartmentRepository;
 import com.coursepresso.project.repository.TermRepository;
 import com.google.common.collect.Lists;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,11 +26,18 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 
 /**
  * FXML Controller class
  *
- * @author steev_000
+ * @author steev_000, Caleb Miller
  */
 public class CourseSearchController implements Initializable {
 
@@ -65,15 +75,16 @@ public class CourseSearchController implements Initializable {
   private ComboBox creditsCombo;
 
   @Inject
-  private CourseSectionRepository courseSectionRepository;
-  @Inject
-  private CourseProfessorRepository courseProfessorRepository;
-  @Inject
   private DepartmentRepository departmentRepository;
+  @Inject
+  private TermRepository termRepository;
   @Inject
   private MainController mainController;
   @Inject
-  private TermRepository termRepository;
+  private SearchResultsController searchResultsController;
+
+  @PersistenceContext
+  private EntityManager entityManager;
 
   /**
    * Initializes the controller class.
@@ -94,32 +105,64 @@ public class CourseSearchController implements Initializable {
 
   @FXML
   private void searchButtonClick(ActionEvent event) {
-    // Build query based on user input
-    if (departmentCombo.getValue() != null)
-      ; // Add predicate
-    if (termCombo.getValue() != null)
-      ; //Add predicate
-    if (courseLevelCombo.getValue() != null)
-      ; // Add predicate
-    if (courseNumberCombo.getValue() != null)
-      ; // Add predicate
-    if (instructorCombo.getValue() != null)
-      ; // Add predicate
-    if (lineNumberText.getText() != null)
-      ; // Add predicate
-    if (mondayCheckbox.isSelected())
-      ; // Add predicate
-    if (tuesdayCheckbox.isSelected())
-      ; // Add predicate
-    if (wednesdayCheckbox.isSelected())
-      ; // Add predicate
-    if (thursdayCheckbox.isSelected())
-      ; // Add predicate
-    if (fridayCheckbox.isSelected())
-      ; // Add predicate
-    if (creditsCombo.getValue() != null)
-      ; // Add predicate
+    CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+    CriteriaQuery cq = cb.createQuery();
+    Root<CourseSection> section = cq.from(CourseSection.class);
+    List<Predicate> predicates = new ArrayList<>();
+    
+    // For joining queries
+    // http://stackoverflow.com/questions/17154676/criteria-jpa-2-with-3-tables
 
+    if (departmentCombo.getValue() != null) {
+      predicates.add(cb.equal(
+          section.get("department"),
+          (Department) departmentCombo.getValue())
+      );
+    }
+    if (termCombo.getValue() != null) {
+      predicates.add(cb.equal(
+          section.get("term"),
+          (Term) termCombo.getValue())
+      );
+    }
+    if (courseNumberCombo.getValue() != null) {
+      predicates.add(cb.equal(
+          section.get("courseNumber"),
+          (Course) courseNumberCombo.getValue())
+      );
+    }
+    if (instructorCombo.getValue() != null) {
+      predicates.add(cb.equal(
+          section.get("professorId"),
+          (Professor) instructorCombo.getValue())
+      );
+    }
+    if (lineNumberText.getText() != null) {
+      predicates.add(cb.equal(
+          section.get("id"),
+          Integer.valueOf(lineNumberText.getText()))
+      );
+    }
+    if (mondayCheckbox.isSelected()) {
+
+    }
+    if (tuesdayCheckbox.isSelected()) {
+
+    }
+    if (wednesdayCheckbox.isSelected()) {
+
+    }
+    if (thursdayCheckbox.isSelected()) {
+
+    }
+    if (fridayCheckbox.isSelected()) {
+
+    }
+
+    cq.select(section).where(predicates.toArray(new Predicate[]{}));
+    List<CourseSection> result = entityManager.createQuery(cq).getResultList();
+
+    searchResultsController.setResults(result);
     mainController.showSearchResults();
   }
 
@@ -197,6 +240,7 @@ public class CourseSearchController implements Initializable {
     );
     creditsCombo.setItems(credits);
     creditsCombo.setVisibleRowCount(4);
+    
+    lineNumberText.setText(null);
   }
-
 }

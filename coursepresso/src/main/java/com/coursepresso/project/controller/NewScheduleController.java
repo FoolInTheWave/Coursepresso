@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.coursepresso.project.controller;
 
 import java.net.URL;
@@ -20,11 +15,7 @@ import javax.inject.Inject;
 /**
  * FXML Controller class
  *
-<<<<<<< HEAD
- * @author Caleb
-=======
  * @author steev_000
->>>>>>> origin/master
  */
 public class NewScheduleController implements Initializable {
 
