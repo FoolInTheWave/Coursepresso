@@ -1,5 +1,7 @@
 package com.coursepresso.project.controller;
 
+import com.coursepresso.project.entity.CourseSection;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
@@ -60,7 +62,8 @@ public class MainController {
     contentArea.setCenter(courseSearchController.getView());
   }
   
-  public void showSearchResults() {
+  public void showSearchResults(List<CourseSection> results) {
+    searchResultsController.setResults(results);
     searchResultsController.buildView();
     contentArea.setCenter(searchResultsController.getView());
   }

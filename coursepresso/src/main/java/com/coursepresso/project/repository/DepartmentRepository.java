@@ -21,7 +21,7 @@ public interface DepartmentRepository extends CrudRepository<Department, String>
    * @return A Department record as a Department object.
    */
   @Query("SELECT d FROM Department d JOIN FETCH d.accessUserList WHERE d.name = (:name)")
-  public Department findByNameAndFetchAccessUserListEagerly(@Param("name") String name);
+  public Department findByNameWithAccessUsers(@Param("name") String name);
   
   /**
    * Custom FIND method retrieves a Department record from the database with an
@@ -31,7 +31,7 @@ public interface DepartmentRepository extends CrudRepository<Department, String>
    * @return A Department record as a Department object.
    */
   @Query("SELECT d FROM Department d JOIN FETCH d.courseList WHERE d.name = (:name)")
-  public Department findByNameAndFetchCourseListEagerly(@Param("name") String name);
+  public Department findByNameWithCourses(@Param("name") String name);
   
   /**
    * Custom FIND method retrieves a Department record from the database with an
@@ -41,5 +41,5 @@ public interface DepartmentRepository extends CrudRepository<Department, String>
    * @return A Department record as a Department object.
    */
   @Query("SELECT d FROM Department d JOIN FETCH d.professorList WHERE d.name = (:name)")
-  public Department findByNameAndFetchProfessorListEagerly(@Param("name") String name);
+  public Department findByNameWithProfessors(@Param("name") String name);
 }
