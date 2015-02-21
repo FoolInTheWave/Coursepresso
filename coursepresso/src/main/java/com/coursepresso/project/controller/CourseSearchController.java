@@ -3,6 +3,7 @@ package com.coursepresso.project.controller;
 import com.coursepresso.project.entity.Course;
 import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.entity.Department;
+import com.coursepresso.project.entity.MeetingDay;
 import com.coursepresso.project.entity.Professor;
 import com.coursepresso.project.entity.Term;
 import com.coursepresso.project.repository.DepartmentRepository;
@@ -28,10 +29,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import org.hibernate.Hibernate;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * FXML Controller class
@@ -107,6 +107,7 @@ public class CourseSearchController implements Initializable {
     CriteriaBuilder cb = entityManager.getCriteriaBuilder();
     CriteriaQuery cq = cb.createQuery();
     Root<CourseSection> section = cq.from(CourseSection.class);
+    Join<CourseSection, MeetingDay> day = section.join("day");
     List<Predicate> predicates = new ArrayList<>();
     
     // For joining queries
@@ -143,7 +144,10 @@ public class CourseSearchController implements Initializable {
       );
     }
     if (mondayCheckbox.isSelected()) {
-
+      predicates.add(cb.equal(
+          section.get("id"),
+          Integer.valueOf(lineNumberText.getText()))
+      );
     }
     if (tuesdayCheckbox.isSelected()) {
 
