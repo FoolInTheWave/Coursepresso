@@ -3,10 +3,8 @@ package com.coursepresso.project.controller;
 import com.coursepresso.project.entity.Course;
 import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.entity.Department;
-import com.coursepresso.project.entity.MeetingDay;
 import com.coursepresso.project.entity.Professor;
 import com.coursepresso.project.entity.Term;
-import com.coursepresso.project.repository.CourseSectionRepository;
 import com.coursepresso.project.repository.DepartmentRepository;
 import com.coursepresso.project.repository.TermRepository;
 import com.google.common.collect.Lists;
@@ -30,9 +28,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.hibernate.Hibernate;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * FXML Controller class
@@ -82,7 +81,7 @@ public class CourseSearchController implements Initializable {
   private MainController mainController;
   @Inject
   private SearchResultsController searchResultsController;
-
+  
   @PersistenceContext
   private EntityManager entityManager;
 
@@ -241,6 +240,12 @@ public class CourseSearchController implements Initializable {
     creditsCombo.setItems(credits);
     creditsCombo.setVisibleRowCount(4);
     
+    departmentCombo.getSelectionModel().clearSelection();
+    termCombo.getSelectionModel().clearSelection();
+    courseLevelCombo.getSelectionModel().clearSelection();
+    courseNumberCombo.getSelectionModel().clearSelection();
+    instructorCombo.getSelectionModel().clearSelection();
+    creditsCombo.getSelectionModel().clearSelection();
     lineNumberText.setText(null);
   }
 }

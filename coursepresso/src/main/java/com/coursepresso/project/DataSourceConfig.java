@@ -11,12 +11,14 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  *
  * @author Caleb Miller
  */
 @Configuration
+@EnableTransactionManagement
 public class DataSourceConfig {
   
   @Bean
@@ -50,11 +52,13 @@ public class DataSourceConfig {
 
   @Bean
   public PlatformTransactionManager transactionManager(
-      final EntityManagerFactory entityManagerFactory
+      final EntityManagerFactory entityManagerFactory,
+      final DataSource dataSource
   ) {
     final JpaTransactionManager transactionManager = new JpaTransactionManager();
 
     transactionManager.setEntityManagerFactory(entityManagerFactory);
+    transactionManager.setDataSource(dataSource);
 
     return transactionManager;
   }

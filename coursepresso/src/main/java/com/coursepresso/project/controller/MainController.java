@@ -1,6 +1,7 @@
 package com.coursepresso.project.controller;
 
 import com.coursepresso.project.entity.CourseSection;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;

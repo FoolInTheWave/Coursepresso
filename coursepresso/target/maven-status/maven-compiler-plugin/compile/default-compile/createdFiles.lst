@@ -26,6 +26,7 @@ com\coursepresso\project\MainPreloader.class
 com\coursepresso\project\repository\CourseSectionRepository.class
 com\coursepresso\project\repository\MeetingTimeRepository.class
 com\coursepresso\project\entity\CourseSection.class
+com\coursepresso\project\helper\MeetingDayHelper.class
 com\coursepresso\project\repository\PrivilegeRepository.class
 com\coursepresso\project\helper\DateHelper.class
 com\coursepresso\project\entity\Appliance.class
@@ -39,6 +40,7 @@ com\coursepresso\project\Main.class
 com\coursepresso\project\entity\Room.class
 com\coursepresso\project\MainConfig.class
 com\coursepresso\project\repository\ApplianceRepository.class
+com\coursepresso\project\helper\Day.class
 com\coursepresso\project\controller\NewScheduleController.class
 com\coursepresso\project\entity\Professor.class
 com\coursepresso\project\controller\MainController.class

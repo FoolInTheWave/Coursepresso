@@ -203,13 +203,6 @@ public class EditCourseSectionController implements Initializable {
   
   public void buildView(CourseSection cs) {
     // Build department combo box
-    /*
-    ObservableList<Department> departments = FXCollections.observableArrayList(
-        Lists.newArrayList(departmentRepository.findAll())
-    );
-    departmentCombo.setItems(departments);
-    departmentCombo.setVisibleRowCount(4);
-            */
     departmentCombo.getSelectionModel().select(cs.getDepartment());
     
     // Build course number combo box
@@ -237,7 +230,7 @@ public class EditCourseSectionController implements Initializable {
     );
     instructorCombo.setItems(professors);
     instructorCombo.setVisibleRowCount(4); 
-    //instructorCombo.getSelectionModel().select(cs.getProfessorId());
+    instructorCombo.getSelectionModel().select(cs.getProfessorId());
     
     // Build type combo box
     ObservableList<String> types = FXCollections.observableArrayList(
