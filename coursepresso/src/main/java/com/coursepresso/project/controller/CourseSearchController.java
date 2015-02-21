@@ -6,7 +6,6 @@ import com.coursepresso.project.entity.Department;
 import com.coursepresso.project.entity.MeetingDay;
 import com.coursepresso.project.entity.Professor;
 import com.coursepresso.project.entity.Term;
-import com.coursepresso.project.repository.CourseSectionRepository;
 import com.coursepresso.project.repository.DepartmentRepository;
 import com.coursepresso.project.repository.TermRepository;
 import com.google.common.collect.Lists;
@@ -82,7 +81,7 @@ public class CourseSearchController implements Initializable {
   private MainController mainController;
   @Inject
   private SearchResultsController searchResultsController;
-
+  
   @PersistenceContext
   private EntityManager entityManager;
 
@@ -245,6 +244,12 @@ public class CourseSearchController implements Initializable {
     creditsCombo.setItems(credits);
     creditsCombo.setVisibleRowCount(4);
     
+    departmentCombo.getSelectionModel().clearSelection();
+    termCombo.getSelectionModel().clearSelection();
+    courseLevelCombo.getSelectionModel().clearSelection();
+    courseNumberCombo.getSelectionModel().clearSelection();
+    instructorCombo.getSelectionModel().clearSelection();
+    creditsCombo.getSelectionModel().clearSelection();
     lineNumberText.setText(null);
   }
 }

@@ -125,19 +125,23 @@ public class NewCourseSectionController implements Initializable {
   public void initialize(URL url, ResourceBundle rb) {
     // setCellValueFactory to display the formatted time
     startTimeColumn.setCellValueFactory(
-        time -> {
+        meetingDay -> {
           SimpleStringProperty property = new SimpleStringProperty();
           DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-          property.setValue(dateFormat.format(time.getValue().getStartTime()));
+          property.setValue(dateFormat.format(
+              meetingDay.getValue().getStartTime())
+          );
           return property;
         }
     );
     // setCellFactory to display the formatted time
     endTimeColumn.setCellValueFactory(
-        time -> {
+        meetingDay -> {
           SimpleStringProperty property = new SimpleStringProperty();
           DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-          property.setValue(dateFormat.format(time.getValue().getEndTime()));
+          property.setValue(dateFormat.format(
+              meetingDay.getValue().getEndTime())
+          );
           return property;
         }
     );

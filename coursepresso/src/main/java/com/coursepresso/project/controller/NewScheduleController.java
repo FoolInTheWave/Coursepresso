@@ -1,5 +1,7 @@
 package com.coursepresso.project.controller;
 
+import com.coursepresso.project.entity.Term;
+import com.coursepresso.project.repository.TermRepository;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -31,6 +33,8 @@ public class NewScheduleController implements Initializable {
   private ComboBox<String> yearCombo;
   
   @Inject
+  private TermRepository termRepository;
+  @Inject
   private MainController mainController;
   
   @FXML
@@ -40,7 +44,9 @@ public class NewScheduleController implements Initializable {
 
   @FXML
   private void createScheduleButtonClick(ActionEvent event) {
-
+    Term term = new Term();
+    String year = new String();
+    //String termName = semesterCombo.getValue() + "/" + ;
   }
 
   /**

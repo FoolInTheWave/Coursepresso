@@ -53,10 +53,10 @@ public class CourseSection implements Serializable {
   @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseSectionId")
+  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "courseSectionId")
   private List<MeetingDay> meetingDayList;
   @JoinColumn(name = "course_number", referencedColumnName = "course_number")
-  @ManyToOne(optional = false)
+  @ManyToOne(fetch = FetchType.EAGER, optional = false)
   private Course courseNumber;
   @JoinColumn(name = "term", referencedColumnName = "term")
   @ManyToOne(optional = false)
@@ -65,7 +65,7 @@ public class CourseSection implements Serializable {
   @ManyToOne(optional = false)
   private Department department;
   @JoinColumn(name = "professor_id", referencedColumnName = "id")
-  @ManyToOne(optional = false)
+  @ManyToOne(fetch = FetchType.EAGER, optional = false)
   private Professor professorId;
 
   public CourseSection() {

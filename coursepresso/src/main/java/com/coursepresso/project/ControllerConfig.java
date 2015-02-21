@@ -2,6 +2,7 @@ package com.coursepresso.project;
 
 import com.coursepresso.project.controller.CourseSearchController;
 import com.coursepresso.project.controller.ConflictController;
+import com.coursepresso.project.controller.EditCourseSectionController;
 import com.coursepresso.project.controller.LoginController;
 import com.coursepresso.project.controller.MainController;
 import com.coursepresso.project.controller.MenuController;
@@ -64,6 +65,11 @@ public class ControllerConfig {
   @Bean
   public NewScheduleController newScheduleController() {
     return loadController("/fxml/NewSchedule.fxml");
+  }
+  
+  @Bean
+  public EditCourseSectionController editCourseSectionController() {
+    return loadController("/fxml/EditCourseSection.fxml");
   }
   
   @SuppressWarnings("unchecked")
