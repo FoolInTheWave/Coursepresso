@@ -108,6 +108,7 @@ public class CourseSearchController implements Initializable {
     CriteriaBuilder cb = entityManager.getCriteriaBuilder();
     CriteriaQuery cq = cb.createQuery();
     Root<CourseSection> section = cq.from(CourseSection.class);
+    Join<CourseSection, MeetingDay> day = section.join("day");
     List<Predicate> predicates = new ArrayList<>();
     
     // For joining queries
@@ -144,7 +145,10 @@ public class CourseSearchController implements Initializable {
       );
     }
     if (mondayCheckbox.isSelected()) {
-
+      predicates.add(cb.equal(
+          section.get("id"),
+          Integer.valueOf(lineNumberText.getText()))
+      );
     }
     if (tuesdayCheckbox.isSelected()) {
 
