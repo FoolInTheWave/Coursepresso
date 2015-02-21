@@ -13,6 +13,7 @@ import com.coursepresso.project.entity.MeetingTime;
 import com.coursepresso.project.entity.Professor;
 import com.coursepresso.project.entity.Room;
 import com.coursepresso.project.entity.Term;
+import com.coursepresso.project.helper.DateHelper;
 import com.coursepresso.project.repository.CourseSectionRepository;
 import com.coursepresso.project.repository.DepartmentRepository;
 import com.coursepresso.project.repository.MeetingDayRepository;
@@ -20,11 +21,20 @@ import com.coursepresso.project.repository.MeetingTimeRepository;
 import com.coursepresso.project.repository.RoomRepository;
 import com.coursepresso.project.repository.TermRepository;
 import com.google.common.collect.Lists;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
+import static com.sun.org.apache.xalan.internal.lib.ExsltDatetime.date;
 import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -32,6 +42,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -39,6 +51,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javax.inject.Inject;
 
 
@@ -95,6 +108,8 @@ public class EditCourseSectionController implements Initializable {
   private Button submitChangesButton;
   @FXML
   private Button backButton;
+  @FXML
+  private Button deleteDayButton;
 
   @Inject
   private CourseSectionRepository courseSectionRepository;
@@ -112,12 +127,41 @@ public class EditCourseSectionController implements Initializable {
   private MainController mainController;
 
   private ObservableList<MeetingDay> meetingDays;
+  private int courseSectionId;
+  
 /**
    * Initializes the controller class.
    */
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-    // TODO
+    // setCellValueFactory to display the formatted time
+    startTimeColumn.setCellValueFactory(
+        meetingDay -> {
+          SimpleStringProperty property = new SimpleStringProperty();
+          DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+          property.setValue(dateFormat.format(
+              meetingDay.getValue().getStartTime())
+          );
+          return property;
+        }
+    );
+    // setCellFactory to display the formatted time
+    endTimeColumn.setCellValueFactory(
+        meetingDay -> {
+          SimpleStringProperty property = new SimpleStringProperty();
+          DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+          property.setValue(dateFormat.format(
+              meetingDay.getValue().getEndTime())
+          );
+          return property;
+        }
+    );
+    roomColumn.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
+    dayColumn.setCellValueFactory(new PropertyValueFactory<>("day"));
+
+    // Initialize the meeting day observable list and table view
+    meetingDays = FXCollections.observableArrayList();
+    meetingDayTable.setItems(meetingDays);
   }  
   
   public Node getView() {
@@ -131,7 +175,44 @@ public class EditCourseSectionController implements Initializable {
   
   @FXML
   private void submitChangesButtonClick(ActionEvent event) {
+    CourseSection courseSection = courseSectionRepository.findByIdWithMeetingDays(courseSectionId);
+
+    courseSection.setCourseNumber((Course) courseNumberCombo.getValue());
+    courseSection.setSectionNumber(Integer.parseInt(sectionField.getText()));
+    courseSection.setAvailable(true);
+    courseSection.setCapacity(Integer.parseInt(capacityField.getText()));
+    courseSection.setSeatsAvailable(courseSection.getCapacity());
+    courseSection.setStatus("Open");
+    courseSection.setTerm((Term) termCombo.getValue());
+    courseSection.setStudentCount(0);
+    courseSection.setType(typeCombo.getValue().toString());
+    // Save LocalDate as Date
+    courseSection.setStartDate(DateHelper.asDate(startDatePicker.getValue()));
+    courseSection.setEndDate(DateHelper.asDate(endDatePicker.getValue()));
+    courseSection.setDepartment((Department) departmentCombo.getValue());
+    courseSection.setProfessorId((Professor) instructorCombo.getValue());
+
+    courseSection = courseSectionRepository.save(courseSection);
+
+    // Save MeetingDays for CourseSection
+    for (MeetingDay day : meetingDays) {
+      day.setCourseSectionId(courseSection);
+      day.setTerm(courseSection.getTerm());
+    }
+    meetingDayRepository.save(meetingDays);
+
+    Alert alert = new Alert(AlertType.INFORMATION);
+    alert.setTitle("Course Section Saved");
+    alert.setHeaderText(null);
+    alert.setContentText("The course section has been saved successfully!");
+    alert.showAndWait();
     
+    mainController.showCourseSearch();
+  }
+  
+  @FXML
+  private void deleteDayButtonClick(ActionEvent event) {
+    meetingDays.remove(meetingDayTable.getSelectionModel().getSelectedItem());
   }
   
   @FXML
@@ -202,6 +283,9 @@ public class EditCourseSectionController implements Initializable {
   }
   
   public void buildView(CourseSection cs) {
+    CourseSection section;
+    courseSectionId = cs.getId();
+    
     // Build department combo box
     departmentCombo.getSelectionModel().select(cs.getDepartment());
     
@@ -264,7 +348,6 @@ public class EditCourseSectionController implements Initializable {
     );
     roomCombo.setItems(roomNumbers);
     roomCombo.setVisibleRowCount(4);
-    //roomCombo.getSelectionModel().select(cs.getMeetingDayList().get(index)
 
     // Build day combo box
     ObservableList<String> days = FXCollections.observableArrayList(
@@ -272,7 +355,33 @@ public class EditCourseSectionController implements Initializable {
     );
     dayCombo.setItems(days);
     dayCombo.setVisibleRowCount(4);
-    //dayCombo.getSelectionModel().select(cs.getMeetingDayList().get(1).getDay());
+    
+    // Build meeting day table
+    section = courseSectionRepository.findByIdWithMeetingDays(cs.getId());
+    section.getMeetingDayList().stream().forEach((day) -> {
+      meetingDays.add(day);
+    });
+    
+    // Build start and end date pickers
+    Instant startInstant = Instant.ofEpochMilli(cs.getStartDate().getTime());
+    LocalDate startLocalDate = LocalDateTime.ofInstant(startInstant, ZoneId.systemDefault()).toLocalDate();
+    startDatePicker.setValue(startLocalDate);
+    
+    Instant endInstant = Instant.ofEpochMilli(cs.getEndDate().getTime());
+    LocalDate endLocalDate = LocalDateTime.ofInstant(endInstant, ZoneId.systemDefault()).toLocalDate();
+    endDatePicker.setValue(endLocalDate);
+    
+    // Set the capacity field to the room with the lowest capacity
+    capacityField.setText(
+        Integer.toString(
+            // Find the room with the lowest capacity from the current day list
+            meetingDays.stream()
+            .min((m1, m2) -> Integer.compare(
+                    m1.getRoomNumber().getCapacity(),
+                    m2.getRoomNumber().getCapacity()
+                )).get().getRoomNumber().getCapacity()
+        )
+    );
+    
   }
-  
 }

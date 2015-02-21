@@ -58,6 +58,7 @@
                   <ComboBox fx:id="instructorCombo" layoutX="14.0" layoutY="202.0" prefHeight="39.0" prefWidth="430.0" />
                   <Button fx:id="submitChangesButton" layoutX="608.0" layoutY="596.0" mnemonicParsing="false" onAction="#submitChangesButtonClick" prefHeight="39.0" prefWidth="220.0" text="Submit Changes" />
                   <Button fx:id="backButton" layoutX="365.0" layoutY="596.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="39.0" prefWidth="220.0" text="Back" />
+                  <Button fx:id="deleteDayButton" layoutX="780.0" layoutY="487.0" mnemonicParsing="false" onAction="#deleteDayButtonClick" prefHeight="39.0" prefWidth="333.0" text="Delete Selected Day" />
                </children>
             </AnchorPane>
          </content>
