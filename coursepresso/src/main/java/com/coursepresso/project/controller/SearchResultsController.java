@@ -91,7 +91,7 @@ public class SearchResultsController implements Initializable {
 
   @FXML
   void modifySectionButtonClick(ActionEvent event) {
-
+    mainController.showEditCourseSection(courseSectionTable.getSelectionModel().getSelectedItem());
   }
 
   public void buildView() {

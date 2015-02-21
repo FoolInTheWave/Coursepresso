@@ -1,5 +1,6 @@
 package com.coursepresso.project.controller;
 
+import com.coursepresso.project.entity.CourseSection;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
@@ -29,6 +30,8 @@ public class MainController {
   private SearchResultsController searchResultsController;
   @Inject
   private NewScheduleController newScheduleController;
+  @Inject
+  private EditCourseSectionController editCourseSectionController;
   
   public Parent getView() {
     return root;
@@ -37,6 +40,11 @@ public class MainController {
   public void showNewCourseSection() {
     newCourseSectionController.buildView();
     contentArea.setCenter(newCourseSectionController.getView());
+  }
+  
+  public void showEditCourseSection(CourseSection cs) {
+    editCourseSectionController.buildView(cs);
+    contentArea.setCenter(editCourseSectionController.getView());
   }
   
   public void showLogin() {

@@ -16,6 +16,7 @@ com\coursepresso\project\repository\CoursePrerequisiteRepository.class
 com\coursepresso\project\entity\GroupPrivilege.class
 com\coursepresso\project\controller\ScheduleSelectionController.class
 com\coursepresso\project\controller\LoginController.class
+com\coursepresso\project\controller\EditCourseSectionController.class
 com\coursepresso\project\controller\MenuController.class
 com\coursepresso\project\entity\MeetingDay.class
 com\coursepresso\project\entity\AccessUser.class
