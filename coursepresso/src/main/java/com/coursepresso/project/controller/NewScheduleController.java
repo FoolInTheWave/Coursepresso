@@ -45,8 +45,12 @@ public class NewScheduleController implements Initializable {
   @FXML
   private void createScheduleButtonClick(ActionEvent event) {
     Term term = new Term();
-    String year = new String();
-    //String termName = semesterCombo.getValue() + "/" + ;
+    String year = yearCombo.getValue();
+    
+    year = year.substring(year.length() - 2);
+    String termName = year + "/" + semesterCombo.getValue();
+    
+    term.setTerm(termName);
   }
 
   /**
@@ -63,17 +67,17 @@ public class NewScheduleController implements Initializable {
   
   public void buildView() {
     // Build type combo box
-    ObservableList<String> levels = FXCollections.observableArrayList(
+    ObservableList<String> semesters = FXCollections.observableArrayList(
         "FA", "WI", "SP", "SU"
     );
-    semesterCombo.setItems(levels);
+    semesterCombo.setItems(semesters);
     semesterCombo.setVisibleRowCount(4);
 
     // Build type combo box
-    ObservableList<String> credits = FXCollections.observableArrayList(
+    ObservableList<String> years = FXCollections.observableArrayList(
         "2015", "2016", "2017", "2018", "2019", "2020"
     );
-    yearCombo.setItems(credits);
+    yearCombo.setItems(years);
     yearCombo.setVisibleRowCount(4);
   }
 }
