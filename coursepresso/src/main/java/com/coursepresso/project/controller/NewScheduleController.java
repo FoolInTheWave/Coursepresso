@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javax.inject.Inject;
@@ -51,6 +52,14 @@ public class NewScheduleController implements Initializable {
     String termName = year + "/" + semesterCombo.getValue();
     
     term.setTerm(termName);
+    
+    termRepository.save(term);
+    
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("Term Saved");
+    alert.setHeaderText(null);
+    alert.setContentText("The term has been saved successfully!");
+    alert.showAndWait();
   }
 
   /**
