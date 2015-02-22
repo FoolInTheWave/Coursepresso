@@ -25,9 +25,9 @@ public class Department implements Serializable {
   private Date updatedAt;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
   private List<AccessUser> accessUserList;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "department")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
   private List<Professor> professorList;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "department")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
   private List<Course> courseList;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
   private List<CourseSection> courseSectionList;

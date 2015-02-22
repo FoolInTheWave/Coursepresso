@@ -24,12 +24,52 @@ public interface CourseSectionRepository extends CrudRepository<CourseSection, I
   List<CourseSection> findBySectionNumber(int sectionNumber);
   
   /**
-   * Custom FIND method retrieves a Department record from the database with an
-   * initialized list of Professor records mapped by a foreign key.
+   * Custom FIND method retrieves a CourseSection record from the database with 
+   * an initialized list of MeetingDay records mapped by a foreign key.
    * 
-   * @param name The name to match.
-   * @return A Department record as a Department object.
+   * @param id The id to match.
+   * @return A CourseSection record as a CourseSection object.
    */
   @Query("SELECT cs FROM CourseSection cs JOIN FETCH cs.meetingDayList WHERE cs.id = (:id)")
   public CourseSection findByIdWithMeetingDays(@Param("id") Integer id);
+  
+  /**
+   * Custom FIND method retrieves a CourseSection record from the database with 
+   * an initialized Course record mapped by a foreign key.
+   * 
+   * @param id The id to match.
+   * @return A CourseSection record as a CourseSection object.
+   */
+  @Query("SELECT cs FROM CourseSection cs JOIN FETCH cs.courseNumber WHERE cs.id = (:id)")
+  public CourseSection findByIdWithCourse(@Param("id") Integer id);
+  
+  /**
+   * Custom FIND method retrieves a CourseSection record from the database with 
+   * an initialized Term record mapped by a foreign key.
+   * 
+   * @param id The id to match.
+   * @return A CourseSection record as a CourseSection object.
+   */
+  @Query("SELECT cs FROM CourseSection cs JOIN FETCH cs.term WHERE cs.id = (:id)")
+  public CourseSection findByIdWithTerm(@Param("id") Integer id);
+  
+  /**
+   * Custom FIND method retrieves a CourseSection record from the database with 
+   * an initialized Department record mapped by a foreign key.
+   * 
+   * @param id The id to match.
+   * @return A CourseSection record as a CourseSection object.
+   */
+  @Query("SELECT cs FROM CourseSection cs JOIN FETCH cs.department WHERE cs.id = (:id)")
+  public CourseSection findByIdWithDepartment(@Param("id") Integer id);
+  
+  /**
+   * Custom FIND method retrieves a CourseSection record from the database with 
+   * an initialized Professor record mapped by a foreign key.
+   * 
+   * @param id The id to match.
+   * @return A CourseSection record as a CourseSection object.
+   */
+  @Query("SELECT cs FROM CourseSection cs JOIN FETCH cs.professorId WHERE cs.id = (:id)")
+  public CourseSection findByIdWithProfessor(@Param("id") Integer id);
 }

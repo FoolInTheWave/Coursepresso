@@ -233,6 +233,9 @@ public class NewCourseSectionController implements Initializable {
     Department department = (Department) departmentCombo.getValue();
 
     // Build course number combo box
+    department = departmentRepository.findByNameWithCourses(
+        department.getName()
+    );
     ObservableList<Course> courses = FXCollections.observableArrayList(
         // Get course list for selected department
         department.getCourseList()
@@ -241,6 +244,9 @@ public class NewCourseSectionController implements Initializable {
     courseNumberCombo.setVisibleRowCount(4);
 
     // Build professor combo box
+    department = departmentRepository.findByNameWithProfessors(
+        department.getName()
+    );
     ObservableList<Professor> professors = FXCollections.observableArrayList(
         // Get professor list for selected department
         department.getProfessorList()

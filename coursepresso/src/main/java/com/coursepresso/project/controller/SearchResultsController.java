@@ -25,8 +25,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javax.inject.Inject;
-import org.hibernate.Hibernate;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * FXML Controller class
@@ -185,7 +183,9 @@ public class SearchResultsController implements Initializable {
 
   @FXML
   void modifySectionButtonClick(ActionEvent event) {
-    mainController.showEditCourseSection(courseSectionTable.getSelectionModel().getSelectedItem());
+    mainController.showEditCourseSection(
+        courseSectionTable.getSelectionModel().getSelectedItem()
+    );
   }
 
   public void buildView() {
@@ -193,7 +193,6 @@ public class SearchResultsController implements Initializable {
   }
 
   public void setResults(List<CourseSection> results) {
-    System.out.println(results);
     courseSections.setAll(results);
   }
 }
