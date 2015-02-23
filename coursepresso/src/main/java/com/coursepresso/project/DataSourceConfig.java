@@ -75,6 +75,11 @@ public class DataSourceConfig {
         "hibernate.dialect",
         "org.hibernate.dialect.MySQL5Dialect"
     );
+    
+    hibernateProperties.setProperty(
+        "hibernate.hbm2ddl.auto",
+        "validate"
+    );
 
     return hibernateProperties;
   }
