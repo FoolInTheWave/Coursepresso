@@ -186,6 +186,8 @@ public class NewCourseSectionController implements Initializable {
     alert.setHeaderText(null);
     alert.setContentText("The course section has been saved successfully!");
     alert.showAndWait();
+    
+    mainController.showMenu();
   }
 
   @FXML

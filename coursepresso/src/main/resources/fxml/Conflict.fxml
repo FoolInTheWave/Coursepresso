@@ -25,7 +25,7 @@
                               </Label>
                            </children>
                         </HBox>
-                        <TableView fx:id="conflictTable" layoutX="14.0" layoutY="41.0" prefHeight="465.0" prefWidth="975.0">
+                        <TableView fx:id="conflictTable" layoutX="14.0" layoutY="41.0" prefHeight="465.0" prefWidth="975.0" VBox.vgrow="ALWAYS">
                           <columns>
                             <TableColumn fx:id="courseColumn" prefWidth="75.0" text="Course" />
                             <TableColumn fx:id="sectionColumn" prefWidth="75.0" text="Section" />
@@ -38,17 +38,17 @@
                         </TableView>
                         <HBox alignment="CENTER" spacing="70.0">
                            <children>
-                              <Button fx:id="resolveAutomaticButton" layoutX="416.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Resolve Automatically">
+                              <Button fx:id="resolveAutomaticButton" layoutX="416.0" layoutY="7.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Resolve Automatically">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="resolveManuallyButton" layoutX="196.0" layoutY="7.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Resolve Manually">
+                              <Button fx:id="resolveManuallyButton" layoutX="196.0" layoutY="7.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Resolve Manually">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="backButton" layoutX="628.0" layoutY="7.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="25.0" prefWidth="150.0" text="Back">
+                              <Button fx:id="backButton" layoutX="628.0" layoutY="7.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="30.0" prefWidth="150.0" text="Back">
                                  <font>
                                     <Font size="13.0" />
                                  </font>

@@ -60,6 +60,8 @@ public class NewScheduleController implements Initializable {
     alert.setHeaderText(null);
     alert.setContentText("The term has been saved successfully!");
     alert.showAndWait();
+    
+    mainController.showMenu();
   }
 
   /**

@@ -17,32 +17,36 @@
          <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="560.0" prefWidth="1020.0">
                <children>
-                  <ComboBox fx:id="semesterCombo" layoutX="313.0" layoutY="220.0" prefHeight="25.0" prefWidth="150.0" />
-                  <ComboBox fx:id="yearCombo" layoutX="558.0" layoutY="220.0" prefHeight="25.0" prefWidth="150.0" />
-                  <Label layoutX="314.0" layoutY="193.0" text="Semester">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <Label layoutX="558.0" layoutY="193.0" text="Year">
-                     <font>
-                        <Font size="13.0" />
-                     </font>
-                  </Label>
-                  <HBox alignment="CENTER" layoutX="326.0" layoutY="330.0" spacing="70.0">
+                  <VBox layoutX="313.0" layoutY="193.0" prefHeight="574.0" prefWidth="1022.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <Button fx:id="createScheduleButton" layoutX="314.0" layoutY="329.0" mnemonicParsing="false" onAction="#createScheduleButtonClick" prefHeight="25.0" prefWidth="150.0" text="Create Schedule">
+                        <Label layoutX="314.0" layoutY="193.0" text="Semester">
                            <font>
                               <Font size="13.0" />
                            </font>
-                        </Button>
-                        <Button fx:id="backButton" layoutX="558.0" layoutY="329.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="25.0" prefWidth="150.0" text="Back">
+                        </Label>
+                        <ComboBox fx:id="semesterCombo" layoutX="313.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" />
+                        <Label layoutX="558.0" layoutY="193.0" text="Year">
                            <font>
                               <Font size="13.0" />
                            </font>
-                        </Button>
+                        </Label>
+                        <ComboBox fx:id="yearCombo" layoutX="558.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" />
+                        <HBox alignment="CENTER" layoutX="326.0" layoutY="330.0" spacing="70.0">
+                           <children>
+                              <Button fx:id="createScheduleButton" layoutX="314.0" layoutY="329.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#createScheduleButtonClick" prefHeight="30.0" prefWidth="150.0" text="Create Schedule">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="backButton" layoutX="558.0" layoutY="329.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="30.0" prefWidth="150.0" text="Back">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
                      </children>
-                  </HBox>
+                  </VBox>
                </children>
             </AnchorPane>
          </content>
