@@ -8,40 +8,112 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1280.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.CourseSearchController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.CourseSearchController">
     <stylesheets>
         <URL value="@/styles/Styles.css" />
     </stylesheets>
    <children>
-      <TitledPane fx:id="root" alignment="TOP_LEFT" animated="false" prefHeight="800.0" prefWidth="1280.0" text="Course Search" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-        <content>
-          <AnchorPane fx:id="titledPaneAnchor" minHeight="0.0" minWidth="0.0" prefHeight="800.0" prefWidth="1280.0">
+      <ScrollPane fx:id="root" fitToHeight="true" fitToWidth="true" prefViewportHeight="800.0" prefViewportWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+          <AnchorPane fx:id="titledPaneAnchor" prefHeight="277.0" prefWidth="1280.0">
                <children>
-                  <ComboBox fx:id="courseNumberCombo" layoutX="424.0" layoutY="297.0" onAction="#courseNumberComboSelect" prefHeight="39.0" prefWidth="150.0" />
-                  <Label layoutX="424.0" layoutY="273.0" text="Course Number" />
-                  <ComboBox fx:id="departmentCombo" layoutX="195.0" layoutY="203.0" onAction="#departmentComboSelect" prefHeight="39.0" prefWidth="430.0" />
-                  <Label layoutX="195.0" layoutY="179.0" text="Department" />
-                  <ComboBox fx:id="termCombo" layoutX="655.0" layoutY="203.0" onAction="#termComboSelect" prefHeight="39.0" prefWidth="430.0" />
-                  <Label layoutX="655.0" layoutY="179.0" text="Semester" />
-                  <ComboBox fx:id="courseLevelCombo" layoutX="195.0" layoutY="297.0" onAction="#courseLevelComboSelect" prefHeight="39.0" prefWidth="150.0" />
-                  <Label layoutX="195.0" layoutY="273.0" text="Course Level" />
-                  <ComboBox fx:id="instructorCombo" layoutX="655.0" layoutY="297.0" onAction="#instructorComboSelect" prefHeight="39.0" prefWidth="430.0" />
-                  <Label layoutX="655.0" layoutY="273.0" text="Instructor" />
-                  <Label layoutX="196.0" layoutY="374.0" text="Line Number" />
-                  <TextField fx:id="lineNumberText" layoutX="196.0" layoutY="397.0" prefHeight="39.0" prefWidth="150.0" />
-                  <Label layoutX="375.0" layoutY="374.0" text="Days" />
-                  <CheckBox fx:id="mondayCheckbox" layoutX="375.0" layoutY="408.0" mnemonicParsing="false" text="Monday" />
-                  <CheckBox fx:id="tuesdayCheckbox" layoutX="481.0" layoutY="408.0" mnemonicParsing="false" text="Tuesday" />
-                  <CheckBox fx:id="wednesdayCheckbox" layoutX="586.0" layoutY="408.0" mnemonicParsing="false" text="Wednesday" />
-                  <CheckBox fx:id="thursdayCheckbox" layoutX="721.0" layoutY="408.0" mnemonicParsing="false" text="Thursday" />
-                  <CheckBox fx:id="fridayCheckbox" layoutX="835.0" layoutY="408.0" mnemonicParsing="false" text="Friday" />
-                  <ComboBox fx:id="creditsCombo" layoutX="935.0" layoutY="401.0" onAction="#creditsComboSelect" prefHeight="39.0" prefWidth="150.0" />
-                  <Label layoutX="935.0" layoutY="377.0" text="Credits" />
-                  <Button fx:id="searchButton" layoutX="657.0" layoutY="466.0" mnemonicParsing="false" onAction="#searchButtonClick" prefHeight="39.0" prefWidth="220.0" text="Search" />
-                  <Button fx:id="backButton" layoutX="403.0" layoutY="466.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="39.0" prefWidth="220.0" text="Back" />
+                  <VBox alignment="CENTER" fillWidth="false" layoutX="195.0" layoutY="179.0" prefHeight="701.0" prefWidth="1005.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label layoutX="195.0" layoutY="179.0" prefWidth="410.0" text="Department">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="departmentCombo" layoutX="195.0" layoutY="203.0" onAction="#departmentComboSelect" prefHeight="25.0" prefWidth="410.0" />
+                        <Label layoutX="655.0" layoutY="179.0" prefWidth="410.0" text="Semester">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="termCombo" layoutX="655.0" layoutY="203.0" onAction="#termComboSelect" prefHeight="25.0" prefWidth="410.0" />
+                        <Label layoutX="424.0" layoutY="273.0" prefWidth="410.0" text="Course Number">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="courseNumberCombo" layoutX="424.0" layoutY="297.0" onAction="#courseNumberComboSelect" prefHeight="25.0" prefWidth="410.0" />
+                        <Label layoutX="195.0" layoutY="273.0" prefWidth="410.0" text="Course Level">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="courseLevelCombo" layoutX="195.0" layoutY="297.0" onAction="#courseLevelComboSelect" prefHeight="25.0" prefWidth="410.0" />
+                        <Label layoutX="655.0" layoutY="273.0" prefWidth="410.0" text="Instructor">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="instructorCombo" layoutX="655.0" layoutY="297.0" onAction="#instructorComboSelect" prefHeight="25.0" prefWidth="410.0" />
+                        <Label layoutX="935.0" layoutY="377.0" prefWidth="410.0" text="Credits">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="creditsCombo" layoutX="935.0" layoutY="401.0" onAction="#creditsComboSelect" prefHeight="25.0" prefWidth="410.0" />
+                        <Label layoutX="196.0" layoutY="374.0" prefWidth="410.0" text="Line Number">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="lineNumberText" layoutX="196.0" layoutY="397.0" prefHeight="25.0" prefWidth="410.0" />
+                        <Label layoutX="375.0" layoutY="374.0" prefHeight="19.0" prefWidth="410.0" text="Days">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <HBox spacing="10.0">
+                           <children>
+                              <CheckBox fx:id="mondayCheckbox" layoutX="366.0" layoutY="403.0" mnemonicParsing="false" text="Monday">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="tuesdayCheckbox" layoutX="472.0" layoutY="403.0" mnemonicParsing="false" text="Tuesday">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="wednesdayCheckbox" layoutX="577.0" layoutY="403.0" mnemonicParsing="false" text="Wednesday">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="thursdayCheckbox" layoutX="712.0" layoutY="403.0" mnemonicParsing="false" text="Thursday">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </CheckBox>
+                              <CheckBox fx:id="fridayCheckbox" layoutX="826.0" layoutY="403.0" mnemonicParsing="false" text="Friday">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </CheckBox>
+                           </children>
+                        </HBox>
+                        <HBox spacing="70.0">
+                           <children>
+                              <Button fx:id="searchButton" layoutX="33.0" layoutY="2.0" mnemonicParsing="false" onAction="#searchButtonClick" prefHeight="25.0" prefWidth="150.0" text="Search">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="backButton" layoutX="233.0" layoutY="2.0" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="25.0" prefWidth="150.0" text="Back">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
-        </content>
-      </TitledPane>
+         </content>
+      </ScrollPane>
    </children>
 </AnchorPane>

@@ -5,11 +5,11 @@
 }
 
 .header .title {
-  -fx-font: 18pt "Tahoma Bold";
+  -fx-font: 18pt "Corbel";
 }
 
 .header .tag-line {
-  -fx-font: 12pt "Tahoma Bold";
+  -fx-font: 12pt "Corbel";
 }
 
 .body {
@@ -21,5 +21,9 @@
 }
 
 .table-cell {
+  -fx-font-size: 12px;
+}
+
+.combo-box {
   -fx-font-size: 12px;
 }
