@@ -24,8 +24,6 @@ public class Department implements Serializable {
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
-  private List<AccessUser> accessUserList;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
   private List<Professor> professorList;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "department")
   private List<Course> courseList;
@@ -58,15 +56,6 @@ public class Department implements Serializable {
 
   public void setUpdatedAt(Date updatedAt) {
     this.updatedAt = updatedAt;
-  }
-
-  @XmlTransient
-  public List<AccessUser> getAccessUserList() {
-    return accessUserList;
-  }
-
-  public void setAccessUserList(List<AccessUser> accessUserList) {
-    this.accessUserList = accessUserList;
   }
 
   @XmlTransient
