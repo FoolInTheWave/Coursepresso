@@ -15,16 +15,6 @@ public interface DepartmentRepository extends CrudRepository<Department, String>
   
   /**
    * Custom FIND method retrieves a Department record from the database with an
-   * initialized list of Professor records mapped by a foreign key.
-   * 
-   * @param name The name to match.
-   * @return A Department record as a Department object.
-   */
-  @Query("SELECT d FROM Department d JOIN FETCH d.accessUserList WHERE d.name = (:name)")
-  public Department findByNameWithAccessUsers(@Param("name") String name);
-  
-  /**
-   * Custom FIND method retrieves a Department record from the database with an
    * initialized list of Course records mapped by a foreign key.
    * 
    * @param name The name to match.

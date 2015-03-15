@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EnableJpaRepositories("com.coursepresso.project.repository")
-@Import({ DataSourceConfig.class, ControllerConfig.class })
+@Import({ DataSourceConfig.class, ControllerConfig.class, ServiceConfig.class })
 public class MainConfig {
 
   public MainConfig() {
