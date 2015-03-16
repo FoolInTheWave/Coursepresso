@@ -32,7 +32,6 @@ public class ServiceConfig {
 
   @Bean
   public HttpInvokerRequestExecutor httpInvokerRequestExecutor() {
-    //return new CommonsHttpInvokerRequestExecutor();
     return new HttpComponentsHttpInvokerRequestExecutor();
   }
 }
