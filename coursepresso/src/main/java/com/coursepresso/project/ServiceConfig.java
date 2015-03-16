@@ -22,7 +22,7 @@ public class ServiceConfig {
   @SuppressWarnings("unchecked")
   protected <T> T createService(String endPoint, Class<T> serviceInterface) {
     HttpInvokerProxyFactoryBean factory = new HttpInvokerProxyFactoryBean();
-    String serverUrl = String.format("http://localhost:8080/coursepresso-server/%s", endPoint);
+    String serverUrl = String.format("http://54.152.123.197:8080/coursepresso/%s", endPoint);
     factory.setServiceUrl(serverUrl);
     factory.setServiceInterface(serviceInterface);
     factory.setHttpInvokerRequestExecutor(httpInvokerRequestExecutor());
