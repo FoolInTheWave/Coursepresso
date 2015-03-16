@@ -24,6 +24,8 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -115,6 +117,7 @@ public class EditCourseSectionController implements Initializable {
   private MainController mainController;
 
   private ObservableList<MeetingDay> meetingDays;
+  private ArrayList<MeetingDay> daysToDelete = new ArrayList<MeetingDay>();
   private CourseSection courseSection;
 
   /**
@@ -182,6 +185,12 @@ public class EditCourseSectionController implements Initializable {
     courseSection.setDepartment((Department) departmentCombo.getValue());
     courseSection.setProfessorId((Professor) instructorCombo.getValue());
 
+    for (MeetingDay dayToDel : daysToDelete) {
+      System.out.println(dayToDel.getDay());
+      courseSection.getMeetingDayList().remove(dayToDel);
+      meetingDayRepository.delete(dayToDel);
+    }
+        
     courseSection = courseSectionRepository.save(courseSection);
 
     // Save MeetingDays for CourseSection
@@ -190,7 +199,7 @@ public class EditCourseSectionController implements Initializable {
       day.setTerm(courseSection.getTerm());
     }
     meetingDayRepository.save(meetingDays);
-
+    
     Alert alert = new Alert(AlertType.INFORMATION);
     alert.setTitle("Course Section Saved");
     alert.setHeaderText(null);
@@ -202,7 +211,13 @@ public class EditCourseSectionController implements Initializable {
 
   @FXML
   private void deleteDayButtonClick(ActionEvent event) {
-    meetingDays.remove(meetingDayTable.getSelectionModel().getSelectedItem());
+    MeetingDay md = meetingDayTable.getSelectionModel().getSelectedItem();
+    
+    System.out.println(md.getDay());
+    
+    daysToDelete.add(md);
+    meetingDays.remove(md);
+    //meetingDayRepository.delete(meetingDayTable.getSelectionModel().getSelectedItem());
   }
 
   @FXML
@@ -275,6 +290,7 @@ public class EditCourseSectionController implements Initializable {
   public void buildView(CourseSection cs) {
     courseSection = cs;
     CourseSection section;
+    //daysToDelete.clear();
 
     // Build department combo box
     departmentCombo.getSelectionModel().select(cs.getDepartment());
@@ -353,6 +369,7 @@ public class EditCourseSectionController implements Initializable {
     dayCombo.setVisibleRowCount(4);
 
     // Build meeting day table
+    meetingDays.clear();
     section = courseSectionRepository.findByIdWithMeetingDays(cs.getId());
     section.getMeetingDayList().stream().forEach((day) -> {
       meetingDays.add(day);
