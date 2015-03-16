@@ -73,8 +73,6 @@ public class CourseSearchController implements Initializable {
   private Button backButton;
   @FXML
   private ComboBox creditsCombo;
-  @FXML
-  private Button deleteSectionButton;
 
   @Inject
   private DepartmentRepository departmentRepository;
@@ -98,20 +96,6 @@ public class CourseSearchController implements Initializable {
 
   public Node getView() {
     return root;
-  }
-
-  @FXML
-  void deleteSectionButtonClick(ActionEvent event) {
-    int dialogResult = JOptionPane.showConfirmDialog (
-            null, "Are you sure you want to delete this section?",
-            "Warning", JOptionPane.YES_NO_OPTION
-    );
-    
-    if(dialogResult == JOptionPane.YES_OPTION){
-      
-    } else {
-      //Do Nothing
-    }
   }
 
   @FXML

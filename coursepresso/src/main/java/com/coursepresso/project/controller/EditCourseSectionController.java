@@ -25,7 +25,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -117,8 +116,6 @@ public class EditCourseSectionController implements Initializable {
   private MainController mainController;
 
   private ObservableList<MeetingDay> meetingDays;
-  private ArrayList<Integer> daysToDelete = new ArrayList<Integer>();
-  private ArrayList<MeetingDay> daysToDelete2 = new ArrayList<MeetingDay>();
   private CourseSection courseSection;
 
   /**
@@ -186,19 +183,7 @@ public class EditCourseSectionController implements Initializable {
     courseSection.setDepartment((Department) departmentCombo.getValue());
     courseSection.setProfessorId((Professor) instructorCombo.getValue());
 
-    for (Integer dayToDel : daysToDelete) {
-      //System.out.println(dayToDel.getDay());
-      //System.out.println(dayToDel.getId());
-      //courseSection.getMeetingDayList().remove(dayToDel);
-      meetingDayRepository.delete(dayToDel);
-    }
-     
-    for (MeetingDay dayToDel : daysToDelete2) {
-      //System.out.println(dayToDel.getDay());
-      //System.out.println(dayToDel.getId());
-      courseSection.getMeetingDayList().remove(dayToDel);
-      //meetingDayRepository.delete(dayToDel);
-    }
+    courseSection.setMeetingDayList(meetingDays);
     
     courseSection = courseSectionRepository.save(courseSection);
 
@@ -220,15 +205,7 @@ public class EditCourseSectionController implements Initializable {
 
   @FXML
   private void deleteDayButtonClick(ActionEvent event) {
-    int mdId = meetingDayTable.getSelectionModel().getSelectedItem().getId();
-    
-    //System.out.println(md.getDay());
-    //System.out.println(md.getId());
-    
-    daysToDelete.add(mdId);
-    daysToDelete2.add(meetingDayTable.getSelectionModel().getSelectedItem());
     meetingDays.remove(meetingDayTable.getSelectionModel().getSelectedItem());
-    //meetingDayRepository.delete(meetingDayTable.getSelectionModel().getSelectedItem());
   }
 
   @FXML

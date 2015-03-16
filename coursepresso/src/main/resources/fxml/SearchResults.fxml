@@ -44,7 +44,7 @@
                                     <Font size="13.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="deleteSectionButton" layoutX="336.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#deleteSectionButtonClick" prefHeight="30.0" prefWidth="150.0" text="Delete Section Section">
+                              <Button fx:id="deleteSectionButton" layoutX="336.0" layoutY="10.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#deleteSectionButtonClick" prefHeight="30.0" prefWidth="150.0" text="Delete Section">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
