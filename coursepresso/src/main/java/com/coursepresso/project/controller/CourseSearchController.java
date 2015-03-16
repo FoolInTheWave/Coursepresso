@@ -32,6 +32,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -72,6 +73,8 @@ public class CourseSearchController implements Initializable {
   private Button backButton;
   @FXML
   private ComboBox creditsCombo;
+  @FXML
+  private Button deleteSectionButton;
 
   @Inject
   private DepartmentRepository departmentRepository;
@@ -81,7 +84,7 @@ public class CourseSearchController implements Initializable {
   private MainController mainController;
   @Inject
   private SearchResultsController searchResultsController;
-  
+
   @PersistenceContext
   private EntityManager entityManager;
 
@@ -98,6 +101,20 @@ public class CourseSearchController implements Initializable {
   }
 
   @FXML
+  void deleteSectionButtonClick(ActionEvent event) {
+    int dialogResult = JOptionPane.showConfirmDialog (
+            null, "Are you sure you want to delete this section?",
+            "Warning", JOptionPane.YES_NO_OPTION
+    );
+    
+    if(dialogResult == JOptionPane.YES_OPTION){
+      
+    } else {
+      //Do Nothing
+    }
+  }
+
+  @FXML
   private void backButtonClick(ActionEvent event) {
     mainController.showMenu();
   }
@@ -109,61 +126,61 @@ public class CourseSearchController implements Initializable {
     Root<CourseSection> section = cq.from(CourseSection.class);
     Join<CourseSection, MeetingDay> day = section.join("meetingDayList");
     Join<CourseSection, Course> course = section.join("courseNumber");
-    
+
     List<Predicate> andClauses = new ArrayList<>();
     List<Predicate> orClauses = new ArrayList<>();
-    
+
     if (departmentCombo.getValue() != null) {
       andClauses.add(cb.equal(
-          section.get("department"),
-          (Department) departmentCombo.getValue())
+              section.get("department"),
+              (Department) departmentCombo.getValue())
       );
     }
     if (termCombo.getValue() != null) {
       andClauses.add(cb.equal(
-          section.get("term"),
-          (Term) termCombo.getValue())
+              section.get("term"),
+              (Term) termCombo.getValue())
       );
     }
     if (courseNumberCombo.getValue() != null) {
       andClauses.add(cb.equal(
-          section.get("courseNumber"),
-          (Course) courseNumberCombo.getValue())
+              section.get("courseNumber"),
+              (Course) courseNumberCombo.getValue())
       );
     }
     if (instructorCombo.getValue() != null) {
       andClauses.add(cb.equal(
-          section.get("professorId"),
-          (Professor) instructorCombo.getValue())
+              section.get("professorId"),
+              (Professor) instructorCombo.getValue())
       );
     }
     if (courseLevelCombo.getValue() != null) {
       andClauses.add(cb.equal(
-          course.get("academicLevel"),
-          courseLevelCombo.getValue())
+              course.get("academicLevel"),
+              courseLevelCombo.getValue())
       );
     }
     if (courseNumberCombo.getValue() != null) {
       Course c = (Course) courseNumberCombo.getValue();
       System.out.println(c);
-      
+
       andClauses.add(cb.equal(
-          course.get("courseNumber"),
-          c.getCourseNumber())
+              course.get("courseNumber"),
+              c.getCourseNumber())
       );
     }
     if (lineNumberText.getText() != null) {
       andClauses.add(cb.equal(
-          section.get("id"),
-          Integer.valueOf(lineNumberText.getText()))
+              section.get("id"),
+              Integer.valueOf(lineNumberText.getText()))
       );
     }
     if (creditsCombo.getValue() != null) {
       String credits = (String) creditsCombo.getValue();
-      
+
       andClauses.add(cb.equal(
-          course.get("credits"),
-          Integer.valueOf(credits))
+              course.get("credits"),
+              Integer.valueOf(credits))
       );
     }
     if (mondayCheckbox.isSelected()) {
@@ -181,7 +198,7 @@ public class CourseSearchController implements Initializable {
     if (fridayCheckbox.isSelected()) {
       orClauses.add(cb.or(cb.equal(day.get("day"), "F")));
     }
-    
+
     if (!orClauses.isEmpty()) {
       andClauses.add(cb.equal(day.get("courseSectionId"), section));
     }
@@ -189,18 +206,17 @@ public class CourseSearchController implements Initializable {
     Predicate[] orArray = new Predicate[orClauses.size()];
     orArray = orClauses.toArray(orArray);
     Predicate orClause = cb.or(orArray);
-    
+
     Predicate[] andArray = new Predicate[andClauses.size()];
     andArray = andClauses.toArray(andArray);
     Predicate andClause = cb.and(andArray);
-    
+
     if ((!andClauses.isEmpty()) && (!orClauses.isEmpty())) {
       cq.select(section).where(andClause, orClause).distinct(true);
-    }
-    else {
+    } else {
       cq.select(section).where(andClause).distinct(true);
     }
-    
+
     List<CourseSection> result = entityManager.createQuery(cq).getResultList();
 
     searchResultsController.setResults(result);
@@ -218,22 +234,22 @@ public class CourseSearchController implements Initializable {
 
     // Build course number combo box
     department = departmentRepository.findByNameWithCourses(
-        department.getName()
+            department.getName()
     );
     ObservableList<Course> courses = FXCollections.observableArrayList(
-        // Get course list for selected department
-        department.getCourseList()
+            // Get course list for selected department
+            department.getCourseList()
     );
     courseNumberCombo.setItems(courses);
     courseNumberCombo.setVisibleRowCount(4);
 
     // Build professor combo box
     department = departmentRepository.findByNameWithProfessors(
-        department.getName()
+            department.getName()
     );
     ObservableList<Professor> professors = FXCollections.observableArrayList(
-        // Get professor list for selected department
-        department.getProfessorList()
+            // Get professor list for selected department
+            department.getProfessorList()
     );
     instructorCombo.setItems(professors);
     instructorCombo.setVisibleRowCount(4);
@@ -262,32 +278,32 @@ public class CourseSearchController implements Initializable {
   public void buildView() {
     // Build department combo box
     ObservableList<Department> departments = FXCollections.observableArrayList(
-        Lists.newArrayList(departmentRepository.findAll())
+            Lists.newArrayList(departmentRepository.findAll())
     );
     departmentCombo.setItems(departments);
     departmentCombo.setVisibleRowCount(4);
 
     // Build term combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
-        Lists.newArrayList(termRepository.findAll())
+            Lists.newArrayList(termRepository.findAll())
     );
     termCombo.setItems(terms);
     termCombo.setVisibleRowCount(4);
 
     // Build type combo box
     ObservableList<String> levels = FXCollections.observableArrayList(
-        "100", "200", "300", "400"
+            "100", "200", "300", "400"
     );
     courseLevelCombo.setItems(levels);
     courseLevelCombo.setVisibleRowCount(4);
 
     // Build type combo box
     ObservableList<String> credits = FXCollections.observableArrayList(
-        "1", "2", "3", "4"
+            "1", "2", "3", "4"
     );
     creditsCombo.setItems(credits);
     creditsCombo.setVisibleRowCount(4);
-    
+
     departmentCombo.getSelectionModel().clearSelection();
     termCombo.getSelectionModel().clearSelection();
     courseLevelCombo.getSelectionModel().clearSelection();

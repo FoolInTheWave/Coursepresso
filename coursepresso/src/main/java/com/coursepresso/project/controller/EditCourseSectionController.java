@@ -117,7 +117,8 @@ public class EditCourseSectionController implements Initializable {
   private MainController mainController;
 
   private ObservableList<MeetingDay> meetingDays;
-  private ArrayList<MeetingDay> daysToDelete = new ArrayList<MeetingDay>();
+  private ArrayList<Integer> daysToDelete = new ArrayList<Integer>();
+  private ArrayList<MeetingDay> daysToDelete2 = new ArrayList<MeetingDay>();
   private CourseSection courseSection;
 
   /**
@@ -185,12 +186,20 @@ public class EditCourseSectionController implements Initializable {
     courseSection.setDepartment((Department) departmentCombo.getValue());
     courseSection.setProfessorId((Professor) instructorCombo.getValue());
 
-    for (MeetingDay dayToDel : daysToDelete) {
-      System.out.println(dayToDel.getDay());
-      courseSection.getMeetingDayList().remove(dayToDel);
+    for (Integer dayToDel : daysToDelete) {
+      //System.out.println(dayToDel.getDay());
+      //System.out.println(dayToDel.getId());
+      //courseSection.getMeetingDayList().remove(dayToDel);
       meetingDayRepository.delete(dayToDel);
     }
-        
+     
+    for (MeetingDay dayToDel : daysToDelete2) {
+      //System.out.println(dayToDel.getDay());
+      //System.out.println(dayToDel.getId());
+      courseSection.getMeetingDayList().remove(dayToDel);
+      //meetingDayRepository.delete(dayToDel);
+    }
+    
     courseSection = courseSectionRepository.save(courseSection);
 
     // Save MeetingDays for CourseSection
@@ -211,12 +220,14 @@ public class EditCourseSectionController implements Initializable {
 
   @FXML
   private void deleteDayButtonClick(ActionEvent event) {
-    MeetingDay md = meetingDayTable.getSelectionModel().getSelectedItem();
+    int mdId = meetingDayTable.getSelectionModel().getSelectedItem().getId();
     
-    System.out.println(md.getDay());
+    //System.out.println(md.getDay());
+    //System.out.println(md.getId());
     
-    daysToDelete.add(md);
-    meetingDays.remove(md);
+    daysToDelete.add(mdId);
+    daysToDelete2.add(meetingDayTable.getSelectionModel().getSelectedItem());
+    meetingDays.remove(meetingDayTable.getSelectionModel().getSelectedItem());
     //meetingDayRepository.delete(meetingDayTable.getSelectionModel().getSelectedItem());
   }
 
