@@ -2,6 +2,7 @@ package com.coursepresso.project.repository;
 
 import java.util.List;
 import com.coursepresso.project.entity.CourseSection;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -72,4 +73,9 @@ public interface CourseSectionRepository extends CrudRepository<CourseSection, I
    */
   @Query("SELECT cs FROM CourseSection cs JOIN FETCH cs.professorId WHERE cs.id = (:id)")
   public CourseSection findByIdWithProfessor(@Param("id") Integer id);
+  
+  @Modifying
+  @Query("delete from CourseSection cs where cs.id = (:id)")
+  @Override
+  void delete(@Param("id") Integer id);
 }

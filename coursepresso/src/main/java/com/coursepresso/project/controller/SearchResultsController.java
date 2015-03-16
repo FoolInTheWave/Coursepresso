@@ -199,6 +199,10 @@ public class SearchResultsController implements Initializable {
     );
     
     if(dialogResult == JOptionPane.YES_OPTION){
+      courseSectionRepository.delete(courseSectionTable.getSelectionModel().getSelectedItem().getId());
+      courseSections.remove(courseSectionTable.getSelectionModel().getSelectedItem());
+      
+      JOptionPane.showMessageDialog(null, "Course section deleted successfully");
       
     } else {
       //Do Nothing
