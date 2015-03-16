@@ -81,7 +81,7 @@ public class CourseSearchController implements Initializable {
   private MainController mainController;
   @Inject
   private SearchResultsController searchResultsController;
-  
+
   @PersistenceContext
   private EntityManager entityManager;
 
@@ -109,10 +109,10 @@ public class CourseSearchController implements Initializable {
     Root<CourseSection> section = cq.from(CourseSection.class);
     Join<CourseSection, MeetingDay> day = section.join("meetingDayList");
     Join<CourseSection, Course> course = section.join("courseNumber");
-    
+
     List<Predicate> andClauses = new ArrayList<>();
     List<Predicate> orClauses = new ArrayList<>();
-    
+
     if (departmentCombo.getValue() != null) {
       andClauses.add(cb.equal(
           section.get("department"),
@@ -146,7 +146,7 @@ public class CourseSearchController implements Initializable {
     if (courseNumberCombo.getValue() != null) {
       Course c = (Course) courseNumberCombo.getValue();
       System.out.println(c);
-      
+
       andClauses.add(cb.equal(
           course.get("courseNumber"),
           c.getCourseNumber())
@@ -160,7 +160,7 @@ public class CourseSearchController implements Initializable {
     }
     if (creditsCombo.getValue() != null) {
       String credits = (String) creditsCombo.getValue();
-      
+
       andClauses.add(cb.equal(
           course.get("credits"),
           Integer.valueOf(credits))
@@ -181,7 +181,7 @@ public class CourseSearchController implements Initializable {
     if (fridayCheckbox.isSelected()) {
       orClauses.add(cb.or(cb.equal(day.get("day"), "F")));
     }
-    
+
     if (!orClauses.isEmpty()) {
       andClauses.add(cb.equal(day.get("courseSectionId"), section));
     }
@@ -189,18 +189,17 @@ public class CourseSearchController implements Initializable {
     Predicate[] orArray = new Predicate[orClauses.size()];
     orArray = orClauses.toArray(orArray);
     Predicate orClause = cb.or(orArray);
-    
+
     Predicate[] andArray = new Predicate[andClauses.size()];
     andArray = andClauses.toArray(andArray);
     Predicate andClause = cb.and(andArray);
-    
+
     if ((!andClauses.isEmpty()) && (!orClauses.isEmpty())) {
       cq.select(section).where(andClause, orClause).distinct(true);
-    }
-    else {
+    } else {
       cq.select(section).where(andClause).distinct(true);
     }
-    
+
     List<CourseSection> result = entityManager.createQuery(cq).getResultList();
 
     searchResultsController.setResults(result);
@@ -214,29 +213,31 @@ public class CourseSearchController implements Initializable {
 
   @FXML
   void departmentComboSelect(ActionEvent event) {
-    Department department = (Department) departmentCombo.getValue();
+    if (departmentCombo.getValue() != null) {
+      Department department = (Department) departmentCombo.getValue();
 
-    // Build course number combo box
-    department = departmentRepository.findByNameWithCourses(
-        department.getName()
-    );
-    ObservableList<Course> courses = FXCollections.observableArrayList(
-        // Get course list for selected department
-        department.getCourseList()
-    );
-    courseNumberCombo.setItems(courses);
-    courseNumberCombo.setVisibleRowCount(4);
+      // Build course number combo box
+      department = departmentRepository.findByNameWithCourses(
+          department.getName()
+      );
+      ObservableList<Course> courses = FXCollections.observableArrayList(
+          // Get course list for selected department
+          department.getCourseList()
+      );
+      courseNumberCombo.setItems(courses);
+      courseNumberCombo.setVisibleRowCount(4);
 
-    // Build professor combo box
-    department = departmentRepository.findByNameWithProfessors(
-        department.getName()
-    );
-    ObservableList<Professor> professors = FXCollections.observableArrayList(
-        // Get professor list for selected department
-        department.getProfessorList()
-    );
-    instructorCombo.setItems(professors);
-    instructorCombo.setVisibleRowCount(4);
+      // Build professor combo box
+      department = departmentRepository.findByNameWithProfessors(
+          department.getName()
+      );
+      ObservableList<Professor> professors = FXCollections.observableArrayList(
+          // Get professor list for selected department
+          department.getProfessorList()
+      );
+      instructorCombo.setItems(professors);
+      instructorCombo.setVisibleRowCount(4);
+    }
   }
 
   @FXML
@@ -287,7 +288,7 @@ public class CourseSearchController implements Initializable {
     );
     creditsCombo.setItems(credits);
     creditsCombo.setVisibleRowCount(4);
-    
+
     departmentCombo.getSelectionModel().clearSelection();
     termCombo.getSelectionModel().clearSelection();
     courseLevelCombo.getSelectionModel().clearSelection();
