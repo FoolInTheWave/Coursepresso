@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.MenuController">
+    <stylesheets>
+        <URL value="@/styles/Styles.css" />
+    </stylesheets>
+   <children>
+      <ScrollPane fx:id="root" fitToHeight="true" fitToWidth="true" prefViewportHeight="501.0" prefViewportWidth="1163.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="560.0" prefWidth="1020.0">
+               <children>
+                  <Button fx:id="searchCoursesButton" layoutX="43.0" layoutY="120.0" mnemonicParsing="false" onAction="#displayCourseSearchButtonClick" prefHeight="61.0" prefWidth="240.0" text="Search Courses">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="headerLabel" layoutX="27.0" layoutY="24.0" prefHeight="78.0" prefWidth="761.0" text="What would you like to do?">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="newCourseButton" layoutX="43.0" layoutY="225.0" mnemonicParsing="false" onAction="#newCourseButtonClick" prefHeight="61.0" prefWidth="240.0" text="Add New Course">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="newScheduleButton" layoutX="43.0" layoutY="333.0" mnemonicParsing="false" onAction="#displayNewScheduleButtonClick" prefHeight="61.0" prefWidth="240.0" text="Create New Schedule">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="displayConflictsButton" layoutX="43.0" layoutY="439.0" mnemonicParsing="false" onAction="#displayConflictsButtonClick" prefHeight="61.0" prefWidth="240.0" text="Display Conflicts">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Button>
+                  <Label fx:id="searchCoursesLabel" layoutX="308.0" layoutY="131.0" prefHeight="40.0" prefWidth="748.0" text="Search existing courses and sort, print, or modify the results.">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="newCourseLabel" layoutX="308.0" layoutY="236.0" prefHeight="40.0" prefWidth="748.0" text="Add a new course or course section to an existing schedule.">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="newScheduleLabel" layoutX="308.0" layoutY="344.0" prefHeight="40.0" prefWidth="748.0" text="Begin creating a new schedule for an upcoming semester.">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="displayConflictsLabel" layoutX="308.0" layoutY="450.0" prefHeight="40.0" prefWidth="748.0" text="Choose an existing schedule and display course conflicts.">
+                     <font>
+                        <Font size="22.0" />
+                     </font>
+                  </Label>
+                  <Separator layoutX="2.0" layoutY="203.0" prefHeight="3.0" prefWidth="1022.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Separator layoutX="2.0" layoutY="309.0" prefHeight="3.0" prefWidth="1022.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Separator layoutX="2.0" layoutY="415.0" prefHeight="3.0" prefWidth="1022.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+               </children>
+            </AnchorPane>
+         </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>
