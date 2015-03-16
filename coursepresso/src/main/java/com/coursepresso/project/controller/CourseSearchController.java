@@ -115,32 +115,32 @@ public class CourseSearchController implements Initializable {
 
     if (departmentCombo.getValue() != null) {
       andClauses.add(cb.equal(
-          section.get("department"),
-          (Department) departmentCombo.getValue())
+              section.get("department"),
+              (Department) departmentCombo.getValue())
       );
     }
     if (termCombo.getValue() != null) {
       andClauses.add(cb.equal(
-          section.get("term"),
-          (Term) termCombo.getValue())
+              section.get("term"),
+              (Term) termCombo.getValue())
       );
     }
     if (courseNumberCombo.getValue() != null) {
       andClauses.add(cb.equal(
-          section.get("courseNumber"),
-          (Course) courseNumberCombo.getValue())
+              section.get("courseNumber"),
+              (Course) courseNumberCombo.getValue())
       );
     }
     if (instructorCombo.getValue() != null) {
       andClauses.add(cb.equal(
-          section.get("professorId"),
-          (Professor) instructorCombo.getValue())
+              section.get("professorId"),
+              (Professor) instructorCombo.getValue())
       );
     }
     if (courseLevelCombo.getValue() != null) {
       andClauses.add(cb.equal(
-          course.get("academicLevel"),
-          courseLevelCombo.getValue())
+              course.get("academicLevel"),
+              courseLevelCombo.getValue())
       );
     }
     if (courseNumberCombo.getValue() != null) {
@@ -148,22 +148,22 @@ public class CourseSearchController implements Initializable {
       System.out.println(c);
 
       andClauses.add(cb.equal(
-          course.get("courseNumber"),
-          c.getCourseNumber())
+              course.get("courseNumber"),
+              c.getCourseNumber())
       );
     }
     if (lineNumberText.getText() != null) {
       andClauses.add(cb.equal(
-          section.get("id"),
-          Integer.valueOf(lineNumberText.getText()))
+              section.get("id"),
+              Integer.valueOf(lineNumberText.getText()))
       );
     }
     if (creditsCombo.getValue() != null) {
       String credits = (String) creditsCombo.getValue();
 
       andClauses.add(cb.equal(
-          course.get("credits"),
-          Integer.valueOf(credits))
+              course.get("credits"),
+              Integer.valueOf(credits))
       );
     }
     if (mondayCheckbox.isSelected()) {
@@ -263,28 +263,28 @@ public class CourseSearchController implements Initializable {
   public void buildView() {
     // Build department combo box
     ObservableList<Department> departments = FXCollections.observableArrayList(
-        Lists.newArrayList(departmentRepository.findAll())
+            Lists.newArrayList(departmentRepository.findAll())
     );
     departmentCombo.setItems(departments);
     departmentCombo.setVisibleRowCount(4);
 
     // Build term combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
-        Lists.newArrayList(termRepository.findAll())
+            Lists.newArrayList(termRepository.findAll())
     );
     termCombo.setItems(terms);
     termCombo.setVisibleRowCount(4);
 
     // Build type combo box
     ObservableList<String> levels = FXCollections.observableArrayList(
-        "100", "200", "300", "400"
+            "100", "200", "300", "400"
     );
     courseLevelCombo.setItems(levels);
     courseLevelCombo.setVisibleRowCount(4);
 
     // Build type combo box
     ObservableList<String> credits = FXCollections.observableArrayList(
-        "1", "2", "3", "4"
+            "1", "2", "3", "4"
     );
     creditsCombo.setItems(credits);
     creditsCombo.setVisibleRowCount(4);

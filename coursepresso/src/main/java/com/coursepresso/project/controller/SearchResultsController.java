@@ -25,6 +25,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javax.inject.Inject;
+import javax.swing.JOptionPane;
 
 /**
  * FXML Controller class
@@ -61,6 +62,8 @@ public class SearchResultsController implements Initializable {
   private TableColumn<CourseSection, String> endTimeColumn;
   @FXML
   private TableColumn<CourseSection, String> studentsColumn;
+  @FXML
+  private Button deleteSectionButton;
 
   @Inject
   private MainController mainController;
@@ -83,94 +86,94 @@ public class SearchResultsController implements Initializable {
     professorColumn.setCellValueFactory(new PropertyValueFactory<>("professorId"));
     studentsColumn.setCellValueFactory(new PropertyValueFactory<>("studentCount"));
     capacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
-    
+
     // setCellValueFactory to display the course title
     courseNameColumn.setCellValueFactory(
-        courseSection -> {
-          SimpleStringProperty property = new SimpleStringProperty();
-          property.setValue(
-              courseSection.getValue().getCourseNumber().getTitle()
-          );
-          return property;
-        }
+            courseSection -> {
+              SimpleStringProperty property = new SimpleStringProperty();
+              property.setValue(
+                      courseSection.getValue().getCourseNumber().getTitle()
+              );
+              return property;
+            }
     );
-    
+
     // setCellValueFactory to display the course days
     daysColumn.setCellValueFactory(
-        courseSection -> {
-          SimpleStringProperty property = new SimpleStringProperty();
-          List<Day> days = new ArrayList<>();
-          List<String> dayNames = new ArrayList<>();
-          
-          // Build list of weighted day name enums
-          for (MeetingDay day : courseSection.getValue().getMeetingDayList()) {
-            days.add(Day.valueOf(day.getDay()));
-          }
-          // Remove duplicate day names
-          days = ImmutableSet.copyOf(days).asList();
-          // Sort enum list by day names
-          days = MeetingDayHelper.sortDayNames(days);
-          // Build string list of day names
-          for (Day day : days) {
-            dayNames.add(day.getName());
-          }
-          // Generate delimited string of day names at the cell value
-          property.setValue(
-              Joiner.on(", ").join(dayNames)
-          );
-          return property;
-        }
+            courseSection -> {
+              SimpleStringProperty property = new SimpleStringProperty();
+              List<Day> days = new ArrayList<>();
+              List<String> dayNames = new ArrayList<>();
+
+              // Build list of weighted day name enums
+              for (MeetingDay day : courseSection.getValue().getMeetingDayList()) {
+                days.add(Day.valueOf(day.getDay()));
+              }
+              // Remove duplicate day names
+              days = ImmutableSet.copyOf(days).asList();
+              // Sort enum list by day names
+              days = MeetingDayHelper.sortDayNames(days);
+              // Build string list of day names
+              for (Day day : days) {
+                dayNames.add(day.getName());
+              }
+              // Generate delimited string of day names at the cell value
+              property.setValue(
+                      Joiner.on(", ").join(dayNames)
+              );
+              return property;
+            }
     );
-    
+
     // setCellValueFactory to display the formatted time
     startTimeColumn.setCellValueFactory(
-        courseSection -> {
-          SimpleStringProperty property = new SimpleStringProperty();
-          DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-          MeetingDay day;
-          
-          if (!courseSection.getValue().getMeetingDayList().isEmpty()) {
-            // Get first meeting day of the course section
-            day = courseSection.getValue().getMeetingDayList().get(0);
-            // Format the start time of the meeting day
-            property.setValue(dateFormat.format(day.getStartTime()));
-          }
-          return property;
-        }
+            courseSection -> {
+              SimpleStringProperty property = new SimpleStringProperty();
+              DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+              MeetingDay day;
+
+              if (!courseSection.getValue().getMeetingDayList().isEmpty()) {
+                // Get first meeting day of the course section
+                day = courseSection.getValue().getMeetingDayList().get(0);
+                // Format the start time of the meeting day
+                property.setValue(dateFormat.format(day.getStartTime()));
+              }
+              return property;
+            }
     );
-    
+
     // setCellValueFactory to display the formatted time
     endTimeColumn.setCellValueFactory(
-        courseSection -> {
-          SimpleStringProperty property = new SimpleStringProperty();
-          DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
-          MeetingDay day;
-          
-          if (!courseSection.getValue().getMeetingDayList().isEmpty()) {
-            // Get first meeting day of the course section
-            day = courseSection.getValue().getMeetingDayList().get(0);
-            // Format the end time of the meeting day
-            property.setValue(dateFormat.format(day.getEndTime()));
-          }
-          return property;
-        }
+            courseSection -> {
+              SimpleStringProperty property = new SimpleStringProperty();
+              DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
+              MeetingDay day;
+
+              if (!courseSection.getValue().getMeetingDayList().isEmpty()) {
+                // Get first meeting day of the course section
+                day = courseSection.getValue().getMeetingDayList().get(0);
+                // Format the end time of the meeting day
+                property.setValue(dateFormat.format(day.getEndTime()));
+              }
+              return property;
+            }
     );
-    
+
     // setCellValueFactory to display the room number
     roomNumColumn.setCellValueFactory(
-        courseSection -> {
-          SimpleStringProperty property = new SimpleStringProperty();
-          MeetingDay day;
-          
-          if (!courseSection.getValue().getMeetingDayList().isEmpty()) {
-            // Get first meeting day of the course section
-            day = courseSection.getValue().getMeetingDayList().get(0);
-            property.setValue(day.getRoomNumber().toString());
-          }
-          return property;
-        }
+            courseSection -> {
+              SimpleStringProperty property = new SimpleStringProperty();
+              MeetingDay day;
+
+              if (!courseSection.getValue().getMeetingDayList().isEmpty()) {
+                // Get first meeting day of the course section
+                day = courseSection.getValue().getMeetingDayList().get(0);
+                property.setValue(day.getRoomNumber().toString());
+              }
+              return property;
+            }
     );
-    
+
     // Initialize the meeting day observable list and table view
     courseSections = FXCollections.observableArrayList();
     courseSectionTable.setItems(courseSections);
@@ -184,12 +187,26 @@ public class SearchResultsController implements Initializable {
   @FXML
   void modifySectionButtonClick(ActionEvent event) {
     mainController.showEditCourseSection(
-        courseSectionTable.getSelectionModel().getSelectedItem()
+            courseSectionTable.getSelectionModel().getSelectedItem()
     );
+  }
+  
+  @FXML
+  void deleteSectionButtonClick(ActionEvent event) {
+    int dialogResult = JOptionPane.showConfirmDialog (
+            null, "Are you sure you want to delete this section?",
+            "Warning", JOptionPane.YES_NO_OPTION
+    );
+    
+    if(dialogResult == JOptionPane.YES_OPTION){
+      
+    } else {
+      //Do Nothing
+    }
   }
 
   public void buildView() {
-    
+
   }
 
   public void setResults(List<CourseSection> results) {

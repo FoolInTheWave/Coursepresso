@@ -25,7 +25,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -118,7 +117,6 @@ public class EditCourseSectionController implements Initializable {
 
   private ObservableList<MeetingDay> meetingDays;
   private ArrayList<MeetingDay> daysToDelete;
-  private ArrayList<MeetingDay> daysToAdd;
   private CourseSection courseSection;
 
   /**
@@ -187,8 +185,6 @@ public class EditCourseSectionController implements Initializable {
     courseSection.setEndDate(DateHelper.asDate(endDatePicker.getValue()));
     courseSection.setDepartment((Department) departmentCombo.getValue());
     courseSection.setProfessorId((Professor) instructorCombo.getValue());
-
-    //courseSection.setMeetingDayList(meetingDays);
 
     for (MeetingDay dayToDel : daysToDelete) {
       meetingDayRepository.delete(dayToDel.getId());
