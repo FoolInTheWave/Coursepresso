@@ -10,6 +10,7 @@ import com.coursepresso.project.controller.NewCourseSectionController;
 import com.coursepresso.project.controller.NewScheduleController;
 import com.coursepresso.project.controller.ScheduleSelectionController;
 import com.coursepresso.project.controller.SearchResultsController;
+import com.coursepresso.project.controller.UserMenuController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import org.springframework.context.annotation.Bean;
@@ -43,8 +44,13 @@ public class ControllerConfig {
   }
   
   @Bean
-  public AdminMenuController menuController() {
-    return loadController("/fxml/Menu.fxml");
+  public AdminMenuController adminMenuController() {
+    return loadController("/fxml/AdminMenu.fxml");
+  }
+  
+  @Bean
+  public UserMenuController userMenuController() {
+    return loadController("/fxml/UserMenu.fxml");
   }
   
   @Bean

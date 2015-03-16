@@ -24,6 +24,8 @@ public class MainController {
   @Inject
   private AdminMenuController adminMenuController;
   @Inject
+  private UserMenuController userMenuController;
+  @Inject
   private ScheduleSelectionController scheduleSelectionController;
   @Inject
   private ConflictController conflictController;
@@ -68,7 +70,7 @@ public class MainController {
   }
   
   public void showUserMenu() {
-    contentArea.setCenter();
+    contentArea.setCenter(userMenuController.getView());
   }
 
   public void showScheduleSelection() {
