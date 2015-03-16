@@ -117,7 +117,8 @@ public class EditCourseSectionController implements Initializable {
   private MainController mainController;
 
   private ObservableList<MeetingDay> meetingDays;
-  private ArrayList<MeetingDay> daysToDelete = new ArrayList<MeetingDay>();
+  private ArrayList<MeetingDay> daysToDelete;
+  private ArrayList<MeetingDay> daysToAdd;
   private CourseSection courseSection;
 
   /**
@@ -153,6 +154,7 @@ public class EditCourseSectionController implements Initializable {
     // Initialize the meeting day observable list and table view
     meetingDays = FXCollections.observableArrayList();
     meetingDayTable.setItems(meetingDays);
+    daysToDelete = new ArrayList<>();
   }
 
   public Node getView() {
@@ -179,27 +181,23 @@ public class EditCourseSectionController implements Initializable {
     courseSection.setTerm((Term) termCombo.getValue());
     courseSection.setStudentCount(0);
     courseSection.setType(typeCombo.getValue().toString());
+
     // Save LocalDate as Date
     courseSection.setStartDate(DateHelper.asDate(startDatePicker.getValue()));
     courseSection.setEndDate(DateHelper.asDate(endDatePicker.getValue()));
     courseSection.setDepartment((Department) departmentCombo.getValue());
     courseSection.setProfessorId((Professor) instructorCombo.getValue());
 
+    //courseSection.setMeetingDayList(meetingDays);
+
     for (MeetingDay dayToDel : daysToDelete) {
-      System.out.println(dayToDel.getDay());
-      courseSection.getMeetingDayList().remove(dayToDel);
-      meetingDayRepository.delete(dayToDel);
+      meetingDayRepository.delete(dayToDel.getId());
     }
-        
+    
+    courseSection.setMeetingDayList(meetingDays);
+
     courseSection = courseSectionRepository.save(courseSection);
 
-    // Save MeetingDays for CourseSection
-    for (MeetingDay day : meetingDays) {
-      day.setCourseSectionId(courseSection);
-      day.setTerm(courseSection.getTerm());
-    }
-    meetingDayRepository.save(meetingDays);
-    
     Alert alert = new Alert(AlertType.INFORMATION);
     alert.setTitle("Course Section Saved");
     alert.setHeaderText(null);
@@ -212,12 +210,9 @@ public class EditCourseSectionController implements Initializable {
   @FXML
   private void deleteDayButtonClick(ActionEvent event) {
     MeetingDay md = meetingDayTable.getSelectionModel().getSelectedItem();
-    
-    System.out.println(md.getDay());
-    
+
     daysToDelete.add(md);
     meetingDays.remove(md);
-    //meetingDayRepository.delete(meetingDayTable.getSelectionModel().getSelectedItem());
   }
 
   @FXML
@@ -233,6 +228,8 @@ public class EditCourseSectionController implements Initializable {
     }
     day.setRoomNumber((Room) roomCombo.getValue());
     day.setDay(dayCombo.getValue().toString());
+    day.setCourseSectionId(courseSection);
+    day.setTerm((Term) termCombo.getValue());
 
     meetingDays.add(day);
 
@@ -290,7 +287,6 @@ public class EditCourseSectionController implements Initializable {
   public void buildView(CourseSection cs) {
     courseSection = cs;
     CourseSection section;
-    //daysToDelete.clear();
 
     // Build department combo box
     departmentCombo.getSelectionModel().select(cs.getDepartment());
