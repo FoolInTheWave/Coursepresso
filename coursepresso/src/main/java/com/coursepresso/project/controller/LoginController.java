@@ -79,7 +79,11 @@ public class LoginController implements Initializable {
         if (newState.equals(Worker.State.SUCCEEDED)) {
           //log.info("Successfully logged in as user '{}'", username);
           System.out.println("Successfully logged in as user: " + username);
+          
+          
           mainController.showMenu();
+          
+          
         } else if (newState.equals(Worker.State.FAILED)) {
           Throwable exception = loginTask.getException();
           if (exception instanceof BadCredentialsException) {

@@ -214,29 +214,33 @@ public class CourseSearchController implements Initializable {
   @FXML
   void departmentComboSelect(ActionEvent event) {
     if (departmentCombo.getValue() != null) {
-      Department department = (Department) departmentCombo.getValue();
+      try {
+        Department department = (Department) departmentCombo.getValue();
 
-      // Build course number combo box
-      department = departmentRepository.findByNameWithCourses(
-          department.getName()
-      );
-      ObservableList<Course> courses = FXCollections.observableArrayList(
-          // Get course list for selected department
-          department.getCourseList()
-      );
-      courseNumberCombo.setItems(courses);
-      courseNumberCombo.setVisibleRowCount(4);
+        // Build course number combo box
+        department = departmentRepository.findByNameWithCourses(
+                department.getName()
+        );
+        ObservableList<Course> courses = FXCollections.observableArrayList(
+                // Get course list for selected department
+                department.getCourseList()
+        );
+        courseNumberCombo.setItems(courses);
+        courseNumberCombo.setVisibleRowCount(4);
 
-      // Build professor combo box
-      department = departmentRepository.findByNameWithProfessors(
-          department.getName()
-      );
-      ObservableList<Professor> professors = FXCollections.observableArrayList(
-          // Get professor list for selected department
-          department.getProfessorList()
-      );
-      instructorCombo.setItems(professors);
-      instructorCombo.setVisibleRowCount(4);
+        // Build professor combo box
+        department = departmentRepository.findByNameWithProfessors(
+                department.getName()
+        );
+        ObservableList<Professor> professors = FXCollections.observableArrayList(
+                // Get professor list for selected department
+                department.getProfessorList()
+        );
+        instructorCombo.setItems(professors);
+        instructorCombo.setVisibleRowCount(4);
+      } catch (NullPointerException e) {
+
+      }
     }
   }
 

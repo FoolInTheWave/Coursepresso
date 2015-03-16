@@ -7,6 +7,8 @@ import javafx.scene.Parent;
 import javafx.scene.layout.BorderPane;
 
 import javax.inject.Inject;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 public class MainController {
 
@@ -20,7 +22,7 @@ public class MainController {
   @Inject
   private LoginController loginController;
   @Inject
-  private MenuController menuController;
+  private AdminMenuController adminMenuController;
   @Inject
   private ScheduleSelectionController scheduleSelectionController;
   @Inject
@@ -53,7 +55,20 @@ public class MainController {
   }
   
   public void showMenu() {
-    contentArea.setCenter(menuController.getView());
+    try {
+      showAdminMenu();
+    } catch (AccessDeniedException e) {
+      showUserMenu();
+    }
+  }
+  
+  @PreAuthorize("hasRole('ADMIN')")
+  public void showAdminMenu() {
+    contentArea.setCenter(adminMenuController.getView());
+  }
+  
+  public void showUserMenu() {
+    contentArea.setCenter();
   }
 
   public void showScheduleSelection() {

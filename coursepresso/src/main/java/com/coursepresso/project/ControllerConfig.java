@@ -5,7 +5,7 @@ import com.coursepresso.project.controller.ConflictController;
 import com.coursepresso.project.controller.EditCourseSectionController;
 import com.coursepresso.project.controller.LoginController;
 import com.coursepresso.project.controller.MainController;
-import com.coursepresso.project.controller.MenuController;
+import com.coursepresso.project.controller.AdminMenuController;
 import com.coursepresso.project.controller.NewCourseSectionController;
 import com.coursepresso.project.controller.NewScheduleController;
 import com.coursepresso.project.controller.ScheduleSelectionController;
@@ -43,7 +43,7 @@ public class ControllerConfig {
   }
   
   @Bean
-  public MenuController menuController() {
+  public AdminMenuController menuController() {
     return loadController("/fxml/Menu.fxml");
   }
   
