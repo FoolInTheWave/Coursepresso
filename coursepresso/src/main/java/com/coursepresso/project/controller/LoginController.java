@@ -52,6 +52,11 @@ public class LoginController implements Initializable {
     // TODO
   }
 
+  public void logout() {
+    usernameField.setText(null);
+    passwordField.setText(null);
+  }
+  
   public Node getView() {
     return root;
   }

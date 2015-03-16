@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.paint.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -14,12 +15,20 @@
                 <String fx:value="header" />
             </styleClass>
             <children>
-                <Label text="Coursepresso" textFill="WHITE">
-                    <styleClass>
-                        <String fx:value="label" />
-                        <String fx:value="title" />
-                    </styleClass>
-                </Label>
+            <HBox prefHeight="17.0" prefWidth="200.0">
+               <children>
+                      <Label text="Coursepresso" textFill="WHITE">
+                          <styleClass>
+                              <String fx:value="label" />
+                              <String fx:value="title" />
+                          </styleClass>
+                     <padding>
+                        <Insets right="750.0" />
+                     </padding>
+                      </Label>
+                  <Button fx:id="logout" mnemonicParsing="false" onAction="#logoutButtonClick" text="Log Out" />
+               </children>
+            </HBox>
                 <Label text="Course Schedule Management System" textFill="WHITE">
                     <styleClass>
                         <String fx:value="label" />

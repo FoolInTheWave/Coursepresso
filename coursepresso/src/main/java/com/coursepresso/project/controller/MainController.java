@@ -1,8 +1,10 @@
 package com.coursepresso.project.controller;
 
 import com.coursepresso.project.entity.CourseSection;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 
 import javax.inject.Inject;
@@ -15,6 +17,8 @@ public class MainController {
   private Parent root;
   @FXML
   private BorderPane contentArea;
+  @FXML
+  private Button logout;
 
   @Inject
   private NewCourseSectionController newCourseSectionController;
@@ -36,25 +40,31 @@ public class MainController {
   private NewScheduleController newScheduleController;
   @Inject
   private EditCourseSectionController editCourseSectionController;
-  
+
   public Parent getView() {
     return root;
   }
-  
+
+  @FXML
+  private void logoutButtonClick(ActionEvent event) {
+    loginController.logout();
+    showLogin();
+  }
+
   public void showNewCourseSection() {
     newCourseSectionController.buildView();
     contentArea.setCenter(newCourseSectionController.getView());
   }
-  
+
   public void showEditCourseSection(CourseSection cs) {
     editCourseSectionController.buildView(cs);
     contentArea.setCenter(editCourseSectionController.getView());
   }
-  
+
   public void showLogin() {
     contentArea.setCenter(loginController.getView());
   }
-  
+
   public void showMenu() {
     try {
       showAdminMenu();
@@ -62,12 +72,12 @@ public class MainController {
       showUserMenu();
     }
   }
-  
+
   @PreAuthorize("hasRole('ADMIN')")
   public void showAdminMenu() {
     contentArea.setCenter(adminMenuController.getView());
   }
-  
+
   public void showUserMenu() {
     contentArea.setCenter(userMenuController.getView());
   }
@@ -75,21 +85,21 @@ public class MainController {
   public void showScheduleSelection() {
     contentArea.setCenter(scheduleSelectionController.getView());
   }
-  
+
   public void showConflict() {
     contentArea.setCenter(conflictController.getView());
   }
-  
+
   public void showCourseSearch() {
     courseSearchController.buildView();
     contentArea.setCenter(courseSearchController.getView());
   }
-  
+
   public void showSearchResults() {
     searchResultsController.buildView();
     contentArea.setCenter(searchResultsController.getView());
   }
-  
+
   public void showNewSchedule() {
     newScheduleController.buildView();
     contentArea.setCenter(newScheduleController.getView());
