@@ -48,7 +48,6 @@ public class MainController {
   @FXML
   private void logoutButtonClick(ActionEvent event) {
     loginController.logout();
-    showLogin();
   }
 
   public void showNewCourseSection() {

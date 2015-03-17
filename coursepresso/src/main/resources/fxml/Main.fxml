@@ -26,7 +26,7 @@
                         <Insets right="750.0" />
                      </padding>
                       </Label>
-                  <Button fx:id="logout" mnemonicParsing="false" onAction="#logoutButtonClick" text="Log Out" />
+                  <Button fx:id="logout" alignment="CENTER" mnemonicParsing="false" onAction="#logoutButtonClick" text="Log Out" />
                </children>
             </HBox>
                 <Label text="Course Schedule Management System" textFill="WHITE">

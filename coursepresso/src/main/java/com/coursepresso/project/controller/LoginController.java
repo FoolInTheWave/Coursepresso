@@ -16,6 +16,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.BadCredentialsException;
 
 /**
@@ -41,6 +43,10 @@ public class LoginController implements Initializable {
   @Inject
   private SecurityService securityService;
 
+  private static final Logger log = LoggerFactory.getLogger(
+      LoginController.class
+  );
+
   /**
    * Initializes the controller class.
    *
@@ -53,10 +59,45 @@ public class LoginController implements Initializable {
   }
 
   public void logout() {
-    usernameField.setText(null);
-    passwordField.setText(null);
+    final String username = usernameField.getText();
+
+    final Task<Void> logoutTask = new Task<Void>() {
+      @Override
+      protected Void call() throws Exception {
+        // Never log password information!
+        log.info("Logging in as user '{}'", username);
+        securityService.logout();
+        return null;
+      }
+    };
+
+    logoutTask.stateProperty().addListener(new ChangeListener<Worker.State>() {
+      @Override
+      public void changed(ObservableValue<? extends Worker.State> source,
+          Worker.State oldState, Worker.State newState) {
+        if (newState.equals(Worker.State.SUCCEEDED)) {
+          log.info("Successfully logged out user '{}'", username);
+
+          usernameField.setText(null);
+          passwordField.setText(null);
+          statusLabel.setText("User logged out successfully!");
+
+          mainController.showLogin();
+        } else if (newState.equals(Worker.State.FAILED)) {
+          Throwable exception = logoutTask.getException();
+          if (exception instanceof BadCredentialsException) {
+            log.debug("Invalid logout attempt");
+          } else {
+            log.error("Logout failed", exception);
+            statusLabel.setText("Logout failed! Check logs for expection.");
+          }
+        }
+      }
+    });
+
+    new Thread(logoutTask).start();
   }
-  
+
   public Node getView() {
     return root;
   }
@@ -70,8 +111,7 @@ public class LoginController implements Initializable {
       @Override
       protected Void call() throws Exception {
         // Never log password information!
-        //log.info("Logging in as user '{}'", username);
-        System.out.println("Logging in as user: " + username);
+        log.info("Logging in as user '{}'", username);
         securityService.login(username, password);
         return null;
       }
@@ -82,23 +122,17 @@ public class LoginController implements Initializable {
       public void changed(ObservableValue<? extends Worker.State> source,
           Worker.State oldState, Worker.State newState) {
         if (newState.equals(Worker.State.SUCCEEDED)) {
-          //log.info("Successfully logged in as user '{}'", username);
-          System.out.println("Successfully logged in as user: " + username);
-          
-          
+          log.info("Successfully logged in as user '{}'", username);
           mainController.showMenu();
-          
-          
+
         } else if (newState.equals(Worker.State.FAILED)) {
           Throwable exception = loginTask.getException();
           if (exception instanceof BadCredentialsException) {
-            //log.debug("Invalid login attempt");
-            System.out.println("Invalid login attempt");
+            log.debug("Invalid login attempt");
             statusLabel.setText("Invalid username or password");
           } else {
-            //log.error("Login failed", exception);
-            System.out.println("Login failed " + exception);
-            statusLabel.setText("Login error: " + exception);
+            log.error("Login failed", exception);
+            statusLabel.setText("Login failed! Check logs for exception.");
           }
         }
       }

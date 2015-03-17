@@ -22,11 +22,16 @@ public class ServiceConfig {
   @SuppressWarnings("unchecked")
   protected <T> T createService(String endPoint, Class<T> serviceInterface) {
     HttpInvokerProxyFactoryBean factory = new HttpInvokerProxyFactoryBean();
-    String serverUrl = String.format("http://54.152.123.197:8080/coursepresso/%s", endPoint);
+
+    String serverUrl = String.format(
+        "https://ec2-54-152-123-197.compute-1.amazonaws.com:8443/coursepresso/%s", 
+        endPoint
+    );
     factory.setServiceUrl(serverUrl);
     factory.setServiceInterface(serviceInterface);
     factory.setHttpInvokerRequestExecutor(httpInvokerRequestExecutor());
     factory.afterPropertiesSet();
+
     return (T) factory.getObject();
   }
 
