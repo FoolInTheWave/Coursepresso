@@ -82,8 +82,8 @@ public class CourseSearchController implements Initializable {
   @Inject
   private SearchResultsController searchResultsController;
 
-  @PersistenceContext
-  private EntityManager entityManager;
+//  @PersistenceContext
+//  private EntityManager entityManager;
 
   /**
    * Initializes the controller class.
@@ -104,106 +104,106 @@ public class CourseSearchController implements Initializable {
 
   @FXML
   private void searchButtonClick(ActionEvent event) {
-    CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-    CriteriaQuery cq = cb.createQuery();
-    Root<CourseSection> section = cq.from(CourseSection.class);
-    Join<CourseSection, MeetingDay> day = section.join("meetingDayList");
-    Join<CourseSection, Course> course = section.join("courseNumber");
+//    CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+//    CriteriaQuery cq = cb.createQuery();
+//    Root<CourseSection> section = cq.from(CourseSection.class);
+//    Join<CourseSection, MeetingDay> day = section.join("meetingDayList");
+//    Join<CourseSection, Course> course = section.join("courseNumber");
+//
+//    List<Predicate> andClauses = new ArrayList<>();
+//    List<Predicate> orClauses = new ArrayList<>();
+//
+//    if (departmentCombo.getValue() != null) {
+//      andClauses.add(cb.equal(
+//              section.get("department"),
+//              (Department) departmentCombo.getValue())
+//      );
+//    }
+//    if (termCombo.getValue() != null) {
+//      andClauses.add(cb.equal(
+//              section.get("term"),
+//              (Term) termCombo.getValue())
+//      );
+//    }
+//    if (courseNumberCombo.getValue() != null) {
+//      andClauses.add(cb.equal(
+//              section.get("courseNumber"),
+//              (Course) courseNumberCombo.getValue())
+//      );
+//    }
+//    if (instructorCombo.getValue() != null) {
+//      andClauses.add(cb.equal(
+//              section.get("professorId"),
+//              (Professor) instructorCombo.getValue())
+//      );
+//    }
+//    if (courseLevelCombo.getValue() != null) {
+//      andClauses.add(cb.equal(
+//              course.get("academicLevel"),
+//              courseLevelCombo.getValue())
+//      );
+//    }
+//    if (courseNumberCombo.getValue() != null) {
+//      Course c = (Course) courseNumberCombo.getValue();
+//      System.out.println(c);
+//
+//      andClauses.add(cb.equal(
+//              course.get("courseNumber"),
+//              c.getCourseNumber())
+//      );
+//    }
+//    if (lineNumberText.getText() != null) {
+//      andClauses.add(cb.equal(
+//              section.get("id"),
+//              Integer.valueOf(lineNumberText.getText()))
+//      );
+//    }
+//    if (creditsCombo.getValue() != null) {
+//      String credits = (String) creditsCombo.getValue();
+//
+//      andClauses.add(cb.equal(
+//              course.get("credits"),
+//              Integer.valueOf(credits))
+//      );
+//    }
+//    if (mondayCheckbox.isSelected()) {
+//      orClauses.add(cb.or(cb.equal(day.get("day"), "M")));
+//    }
+//    if (tuesdayCheckbox.isSelected()) {
+//      orClauses.add(cb.or(cb.equal(day.get("day"), "T")));
+//    }
+//    if (wednesdayCheckbox.isSelected()) {
+//      orClauses.add(cb.or(cb.equal(day.get("day"), "W")));
+//    }
+//    if (thursdayCheckbox.isSelected()) {
+//      orClauses.add(cb.or(cb.equal(day.get("day"), "TH")));
+//    }
+//    if (fridayCheckbox.isSelected()) {
+//      orClauses.add(cb.or(cb.equal(day.get("day"), "F")));
+//    }
+//
+//    if (!orClauses.isEmpty()) {
+//      andClauses.add(cb.equal(day.get("courseSectionId"), section));
+//    }
+//
+//    Predicate[] orArray = new Predicate[orClauses.size()];
+//    orArray = orClauses.toArray(orArray);
+//    Predicate orClause = cb.or(orArray);
+//
+//    Predicate[] andArray = new Predicate[andClauses.size()];
+//    andArray = andClauses.toArray(andArray);
+//    Predicate andClause = cb.and(andArray);
+//
+//    if ((!andClauses.isEmpty()) && (!orClauses.isEmpty())) {
+//      cq.select(section).where(andClause, orClause).distinct(true);
+//    } else {
+//      cq.select(section).where(andClause).distinct(true);
+//    }
 
-    List<Predicate> andClauses = new ArrayList<>();
-    List<Predicate> orClauses = new ArrayList<>();
-
-    if (departmentCombo.getValue() != null) {
-      andClauses.add(cb.equal(
-              section.get("department"),
-              (Department) departmentCombo.getValue())
-      );
-    }
-    if (termCombo.getValue() != null) {
-      andClauses.add(cb.equal(
-              section.get("term"),
-              (Term) termCombo.getValue())
-      );
-    }
-    if (courseNumberCombo.getValue() != null) {
-      andClauses.add(cb.equal(
-              section.get("courseNumber"),
-              (Course) courseNumberCombo.getValue())
-      );
-    }
-    if (instructorCombo.getValue() != null) {
-      andClauses.add(cb.equal(
-              section.get("professorId"),
-              (Professor) instructorCombo.getValue())
-      );
-    }
-    if (courseLevelCombo.getValue() != null) {
-      andClauses.add(cb.equal(
-              course.get("academicLevel"),
-              courseLevelCombo.getValue())
-      );
-    }
-    if (courseNumberCombo.getValue() != null) {
-      Course c = (Course) courseNumberCombo.getValue();
-      System.out.println(c);
-
-      andClauses.add(cb.equal(
-              course.get("courseNumber"),
-              c.getCourseNumber())
-      );
-    }
-    if (lineNumberText.getText() != null) {
-      andClauses.add(cb.equal(
-              section.get("id"),
-              Integer.valueOf(lineNumberText.getText()))
-      );
-    }
-    if (creditsCombo.getValue() != null) {
-      String credits = (String) creditsCombo.getValue();
-
-      andClauses.add(cb.equal(
-              course.get("credits"),
-              Integer.valueOf(credits))
-      );
-    }
-    if (mondayCheckbox.isSelected()) {
-      orClauses.add(cb.or(cb.equal(day.get("day"), "M")));
-    }
-    if (tuesdayCheckbox.isSelected()) {
-      orClauses.add(cb.or(cb.equal(day.get("day"), "T")));
-    }
-    if (wednesdayCheckbox.isSelected()) {
-      orClauses.add(cb.or(cb.equal(day.get("day"), "W")));
-    }
-    if (thursdayCheckbox.isSelected()) {
-      orClauses.add(cb.or(cb.equal(day.get("day"), "TH")));
-    }
-    if (fridayCheckbox.isSelected()) {
-      orClauses.add(cb.or(cb.equal(day.get("day"), "F")));
-    }
-
-    if (!orClauses.isEmpty()) {
-      andClauses.add(cb.equal(day.get("courseSectionId"), section));
-    }
-
-    Predicate[] orArray = new Predicate[orClauses.size()];
-    orArray = orClauses.toArray(orArray);
-    Predicate orClause = cb.or(orArray);
-
-    Predicate[] andArray = new Predicate[andClauses.size()];
-    andArray = andClauses.toArray(andArray);
-    Predicate andClause = cb.and(andArray);
-
-    if ((!andClauses.isEmpty()) && (!orClauses.isEmpty())) {
-      cq.select(section).where(andClause, orClause).distinct(true);
-    } else {
-      cq.select(section).where(andClause).distinct(true);
-    }
-
-    List<CourseSection> result = entityManager.createQuery(cq).getResultList();
-
-    searchResultsController.setResults(result);
-    mainController.showSearchResults();
+//    List<CourseSection> result = entityManager.createQuery(cq).getResultList();
+//
+//    searchResultsController.setResults(result);
+//    mainController.showSearchResults();
   }
 
   @FXML
