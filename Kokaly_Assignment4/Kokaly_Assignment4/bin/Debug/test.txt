@@ -1,0 +1,11 @@
+J. Billings	Chevrolet	1500	Cooling
+R. Stevens	Kia 	Sorento	Cooling
+J. Billings	Chevrolet 	Monte Carlo	Cooling
+Z. Samero	Dodge 	Dart	Brakes
+N. Smith	Ford 	Focus	Transmission
+H. Davis	Ford 	Thunderbird	Oil
+N. Smith	Buick 	Skylark	Tires
+S. Rodgers	Pontiac 	Solstice	Brakes
+F. Tomas	Dodge 	Dart	Oil
+A. Stark	Chevrolet 	Equinox	Oil
+H. Potter	Dodge 	Grand Caravan	Tires

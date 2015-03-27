@@ -5,6 +5,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 
 import javax.inject.Inject;
@@ -18,7 +19,7 @@ public class MainController {
   @FXML
   private BorderPane contentArea;
   @FXML
-  private Button logout;
+  private MenuItem logout;
 
   @Inject
   private NewCourseSectionController newCourseSectionController;
