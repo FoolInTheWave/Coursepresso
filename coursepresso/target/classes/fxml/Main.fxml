@@ -7,65 +7,45 @@
 <?import javafx.scene.layout.*?>
 
 <BorderPane fx:id="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.MainController">
-   <center>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <top>
-              <VBox spacing="5" BorderPane.alignment="CENTER">
-                  <styleClass>
-                      <String fx:value="header" />
-                  </styleClass>
-                  <children>
-                  <HBox prefHeight="17.0" prefWidth="200.0">
-                     <children>
-                            <Label text="Coursepresso" textFill="WHITE">
-                                <styleClass>
-                                    <String fx:value="label" />
-                                    <String fx:value="title" />
-                                </styleClass>
-                           <padding>
-                              <Insets right="750.0" />
-                           </padding>
-                            </Label>
-                     </children>
-                  </HBox>
-                      <Label text="Course Schedule Management System" textFill="WHITE">
+
+    <!-- Header -->
+    <top>
+        <VBox spacing="5">
+            <styleClass>
+                <String fx:value="header" />
+            </styleClass>
+            <children>
+            <HBox prefHeight="17.0" prefWidth="200.0">
+               <children>
+                      <Label text="Coursepresso" textFill="WHITE">
                           <styleClass>
                               <String fx:value="label" />
-                              <String fx:value="tag-line" />
+                              <String fx:value="title" />
                           </styleClass>
+                     <padding>
+                        <Insets right="750.0" />
+                     </padding>
                       </Label>
-                  </children>
-              </VBox>
-         </top>
-         <bottom>
-              <BorderPane fx:id="contentArea" BorderPane.alignment="CENTER">
-                  <styleClass>
-                      <String fx:value="body" />
-                  </styleClass>
-              </BorderPane>
-         </bottom>
-      </BorderPane>
-   </center>
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Options">
-            <items>
-              <MenuItem fx:id="logoutBtn" mnemonicParsing="false" text="Logout" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
+                  <Button fx:id="logout" alignment="CENTER" mnemonicParsing="false" onAction="#logoutButtonClick" text="Log Out" />
+               </children>
+            </HBox>
+                <Label text="Course Schedule Management System" textFill="WHITE">
+                    <styleClass>
+                        <String fx:value="label" />
+                        <String fx:value="tag-line" />
+                    </styleClass>
+                </Label>
+            </children>
+        </VBox>
+    </top>
+
+    <!-- Content Area -->
+    <center>
+        <BorderPane fx:id="contentArea">
+            <styleClass>
+                <String fx:value="body" />
+            </styleClass>
+        </BorderPane>
+    </center>
 
 </BorderPane>

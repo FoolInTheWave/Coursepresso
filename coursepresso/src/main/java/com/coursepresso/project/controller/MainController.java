@@ -19,7 +19,7 @@ public class MainController {
   @FXML
   private BorderPane contentArea;
   @FXML
-  private MenuItem logout;
+  private Button logout;
 
   @Inject
   private NewCourseSectionController newCourseSectionController;
