@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Caleb Miller
  */
 @Entity
-@Table(name = "course_section")
+@Table(name = "course_sections")
 public class CourseSection implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -243,10 +243,7 @@ public class CourseSection implements Serializable {
 
   @Override
   public String toString() {
-    return String.format(
-        "CourseSection[id=%d, courseNumber='%s', sectionNumber=%d]", 
-        id, courseNumber.getCourseNumber(), sectionNumber
-    );
+    return id.toString();
   }
 
 }

@@ -11,7 +11,7 @@ import javax.persistence.*;
  * @author Caleb Miller
  */
 @Entity
-@Table(name = "meeting_time")
+@Table(name = "meeting_times")
 public class MeetingTime implements Serializable {
 
   private static final long serialVersionUID = 1L;

@@ -9,7 +9,7 @@ import javax.persistence.*;
  * @author Caleb Miller
  */
 @Entity
-@Table(name = "course_prerequisite")
+@Table(name = "course_prerequisites")
 public class CoursePrerequisite implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -96,7 +96,7 @@ public class CoursePrerequisite implements Serializable {
 
   @Override
   public String toString() {
-    return "coursepresso.model.CoursePrerequisite[ id=" + id + " ]";
+    return id.toString();
   }
 
 }

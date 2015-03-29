@@ -21,6 +21,11 @@ public class ServiceConfig {
   }
 
   @Bean
+  public SearchService searchService() {
+    return createService("search.service", SearchService.class);
+  }
+
+  @Bean
   public ApplianceRepository applianceRepository() {
     return createService("appliance.repository", ApplianceRepository.class);
   }

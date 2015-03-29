@@ -9,7 +9,7 @@ import javax.persistence.*;
  * @author Caleb Miller
  */
 @Entity
-@Table(name = "appliance")
+@Table(name = "appliances")
 public class Appliance implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -97,7 +97,7 @@ public class Appliance implements Serializable {
 
   @Override
   public String toString() {
-    return "coursepresso.model.Appliance[ id=" + id + " ]";
+    return id.toString();
   }
 
 }

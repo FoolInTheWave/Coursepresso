@@ -9,7 +9,7 @@ import javax.persistence.*;
  * @author Caleb Miller
  */
 @Entity
-@Table(name = "meeting_day")
+@Table(name = "meeting_days")
 public class MeetingDay implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -146,7 +146,7 @@ public class MeetingDay implements Serializable {
 
   @Override
   public String toString() {
-    return "coursepresso.model.MeetingDay[ id=" + id + " ]";
+    return id.toString();
   }
 
 }

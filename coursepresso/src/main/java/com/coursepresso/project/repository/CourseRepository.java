@@ -21,5 +21,5 @@ public interface CourseRepository extends CrudRepository<Course, String>  {
    * @return A Course record as a Course object.
    */
   @Query("SELECT c FROM Course c JOIN FETCH c.courseSectionList WHERE c.courseNumber = (:courseNumber)")
-  public Course findByCourseNumberAndFetchCourseSectionListEagerly(@Param("courseNumber") String courseNumber);
+  public Course findByCourseNumberWithCourseSections(@Param("courseNumber") String courseNumber);
 }
