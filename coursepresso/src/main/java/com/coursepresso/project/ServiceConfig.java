@@ -26,6 +26,11 @@ public class ServiceConfig {
   }
 
   @Bean
+  public ConflictService conflictService() {
+    return createService("conflict.service", ConflictService.class);
+  }
+
+  @Bean
   public ApplianceRepository applianceRepository() {
     return createService("appliance.repository", ApplianceRepository.class);
   }

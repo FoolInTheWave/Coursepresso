@@ -106,7 +106,7 @@ public class CourseSearchController implements Initializable {
      params.put("term", (Term) termCombo.getValue());
    }
    if (courseNumberCombo.getValue() != null) {
-     params.put("courseNumber", (Course) courseNumberCombo.getValue());
+     params.put("course", (Course) courseNumberCombo.getValue());
    }
    if (instructorCombo.getValue() != null) {
      params.put("professor", (Professor) instructorCombo.getValue());
@@ -135,7 +135,7 @@ public class CourseSearchController implements Initializable {
      params.put("wednesday", "W");
    }
    if (thursdayCheckbox.isSelected()) {
-     params.put("thrusday", "TH");
+     params.put("thursday", "TH");
    }
    if (fridayCheckbox.isSelected()) {
      params.put("friday", "F");
