@@ -6,46 +6,51 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="root" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.MainController">
 
-    <!-- Header -->
-    <top>
-        <VBox spacing="5">
-            <styleClass>
-                <String fx:value="header" />
-            </styleClass>
-            <children>
-            <HBox prefHeight="17.0" prefWidth="200.0">
+<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.MainController">
+   <children>
+      <MenuBar prefHeight="25.0" prefWidth="782.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Logout">
+            <items>
+              <MenuItem fx:id="logoutMnu" mnemonicParsing="false" onAction="#logoutMnuClick" text="Logout" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem fx:id="aboutMnu" mnemonicParsing="false" onAction="#aboutMnuClick" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <VBox prefHeight="60.0" spacing="5">
+         <children>
+            <VBox prefHeight="35.0" prefWidth="758.0" styleClass="header">
                <children>
-                      <Label text="Coursepresso" textFill="WHITE">
-                          <styleClass>
-                              <String fx:value="label" />
-                              <String fx:value="title" />
-                          </styleClass>
+                  <Label text="Coursepresso" textFill="WHITE">
                      <padding>
                         <Insets right="750.0" />
                      </padding>
-                      </Label>
-                  <Button fx:id="logout" alignment="CENTER" mnemonicParsing="false" onAction="#logoutButtonClick" text="Log Out" />
-               </children>
-            </HBox>
-                <Label text="Course Schedule Management System" textFill="WHITE">
-                    <styleClass>
+                     <styleClass>
+                        <String fx:value="label" />
+                        <String fx:value="title" />
+                     </styleClass>
+                  </Label>
+                  <Label text="Course Schedule Management System" textFill="WHITE">
+                     <styleClass>
                         <String fx:value="label" />
                         <String fx:value="tag-line" />
-                    </styleClass>
-                </Label>
-            </children>
-        </VBox>
-    </top>
-
-    <!-- Content Area -->
-    <center>
-        <BorderPane fx:id="contentArea">
-            <styleClass>
-                <String fx:value="body" />
-            </styleClass>
-        </BorderPane>
-    </center>
-
-</BorderPane>
+                     </styleClass>
+                  </Label>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+      <BorderPane fx:id="contentArea" styleClass="body" />
+   </children>
+</VBox>
