@@ -189,8 +189,8 @@ public class EditCourseSectionController implements Initializable {
     for (MeetingDay dayToDel : daysToDelete) {
       meetingDayRepository.delete(dayToDel.getId());
     }
-    
-    courseSection.setMeetingDayList(meetingDays);
+
+    courseSection.setMeetingDayList(new ArrayList<>(meetingDays));
 
     courseSection = courseSectionRepository.save(courseSection);
 
@@ -363,30 +363,36 @@ public class EditCourseSectionController implements Initializable {
     // Build meeting day table
     meetingDays.clear();
     section = courseSectionRepository.findByIdWithMeetingDays(cs.getId());
-    section.getMeetingDayList().stream().forEach((day) -> {
-      meetingDays.add(day);
-    });
-
+    System.out.println(section);
+    System.out.println(cs);
+    if (section.getMeetingDayList() != null) {
+      section.getMeetingDayList().stream().forEach((day) -> {
+        meetingDays.add(day);
+      });
+    }
+    
     // Build start and end date pickers
-    Instant startInstant = Instant.ofEpochMilli(cs.getStartDate().getTime());
+    Instant startInstant = Instant.ofEpochMilli(section.getStartDate().getTime());
     LocalDate startLocalDate = LocalDateTime.ofInstant(startInstant, ZoneId.systemDefault()).toLocalDate();
     startDatePicker.setValue(startLocalDate);
 
-    Instant endInstant = Instant.ofEpochMilli(cs.getEndDate().getTime());
+    Instant endInstant = Instant.ofEpochMilli(section.getEndDate().getTime());
     LocalDate endLocalDate = LocalDateTime.ofInstant(endInstant, ZoneId.systemDefault()).toLocalDate();
     endDatePicker.setValue(endLocalDate);
-
+    
     // Set the capacity field to the room with the lowest capacity
-    capacityField.setText(
-        Integer.toString(
-            // Find the room with the lowest capacity from the current day list
-            meetingDays.stream()
-            .min((m1, m2) -> Integer.compare(
-                    m1.getRoomNumber().getCapacity(),
-                    m2.getRoomNumber().getCapacity()
-                )).get().getRoomNumber().getCapacity()
-        )
-    );
-
+    if (!meetingDays.isEmpty()) {
+      capacityField.setText(
+          Integer.toString(
+              // Find the room with the lowest capacity from the current day list
+              meetingDays.stream()
+              .min((m1, m2) -> Integer.compare(
+                      m1.getRoomNumber().getCapacity(),
+                      m2.getRoomNumber().getCapacity()
+                  )).get().getRoomNumber().getCapacity()
+          )
+      );
+    }
   }
+  
 }

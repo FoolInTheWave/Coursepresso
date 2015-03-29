@@ -202,7 +202,7 @@ public class SearchResultsController implements Initializable {
       courseSectionRepository.delete(courseSectionTable.getSelectionModel().getSelectedItem().getId());
       courseSections.remove(courseSectionTable.getSelectionModel().getSelectedItem());
       
-      JOptionPane.showMessageDialog(null, "Course section deleted successfully");
+      JOptionPane.showMessageDialog(null, "Course section deleted successfully!");
       
     } else {
       //Do Nothing

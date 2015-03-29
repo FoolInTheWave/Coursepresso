@@ -21,6 +21,7 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -179,7 +180,7 @@ public class NewCourseSectionController implements Initializable {
       day.setCourseSectionId(courseSection);
       day.setTerm(courseSection.getTerm());
     }
-    meetingDayRepository.save(meetingDays);
+    meetingDayRepository.save(new ArrayList<MeetingDay>(meetingDays));
 
     Alert alert = new Alert(AlertType.INFORMATION);
     alert.setTitle("Course Section Saved");

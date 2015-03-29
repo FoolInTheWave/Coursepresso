@@ -31,7 +31,7 @@ public interface CourseSectionRepository extends CrudRepository<CourseSection, I
    * @param id The id to match.
    * @return A CourseSection record as a CourseSection object.
    */
-  @Query("SELECT cs FROM CourseSection cs JOIN FETCH cs.meetingDayList WHERE cs.id = (:id)")
+  @Query("SELECT cs FROM CourseSection cs LEFT JOIN FETCH cs.meetingDayList WHERE cs.id = (:id)")
   public CourseSection findByIdWithMeetingDays(@Param("id") Integer id);
   
   /**
