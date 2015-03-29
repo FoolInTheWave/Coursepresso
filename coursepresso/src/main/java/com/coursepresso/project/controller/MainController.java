@@ -1,6 +1,7 @@
 package com.coursepresso.project.controller;
 
 import com.coursepresso.project.entity.CourseSection;
+import com.coursepresso.project.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -8,8 +9,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 
 import javax.inject.Inject;
+import javax.swing.JOptionPane;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -23,6 +26,8 @@ public class MainController {
   private MenuItem logoutMnu;
   @FXML
   private MenuItem aboutMnu;
+  @FXML
+  private MenuItem closeMnu;
 
   @Inject
   private NewCourseSectionController newCourseSectionController;
@@ -62,6 +67,25 @@ public class MainController {
     alert.setContentText("I have a great message for you!");
 
     alert.showAndWait();
+  }
+
+  @FXML
+  private void closeMnuClick(ActionEvent event) {
+    int dialogResult = JOptionPane.showConfirmDialog(
+            null, "Are you sure you want to logout and close Coursepresso?",
+            "Warning", JOptionPane.YES_NO_OPTION
+    );
+
+    if (dialogResult == JOptionPane.YES_OPTION) {
+      loginController.logout();
+      // get a handle to the stage
+      Stage stage = (Stage) Main.getScene().getWindow();
+      // close the stage
+      stage.close();
+
+    } else {
+      //Do Nothing
+    }
   }
 
   public void showNewCourseSection() {
