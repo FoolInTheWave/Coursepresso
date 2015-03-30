@@ -1,6 +1,10 @@
 package com.coursepresso.project.controller;
 
+import com.coursepresso.project.entity.Term;
+import com.coursepresso.project.service.ConflictService;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -17,7 +21,7 @@ import javax.inject.Inject;
  * @author Caleb Miller
  */
 public class ConflictController implements Initializable {
-  
+
   @FXML
   private Node root;
   @FXML
@@ -38,17 +42,21 @@ public class ConflictController implements Initializable {
   private Button resolveManuallyButton;
   @FXML
   private Button resolveAutomaticallyButton;
-  
+
   @Inject
   private MainController mainController;
+  @Inject
+  private ConflictService conflictService;
   
   public Node getView() {
     return root;
   }
+  
+  private static List<String> conflicts;
 
   /**
    * Initializes the controller class.
-   * 
+   *
    * @param url
    * @param rb
    */
@@ -56,9 +64,15 @@ public class ConflictController implements Initializable {
   public void initialize(URL url, ResourceBundle rb) {
     // TODO
   }
-  
+
   @FXML
   private void backButtonClick() {
     mainController.showScheduleSelection();
+  }
+
+  public void buildView(Term selectedTerm) {
+    //conflicts = conflictService.getConflicts(selectedTerm);
+    
+    System.out.println(conflicts);
   }
 }

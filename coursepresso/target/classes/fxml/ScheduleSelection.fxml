@@ -39,7 +39,7 @@
                         </TableView>
                         <HBox alignment="CENTER" spacing="70.0">
                            <children>
-                              <Button fx:id="submitButton" layoutX="317.0" layoutY="2.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="30.0" prefWidth="150.0" text="Submit">
+                              <Button fx:id="submitButton" layoutX="317.0" layoutY="2.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#submitButtonClick" prefHeight="30.0" prefWidth="150.0" text="Submit">
                                  <font>
                                     <Font size="13.0" />
                                  </font>

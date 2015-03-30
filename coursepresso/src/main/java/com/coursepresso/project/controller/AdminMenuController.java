@@ -40,6 +40,8 @@ public class AdminMenuController implements Initializable {
   
   @Inject
   private MainController mainController;
+  @Inject
+  private ScheduleSelectionController scheduleSelectionController;
   
   public Node getView() {
     return root;
@@ -63,7 +65,8 @@ public class AdminMenuController implements Initializable {
   
   @FXML
   private void displayConflictsButtonClick(ActionEvent event) {
-    mainController.showConflict();
+    scheduleSelectionController.buildView();
+    mainController.showScheduleSelection();
   }
   
   @FXML
