@@ -17,7 +17,7 @@
          <content>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="560.0" prefWidth="1020.0">
                <children>
-                  <Button fx:id="searchCoursesButton" layoutX="43.0" layoutY="120.0" mnemonicParsing="false" onAction="#displayCourseSearchButtonClick" prefHeight="61.0" prefWidth="240.0" text="Search Courses">
+                  <Button fx:id="searchCoursesButton" layoutX="43.0" layoutY="95.0" mnemonicParsing="false" onAction="#displayCourseSearchButtonClick" prefHeight="50.0" prefWidth="240.0" text="Search Courses">
                      <font>
                         <Font size="21.0" />
                      </font>
@@ -27,44 +27,55 @@
                         <Font size="24.0" />
                      </font>
                   </Label>
-                  <Button fx:id="newCourseButton" layoutX="43.0" layoutY="225.0" mnemonicParsing="false" onAction="#newCourseButtonClick" prefHeight="61.0" prefWidth="240.0" text="Add New Course">
+                  <Button fx:id="newCourseButton" layoutX="43.0" layoutY="182.0" mnemonicParsing="false" onAction="#newCourseButtonClick" prefHeight="50.0" prefWidth="240.0" text="Add New Course">
                      <font>
                         <Font size="21.0" />
                      </font>
                   </Button>
-                  <Button fx:id="newScheduleButton" layoutX="43.0" layoutY="333.0" mnemonicParsing="false" onAction="#displayNewScheduleButtonClick" prefHeight="61.0" prefWidth="240.0" text="Create New Schedule">
+                  <Button fx:id="newScheduleButton" layoutX="43.0" layoutY="273.0" mnemonicParsing="false" onAction="#displayNewScheduleButtonClick" prefHeight="50.0" prefWidth="240.0" text="Create New Schedule">
                      <font>
                         <Font size="21.0" />
                      </font>
                   </Button>
-                  <Button fx:id="displayConflictsButton" layoutX="43.0" layoutY="439.0" mnemonicParsing="false" onAction="#displayConflictsButtonClick" prefHeight="61.0" prefWidth="240.0" text="Display Conflicts">
+                  <Button fx:id="displayConflictsButton" layoutX="43.0" layoutY="363.0" mnemonicParsing="false" onAction="#displayConflictsButtonClick" prefHeight="50.0" prefWidth="240.0" text="Display Conflicts">
                      <font>
                         <Font size="21.0" />
                      </font>
                   </Button>
-                  <Label fx:id="searchCoursesLabel" layoutX="308.0" layoutY="131.0" prefHeight="40.0" prefWidth="748.0" text="Search existing courses and sort, print, or modify the results.">
+                  <Label fx:id="searchCoursesLabel" layoutX="308.0" layoutY="100.0" prefHeight="40.0" prefWidth="710.0" text="Search existing courses and sort, print, or modify the results.">
                      <font>
-                        <Font size="22.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="newCourseLabel" layoutX="308.0" layoutY="236.0" prefHeight="40.0" prefWidth="748.0" text="Add a new course or course section to an existing schedule.">
+                  <Label fx:id="newCourseLabel" layoutX="308.0" layoutY="187.0" prefHeight="40.0" prefWidth="748.0" text="Add a new course or course section to an existing schedule.">
                      <font>
-                        <Font size="22.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="newScheduleLabel" layoutX="308.0" layoutY="344.0" prefHeight="40.0" prefWidth="748.0" text="Begin creating a new schedule for an upcoming semester.">
+                  <Label fx:id="newScheduleLabel" layoutX="308.0" layoutY="278.0" prefHeight="40.0" prefWidth="748.0" text="Begin creating a new schedule for an upcoming semester.">
                      <font>
-                        <Font size="22.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="displayConflictsLabel" layoutX="308.0" layoutY="450.0" prefHeight="40.0" prefWidth="748.0" text="Choose an existing schedule and display course conflicts.">
+                  <Label fx:id="displayConflictsLabel" layoutX="308.0" layoutY="368.0" prefHeight="40.0" prefWidth="748.0" text="Choose an existing schedule and display course conflicts.">
                      <font>
-                        <Font size="22.0" />
+                        <Font size="18.0" />
                      </font>
                   </Label>
-                  <Separator layoutX="2.0" layoutY="203.0" prefHeight="3.0" prefWidth="1022.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                  <Separator layoutX="2.0" layoutY="309.0" prefHeight="3.0" prefWidth="1022.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-                  <Separator layoutX="2.0" layoutY="415.0" prefHeight="3.0" prefWidth="1022.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Separator layoutY="163.0" prefHeight="3.0" prefWidth="1022.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Separator layoutY="254.0" prefHeight="3.0" prefWidth="1022.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Separator layoutY="344.0" prefHeight="3.0" prefWidth="1022.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <Separator layoutY="436.0" prefHeight="3.0" prefWidth="1022.0" />
+                  <Label fx:id="displayConflictsLabel1" layoutX="308.0" layoutY="461.0" prefHeight="40.0" prefWidth="707.0" text="Create a new user for Coursepresso.">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="createUserButton" layoutX="43.0" layoutY="456.0" mnemonicParsing="false" onAction="#createUserButtonClick" prefHeight="50.0" prefWidth="240.0" text="Create User">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </content>

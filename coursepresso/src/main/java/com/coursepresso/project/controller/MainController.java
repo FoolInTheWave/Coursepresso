@@ -49,6 +49,8 @@ public class MainController {
   private NewScheduleController newScheduleController;
   @Inject
   private EditCourseSectionController editCourseSectionController;
+  @Inject
+  private CreateUserController createUserController;
 
   public Parent getView() {
     return root;
@@ -72,8 +74,8 @@ public class MainController {
   @FXML
   private void closeMnuClick(ActionEvent event) {
     int dialogResult = JOptionPane.showConfirmDialog(
-            null, "Are you sure you want to logout and close Coursepresso?",
-            "Warning", JOptionPane.YES_NO_OPTION
+        null, "Are you sure you want to logout and close Coursepresso?",
+        "Warning", JOptionPane.YES_NO_OPTION
     );
 
     if (dialogResult == JOptionPane.YES_OPTION) {
@@ -140,5 +142,10 @@ public class MainController {
   public void showNewSchedule() {
     newScheduleController.buildView();
     contentArea.setCenter(newScheduleController.getView());
+  }
+
+  public void showCreateUser() {
+    createUserController.buildView();
+    contentArea.setCenter(createUserController.getView());
   }
 }
