@@ -65,7 +65,7 @@ public class LoginController implements Initializable {
       @Override
       protected Void call() throws Exception {
         // Never log password information!
-        log.info("Logging in as user '{}'", username);
+        log.info("Logging out as user '{}'", username);
         securityService.logout();
         return null;
       }

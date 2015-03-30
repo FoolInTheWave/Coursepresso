@@ -1,5 +1,6 @@
 package com.coursepresso.project.controller;
 
+import com.coursepresso.project.service.SecurityService;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * FXML Controller class
@@ -39,8 +41,11 @@ public class CreateUserController implements Initializable {
   private Button createUserButton;
   @FXML
   private PasswordField confirmPasswordField;
+
   @Inject
   private MainController mainController;
+  @Inject
+  private SecurityService securityService;
 
   public Node getView() {
     return root;
@@ -66,19 +71,30 @@ public class CreateUserController implements Initializable {
             authorities.add(
                 new SimpleGrantedAuthority(authorityCombo.getValue())
             );
+
+            // Hash the password
+            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+            String hashedPassword = passwordEncoder.encode(
+                passwordField.getText()
+            );
+
             // Create new user
             User user = new User(
                 usernameField.getText(),
-                passwordField.getText(),
+                hashedPassword,
                 authorities
             );
+
             // Nofify user
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("New User Created");
             alert.setHeaderText(null);
             alert.setContentText("The new user account has been created successfully!");
             alert.showAndWait();
-            
+
+            // Call the service to save the user
+            securityService.createUser(user);
+
             mainController.showMenu();
           } else {
             // Notify user of no authority error
