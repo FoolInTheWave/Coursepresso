@@ -6,7 +6,6 @@ import com.coursepresso.project.entity.Conflict;
 import com.coursepresso.project.repository.CourseSectionRepository;
 import com.coursepresso.project.service.ConflictService;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -24,7 +23,7 @@ import javax.inject.Inject;
 /**
  * FXML Controller class
  *
- * @author Caleb Miller
+ * @author Caleb Miller, Steve Foco
  */
 public class ConflictController implements Initializable {
 
@@ -71,10 +70,18 @@ public class ConflictController implements Initializable {
    */
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-    lineNoColumn.setCellValueFactory(new PropertyValueFactory<Conflict, String>("lineNo"));
-    courseColumn.setCellValueFactory(new PropertyValueFactory<Conflict, String>("course"));
-    sectionColumn.setCellValueFactory(new PropertyValueFactory<Conflict, String>("sectionNum"));
-    reasonColumn.setCellValueFactory(new PropertyValueFactory<Conflict, String>("reason"));
+    lineNoColumn.setCellValueFactory(
+        new PropertyValueFactory<Conflict, String>("lineNo")
+    );
+    courseColumn.setCellValueFactory(
+        new PropertyValueFactory<Conflict, String>("course")
+    );
+    sectionColumn.setCellValueFactory(
+        new PropertyValueFactory<Conflict, String>("sectionNum")
+    );
+    reasonColumn.setCellValueFactory(
+        new PropertyValueFactory<Conflict, String>("reason")
+    );
     
     // Initialize the conflicts observable list and table view
     conflicts = FXCollections.observableArrayList();
@@ -99,22 +106,22 @@ public class ConflictController implements Initializable {
       
       System.out.println(sections[0] + " " + sections[1]);
       
-      cs1 = courseSectionRepository.findByIdWithCourse(Integer.parseInt(sections[0]));
-      cs2 = courseSectionRepository.findByIdWithCourse(Integer.parseInt(sections[1]));
+      cs1 = courseSectionRepository.findByIdWithCourse(
+          Integer.parseInt(sections[0])
+      );
+      cs2 = courseSectionRepository.findByIdWithCourse(
+          Integer.parseInt(sections[1])
+      );
       
-      conflicts.add(new Conflict(cs1.getCourseNumber().getTitle(), Integer.toString(cs1.getSectionNumber()), cs1.getId().toString(), cs2.getId().toString()));
-      System.out.println(cs1.getCourseNumber().getTitle() + cs1.getSectionNumber() + cs1.getId() + cs2.getId());
+      conflicts.add(new Conflict(
+          cs1.getCourseNumber().getTitle(), 
+          Integer.toString(cs1.getSectionNumber()), 
+          cs1.getId().toString(), 
+          cs2.getId().toString())
+      );
     }
     
     numberLabel.setText(conflicts.size() + " Conflicts Found");
-    
-    /* EVEN THIS DOESN'T WORK
-    conflicts = FXCollections.observableArrayList(
-            new Conflict("Blah", "Blah", "Blah", "Blah")
-    );
-    */
-    
-    System.out.println(conflicts.toString());
     
     conflictTable.setItems(conflicts);
   }

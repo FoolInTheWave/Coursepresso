@@ -1,15 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.coursepresso.project.entity;
 
 import javafx.beans.property.SimpleStringProperty;
 
 /**
  *
- * @author Steve
+ * @author Steve Foco
  */
 public class Conflict {
   private final SimpleStringProperty course;
@@ -32,11 +27,11 @@ public class Conflict {
     return sectionNum.get();
   }
   
-  public String getlineNo() {
+  public String getLineNo() {
     return lineNo.get();
   }
   
-  public String getreason() {
+  public String getReason() {
     return reason.get();
   }
   
@@ -48,7 +43,7 @@ public class Conflict {
     this.sectionNum.set(sectionNum);
   }
   
-  public void setlineNo(String lineNo) {
+  public void setLineNo(String lineNo) {
     this.lineNo.set(lineNo);
   }
   
