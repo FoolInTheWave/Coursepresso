@@ -27,10 +27,10 @@
                         </HBox>
                         <TableView fx:id="conflictTable" layoutX="14.0" layoutY="41.0" prefHeight="465.0" prefWidth="975.0" VBox.vgrow="ALWAYS">
                           <columns>
-                            <TableColumn fx:id="courseColumn" prefWidth="75.0" text="Course" />
-                            <TableColumn fx:id="sectionColumn" prefWidth="75.0" text="Section" />
-                              <TableColumn fx:id="termColumn" prefWidth="75.0" text="Term" />
-                              <TableColumn fx:id="reasonColumn" prefWidth="75.0" text="Reason" />
+                              <TableColumn fx:id="lineNoColumn" prefWidth="140.0" text="Line No." />
+                            <TableColumn fx:id="courseColumn" prefWidth="370.0" text="Course" />
+                            <TableColumn fx:id="sectionColumn" prefWidth="108.0" text="Section" />
+                              <TableColumn fx:id="reasonColumn" prefWidth="357.0" text="Reason" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

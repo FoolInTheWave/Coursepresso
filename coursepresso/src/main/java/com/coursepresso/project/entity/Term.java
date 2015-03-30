@@ -20,6 +20,9 @@ public class Term implements Serializable {
   @Column(name = "term")
   private String term;
   @Basic(optional = false)
+  @Column(name = "status")
+  private String status;
+  @Basic(optional = false)
   @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
@@ -31,8 +34,9 @@ public class Term implements Serializable {
   public Term() {
   }
 
-  public Term(String term, Date updatedAt) {
+  public Term(String term, String status, Date updatedAt) {
     this.term = term;
+    this.status = status;
     this.updatedAt = updatedAt;
   }
 
@@ -42,6 +46,14 @@ public class Term implements Serializable {
 
   public void setTerm(String term) {
     this.term = term;
+  }
+  
+  public String getStatus() {
+    return status;
+  }
+  
+  public void setStatus(String status) {
+    this.status = status;
   }
   
   public Date getUpdatedAt() {

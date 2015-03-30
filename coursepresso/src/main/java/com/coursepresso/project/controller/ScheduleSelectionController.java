@@ -33,7 +33,7 @@ public class ScheduleSelectionController implements Initializable {
   @FXML
   private TableColumn<Term, String> termColumn;
   @FXML
-  private TableColumn<?, ?> statusColumn;
+  private TableColumn<Term, String> statusColumn;
   @FXML
   private Button backButton;
   @FXML
@@ -61,6 +61,7 @@ public class ScheduleSelectionController implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     termColumn.setCellValueFactory(new PropertyValueFactory<>("term"));
+    statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
     // Initialize the term observable list and table view
     terms = FXCollections.observableArrayList();
