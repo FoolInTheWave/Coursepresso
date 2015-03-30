@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="576.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.CreateUserController">
+  <stylesheets>
+    <URL value="@/styles/Styles.css" />
+  </stylesheets>
+   <children>
+      <ScrollPane fx:id="root" fitToHeight="true" fitToWidth="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="1024.0">
+               <children>
+                  <VBox prefHeight="576.0" prefWidth="1024.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label text="Username">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="usernameField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </TextField>
+                        <Label text="Password">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <PasswordField fx:id="passwordField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </PasswordField>
+                        <Label text="Confirm Password">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <PasswordField fx:id="confirmPasswordField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </PasswordField>
+                        <Label text="Authority">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <ComboBox fx:id="authorityCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" visibleRowCount="5" />
+                        <HBox alignment="CENTER" prefHeight="41.0" prefWidth="1024.0" spacing="70.0">
+                           <children>
+                              <Button fx:id="createUserButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createUserButtonClick" prefHeight="30.0" prefWidth="150.0" text="Create User">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="30.0" prefWidth="150.0" text="Back">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+   </children>
+</AnchorPane>

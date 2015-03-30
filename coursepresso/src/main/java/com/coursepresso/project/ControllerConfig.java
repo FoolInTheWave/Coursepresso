@@ -1,16 +1,6 @@
 package com.coursepresso.project;
 
-import com.coursepresso.project.controller.CourseSearchController;
-import com.coursepresso.project.controller.ConflictController;
-import com.coursepresso.project.controller.EditCourseSectionController;
-import com.coursepresso.project.controller.LoginController;
-import com.coursepresso.project.controller.MainController;
-import com.coursepresso.project.controller.AdminMenuController;
-import com.coursepresso.project.controller.NewCourseSectionController;
-import com.coursepresso.project.controller.NewScheduleController;
-import com.coursepresso.project.controller.ScheduleSelectionController;
-import com.coursepresso.project.controller.SearchResultsController;
-import com.coursepresso.project.controller.UserMenuController;
+import com.coursepresso.project.controller.*;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
 import org.springframework.context.annotation.Bean;
@@ -22,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class ControllerConfig {
-  
+
   @Bean
   public MainController mainController() {
     return loadController("/fxml/Main.fxml");
@@ -32,52 +22,57 @@ public class ControllerConfig {
   public NewCourseSectionController newCourseSectionController() {
     return loadController("/fxml/NewCourseSection.fxml");
   }
-  
+
   @Bean
   public LoginController loginController() {
     return loadController("/fxml/Login.fxml");
   }
-  
+
   @Bean
   public ConflictController conflictController() {
     return loadController("/fxml/Conflict.fxml");
   }
-  
+
   @Bean
   public AdminMenuController adminMenuController() {
     return loadController("/fxml/AdminMenu.fxml");
   }
-  
+
   @Bean
   public UserMenuController userMenuController() {
     return loadController("/fxml/UserMenu.fxml");
   }
-  
+
   @Bean
   public CourseSearchController courseSearchController() {
     return loadController("/fxml/CourseSearch.fxml");
   }
-    
+
   @Bean
   public ScheduleSelectionController scheduleSelectionController() {
     return loadController("/fxml/ScheduleSelection.fxml");
   }
-  
+
   @Bean
   public SearchResultsController searchResultsController() {
     return loadController("/fxml/SearchResults.fxml");
   }
-  
+
   @Bean
   public NewScheduleController newScheduleController() {
     return loadController("/fxml/NewSchedule.fxml");
   }
-  
+
   @Bean
   public EditCourseSectionController editCourseSectionController() {
     return loadController("/fxml/EditCourseSection.fxml");
   }
-  
+
+  @Bean
+  public CreateUserController createUserController() {
+    return loadController("/fxml/CreateUser.fxml");
+  }
+
   @SuppressWarnings("unchecked")
   private <T> T loadController(String fxmlFile) {
     try {

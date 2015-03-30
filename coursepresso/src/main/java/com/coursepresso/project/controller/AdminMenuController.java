@@ -34,46 +34,51 @@ public class AdminMenuController implements Initializable {
   @FXML
   private Label newCourseLabel;
   @FXML
-  private Label newScheduleLabel;  
+  private Label newScheduleLabel;
   @FXML
   private Label headerLabel;
-  
+
   @Inject
   private MainController mainController;
-  
+
   public Node getView() {
     return root;
   }
-    
+
   /**
    * Initializes the controller class.
-   * 
+   *
    * @param url
    * @param rb
    */
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-      // TODO
+    // TODO
   }
-  
+
   @FXML
   private void newCourseButtonClick(ActionEvent event) {
     mainController.showNewCourseSection();
   }
-  
+
   @FXML
   private void displayConflictsButtonClick(ActionEvent event) {
     mainController.showConflict();
   }
-  
+
   @FXML
   private void displayCourseSearchButtonClick(ActionEvent event) {
     mainController.showCourseSearch();
   }
-  
+
   @FXML
   private void displayNewScheduleButtonClick(ActionEvent event) {
     mainController.showNewSchedule();
   }
-  
+
+  @FXML
+  private void createUserButtonClick(ActionEvent event) {
+    mainController.showCreateUser();
+  }
+
 }
