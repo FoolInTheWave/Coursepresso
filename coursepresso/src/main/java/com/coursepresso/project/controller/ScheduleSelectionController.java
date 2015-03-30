@@ -82,10 +82,12 @@ public class ScheduleSelectionController implements Initializable {
   }
 
   public void buildView() {
+    terms.clear();
     terms = FXCollections.observableArrayList(
         Lists.newArrayList(termRepository.findAll())
     );
 
+    numberLabel.setText(terms.size() + " Schedules Found");
     scheduleTable.setItems(terms);
   }
 
