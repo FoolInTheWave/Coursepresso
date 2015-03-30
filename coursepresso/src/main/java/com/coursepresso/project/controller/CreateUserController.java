@@ -62,6 +62,9 @@ public class CreateUserController implements Initializable {
   @FXML
   private void createUserButtonClick() {
     ArrayList<GrantedAuthority> authorities = new ArrayList<>();
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("User Creation");
+    alert.setHeaderText(null);
 
     if (!usernameField.getText().equals("")) {
       if (!passwordField.getText().equals("")) {
@@ -85,46 +88,31 @@ public class CreateUserController implements Initializable {
                 authorities
             );
 
-            // Nofify user
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("New User Created");
-            alert.setHeaderText(null);
-            alert.setContentText("The new user account has been created successfully!");
-            alert.showAndWait();
-
             // Call the service to save the user
             securityService.createUser(user);
+
+            // Nofify user
+            alert.setContentText("The new user account has been created successfully!");
+            alert.showAndWait();
 
             mainController.showMenu();
           } else {
             // Notify user of no authority error
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error");
-            alert.setHeaderText(null);
             alert.setContentText("The new user must have an authority!");
             alert.showAndWait();
           }
         } else {
           // Notify user of password mismatch
-          Alert alert = new Alert(Alert.AlertType.INFORMATION);
-          alert.setTitle("Error");
-          alert.setHeaderText(null);
           alert.setContentText("The passwords do not match!");
           alert.showAndWait();
         }
       } else {
         // Notify user of no password error
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Error");
-        alert.setHeaderText(null);
         alert.setContentText("The new user must have a password!");
         alert.showAndWait();
       }
     } else {
       // Notify user of no username error
-      Alert alert = new Alert(Alert.AlertType.INFORMATION);
-      alert.setTitle("Error");
-      alert.setHeaderText(null);
       alert.setContentText("The new user must have a username!");
       alert.showAndWait();
     }
