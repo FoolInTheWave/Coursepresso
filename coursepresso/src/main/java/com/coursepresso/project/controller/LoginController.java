@@ -88,7 +88,7 @@ public class LoginController implements Initializable {
           if (exception instanceof BadCredentialsException) {
             log.debug("Invalid logout attempt");
           } else {
-            log.error("Logout failed", exception);
+            log.error("Logout failed: ", exception);
             statusLabel.setText("Logout failed! Check logs for expection.");
           }
         }
@@ -131,7 +131,7 @@ public class LoginController implements Initializable {
             log.debug("Invalid login attempt");
             statusLabel.setText("Invalid username or password");
           } else {
-            log.error("Login failed", exception);
+            log.error("Login failed: ", exception);
             statusLabel.setText("Login failed! Check logs for exception.");
           }
         }

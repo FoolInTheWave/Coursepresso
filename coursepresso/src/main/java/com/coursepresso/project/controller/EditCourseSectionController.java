@@ -43,6 +43,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FXML Controller class
@@ -50,6 +52,10 @@ import javax.inject.Inject;
  * @author steev_000
  */
 public class EditCourseSectionController implements Initializable {
+  
+  private static final Logger log = LoggerFactory.getLogger(
+      EditCourseSectionController.class
+  );
 
   @FXML
   private Node root;
@@ -220,7 +226,7 @@ public class EditCourseSectionController implements Initializable {
       day.setStartTime(df.parse(startTimeCombo.getValue().toString()));
       day.setEndTime(df.parse(endTimeCombo.getValue().toString()));
     } catch (ParseException ex) {
-      System.err.println(ex);
+      log.error("Date parse error: ", ex);
     }
     day.setRoomNumber((Room) roomCombo.getValue());
     day.setDay(dayCombo.getValue().toString());
@@ -363,8 +369,6 @@ public class EditCourseSectionController implements Initializable {
     // Build meeting day table
     meetingDays.clear();
     section = courseSectionRepository.findByIdWithMeetingDays(cs.getId());
-    System.out.println(section);
-    System.out.println(cs);
     if (section.getMeetingDayList() != null) {
       section.getMeetingDayList().stream().forEach((day) -> {
         meetingDays.add(day);
