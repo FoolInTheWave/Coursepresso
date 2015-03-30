@@ -74,9 +74,9 @@ public class ScheduleSelectionController implements Initializable {
 
   @FXML
   private void submitButtonClick() {
-    conflictController.buildView(
-           scheduleTable.getSelectionModel().getSelectedItem()
-    );
+    Term term = scheduleTable.getSelectionModel().getSelectedItem();
+    conflictController.buildView(term);
+    
     mainController.showConflict();
   }
 

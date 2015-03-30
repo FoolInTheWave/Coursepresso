@@ -71,8 +71,8 @@ public class ConflictController implements Initializable {
   }
 
   public void buildView(Term selectedTerm) {
-    //conflicts = conflictService.getConflicts(selectedTerm);
+    conflicts = conflictService.getConflicts(selectedTerm);
     
-    System.out.println(conflicts);
+    System.out.println(selectedTerm.getTerm());
   }
 }
