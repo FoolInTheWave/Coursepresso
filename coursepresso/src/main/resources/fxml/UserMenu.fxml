@@ -8,52 +8,68 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.coursepresso.project.controller.UserMenuController">
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.UserMenuController">
     <stylesheets>
         <URL value="@/styles/Styles.css" />
     </stylesheets>
    <children>
-      <ScrollPane fx:id="root" prefHeight="583.0" prefWidth="1030.0">
+      <ScrollPane fx:id="root" fitToHeight="true" fitToWidth="true" prefViewportHeight="800.0" prefViewportWidth="1280.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
             <AnchorPane prefHeight="581.0" prefWidth="1028.0">
                <children>
-                  <Label fx:id="headerLabel" layoutX="27.0" layoutY="24.0" prefHeight="78.0" prefWidth="761.0" text="What would you like to do?">
-                     <font>
-                        <Font size="24.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="searchCoursesButton" layoutX="43.0" layoutY="120.0" mnemonicParsing="false" onAction="#displayCourseSearchButtonClick" prefHeight="61.0" prefWidth="240.0" text="Search Courses">
-                     <font>
-                        <Font size="21.0" />
-                     </font>
-                  </Button>
-                  <Label fx:id="searchCoursesLabel" layoutX="308.0" layoutY="131.0" prefHeight="40.0" prefWidth="596.0" text="Search existing courses and sort, print, or modify the results.">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Label>
-                  <Separator layoutX="2.0" layoutY="203.0" prefHeight="3.0" prefWidth="1022.0" />
-                  <Button fx:id="newSectionButton" layoutX="43.0" layoutY="225.0" mnemonicParsing="false" onAction="#newSectionButtonClick" prefHeight="61.0" prefWidth="240.0" text="New Course Section">
-                     <font>
-                        <Font size="21.0" />
-                     </font>
-                  </Button>
-                  <Label fx:id="newCourseLabel" layoutX="308.0" layoutY="236.0" prefHeight="40.0" prefWidth="675.0" text="Add a new course section to an existing schedule.">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Label>
-                  <Button fx:id="displayConflictsButton" layoutX="43.0" layoutY="333.0" mnemonicParsing="false" onAction="#displayConflictsButtonClick" prefHeight="61.0" prefWidth="240.0" text="Display Conflicts">
-                     <font>
-                        <Font size="21.0" />
-                     </font>
-                  </Button>
-                  <Separator layoutX="2.0" layoutY="309.0" prefHeight="3.0" prefWidth="1022.0" />
-                  <Label fx:id="displayConflictsLabel" layoutX="308.0" layoutY="344.0" prefHeight="40.0" prefWidth="598.0" text="Choose an existing schedule and display course conflicts.">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Label>
+                  <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="headerLabel" prefHeight="78.0" prefWidth="761.0" text="What would you like to do?">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                           <children>
+                              <Button fx:id="searchCoursesButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#displayCourseSearchButtonClick" prefHeight="60.0" prefWidth="240.0" text="Search Courses">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Button>
+                              <Label fx:id="searchCoursesLabel" prefHeight="40.0" prefWidth="596.0" text="Search existing courses and sort, print, or modify the results.">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Separator prefHeight="3.0" prefWidth="1022.0" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                           <children>
+                              <Button fx:id="newSectionButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newSectionButtonClick" prefHeight="60.0" prefWidth="240.0" text="New Course Section">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Button>
+                              <Label fx:id="newCourseLabel" prefHeight="40.0" prefWidth="675.0" text="Add a new course section to an existing schedule.">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Separator prefHeight="3.0" prefWidth="1022.0" />
+                        <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+                           <children>
+                              <Button fx:id="displayConflictsButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#displayConflictsButtonClick" prefHeight="60.0" prefWidth="240.0" text="Display Conflicts">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Button>
+                              <Label fx:id="displayConflictsLabel" prefHeight="40.0" prefWidth="598.0" text="Choose an existing schedule and display course conflicts.">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </AnchorPane>
          </content>
