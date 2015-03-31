@@ -32,7 +32,7 @@ public class MainController {
   @Inject
   private NewCourseSectionController newCourseSectionController;
   @Inject
-  private LoginController loginController;
+  private AuthenticationController authenticationController;
   @Inject
   private AdminMenuController adminMenuController;
   @Inject
@@ -58,7 +58,7 @@ public class MainController {
 
   @FXML
   private void logoutMnuClick(ActionEvent event) {
-    loginController.logout();
+    authenticationController.logout();
   }
 
   @FXML
@@ -79,7 +79,7 @@ public class MainController {
     );
 
     if (dialogResult == JOptionPane.YES_OPTION) {
-      loginController.logout();
+      authenticationController.logout();
       // get a handle to the stage
       Stage stage = (Stage) Main.getScene().getWindow();
       // close the stage
@@ -100,8 +100,8 @@ public class MainController {
     contentArea.setCenter(editCourseSectionController.getView());
   }
 
-  public void showLogin() {
-    contentArea.setCenter(loginController.getView());
+  public void showAuthentication() {
+    contentArea.setCenter(authenticationController.getView());
   }
 
   public void showMenu() {

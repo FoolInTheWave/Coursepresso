@@ -24,8 +24,8 @@ public class ControllerConfig {
   }
 
   @Bean
-  public LoginController loginController() {
-    return loadController("/fxml/Login.fxml");
+  public AuthenticationController authenticationController() {
+    return loadController("/fxml/Authentication.fxml");
   }
 
   @Bean

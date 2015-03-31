@@ -3,7 +3,6 @@ package com.coursepresso.project.controller;
 import com.coursepresso.project.service.SecurityService;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.concurrent.Worker;
@@ -25,7 +24,7 @@ import org.springframework.security.authentication.BadCredentialsException;
  *
  * @author Caleb Miller
  */
-public class LoginController implements Initializable {
+public class AuthenticationController implements Initializable {
 
   @FXML
   private Node root;
@@ -43,8 +42,7 @@ public class LoginController implements Initializable {
   @Inject
   private SecurityService securityService;
 
-  private static final Logger log = LoggerFactory.getLogger(
-      LoginController.class
+  private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class
   );
 
   /**
@@ -82,7 +80,7 @@ public class LoginController implements Initializable {
         passwordField.setText(null);
         statusLabel.setText("User logged out successfully!");
         
-        mainController.showLogin();
+        mainController.showAuthentication();
       } else if (newState.equals(Worker.State.FAILED)) {
         Throwable exception = logoutTask.getException();
         if (exception instanceof BadCredentialsException) {
