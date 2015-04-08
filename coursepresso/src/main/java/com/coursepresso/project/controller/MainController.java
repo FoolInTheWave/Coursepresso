@@ -2,6 +2,7 @@ package com.coursepresso.project.controller;
 
 import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.Main;
+import com.coursepresso.project.service.SecurityService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
@@ -51,6 +52,10 @@ public class MainController {
   private EditCourseSectionController editCourseSectionController;
   @Inject
   private CreateUserController createUserController;
+  @Inject
+  private ViewUsersController viewUsersController;
+  @Inject
+  private SecurityService securityService;
 
   public Parent getView() {
     return root;
@@ -105,14 +110,17 @@ public class MainController {
   }
 
   public void showMenu() {
-    try {
+    String auth = securityService.getAuthority();
+    
+    System.out.println(auth);
+    
+    if(auth.equals("[ADMIN]"))
       showAdminMenu();
-    } catch (AccessDeniedException e) {
+    else
       showUserMenu();
-    }
+    
   }
 
-  @PreAuthorize("hasRole('ADMIN')")
   public void showAdminMenu() {
     contentArea.setCenter(adminMenuController.getView());
   }
@@ -147,5 +155,9 @@ public class MainController {
   public void showCreateUser() {
     createUserController.buildView();
     contentArea.setCenter(createUserController.getView());
+  }
+  
+  public void showViewUsers() {
+    contentArea.setCenter(viewUsersController.getView());
   }
 }

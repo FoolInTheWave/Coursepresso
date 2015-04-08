@@ -72,6 +72,11 @@ public class ControllerConfig {
   public CreateUserController createUserController() {
     return loadController("/fxml/CreateUser.fxml");
   }
+  
+  @Bean
+  public ViewUsersController viewUsersController() {
+    return loadController("/fxml/viewUsers.fxml");
+  }
 
   @SuppressWarnings("unchecked")
   private <T> T loadController(String fxmlFile) {

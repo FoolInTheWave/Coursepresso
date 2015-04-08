@@ -13,4 +13,6 @@ public interface SecurityService {
   void logout();
   
   void createUser(UserDetails user);
+  
+  String getAuthority();
 }
