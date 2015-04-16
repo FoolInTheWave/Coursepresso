@@ -20,6 +20,6 @@ public interface CourseRepository extends CrudRepository<Course, String>  {
    * @param courseNumber The courseNumber to match.
    * @return A Course record as a Course object.
    */
-  @Query("SELECT c FROM Course c JOIN FETCH c.courseSectionList WHERE c.courseNumber = (:courseNumber)")
+  @Query("SELECT c FROM Course c LEFT JOIN FETCH c.courseSectionList WHERE c.courseNumber = (:courseNumber)")
   public Course findByCourseNumberWithCourseSections(@Param("courseNumber") String courseNumber);
 }

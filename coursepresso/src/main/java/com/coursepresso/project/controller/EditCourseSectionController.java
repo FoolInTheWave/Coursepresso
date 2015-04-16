@@ -52,7 +52,7 @@ import org.slf4j.LoggerFactory;
  * @author steev_000
  */
 public class EditCourseSectionController implements Initializable {
-  
+
   private static final Logger log = LoggerFactory.getLogger(
       EditCourseSectionController.class
   );
@@ -374,7 +374,7 @@ public class EditCourseSectionController implements Initializable {
         meetingDays.add(day);
       });
     }
-    
+
     // Build start and end date pickers
     Instant startInstant = Instant.ofEpochMilli(section.getStartDate().getTime());
     LocalDate startLocalDate = LocalDateTime.ofInstant(startInstant, ZoneId.systemDefault()).toLocalDate();
@@ -383,7 +383,7 @@ public class EditCourseSectionController implements Initializable {
     Instant endInstant = Instant.ofEpochMilli(section.getEndDate().getTime());
     LocalDate endLocalDate = LocalDateTime.ofInstant(endInstant, ZoneId.systemDefault()).toLocalDate();
     endDatePicker.setValue(endLocalDate);
-    
+
     // Set the capacity field to the room with the lowest capacity
     if (!meetingDays.isEmpty()) {
       capacityField.setText(
@@ -398,5 +398,5 @@ public class EditCourseSectionController implements Initializable {
       );
     }
   }
-  
+
 }

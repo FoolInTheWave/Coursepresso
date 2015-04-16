@@ -20,7 +20,7 @@ public interface DepartmentRepository extends CrudRepository<Department, String>
    * @param name The name to match.
    * @return A Department record as a Department object.
    */
-  @Query("SELECT d FROM Department d JOIN FETCH d.courseList WHERE d.name = (:name)")
+  @Query("SELECT d FROM Department d LEFT JOIN FETCH d.courseList WHERE d.name = (:name)")
   public Department findByNameWithCourses(@Param("name") String name);
   
   /**
@@ -30,6 +30,6 @@ public interface DepartmentRepository extends CrudRepository<Department, String>
    * @param name The name to match.
    * @return A Department record as a Department object.
    */
-  @Query("SELECT d FROM Department d JOIN FETCH d.professorList WHERE d.name = (:name)")
+  @Query("SELECT d FROM Department d LEFT JOIN FETCH d.professorList WHERE d.name = (:name)")
   public Department findByNameWithProfessors(@Param("name") String name);
 }
