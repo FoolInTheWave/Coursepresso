@@ -42,7 +42,8 @@ public class AuthenticationController implements Initializable {
   @Inject
   private SecurityService securityService;
 
-  private static final Logger log = LoggerFactory.getLogger(AuthenticationController.class
+  private static final Logger log = LoggerFactory.getLogger(
+      AuthenticationController.class
   );
 
   /**
@@ -70,27 +71,28 @@ public class AuthenticationController implements Initializable {
     };
 
     logoutTask.stateProperty().addListener(
-        (ObservableValue<? extends Worker.State> source, 
-            Worker.State oldState, 
+        (ObservableValue<? extends Worker.State> source,
+            Worker.State oldState,
             Worker.State newState) -> {
-      if (newState.equals(Worker.State.SUCCEEDED)) {
-        log.info("Successfully logged out user '{}'", username);
-        
-        usernameField.setText(null);
-        passwordField.setText(null);
-        statusLabel.setText("User logged out successfully!");
-        
-        mainController.showAuthentication();
-      } else if (newState.equals(Worker.State.FAILED)) {
-        Throwable exception = logoutTask.getException();
-        if (exception instanceof BadCredentialsException) {
-          log.debug("Invalid logout attempt");
-        } else {
-          log.error("Logout failed: ", exception);
-          statusLabel.setText("Logout failed! Check logs for expection.");
+          if (newState.equals(Worker.State.SUCCEEDED)) {
+            log.info("Successfully logged out user '{}'", username);
+
+            usernameField.setText(null);
+            passwordField.setText(null);
+            statusLabel.setText("User logged out successfully!");
+
+            mainController.showAuthentication();
+          } else if (newState.equals(Worker.State.FAILED)) {
+            Throwable exception = logoutTask.getException();
+            if (exception instanceof BadCredentialsException) {
+              log.debug("Invalid logout attempt");
+            } else {
+              log.error("Logout failed: ", exception);
+              statusLabel.setText("Logout failed! Check logs for expection.");
+            }
+          }
         }
-      }
-    });
+    );
 
     new Thread(logoutTask).start();
   }
@@ -115,23 +117,24 @@ public class AuthenticationController implements Initializable {
     };
 
     loginTask.stateProperty().addListener(
-        (ObservableValue<? extends Worker.State> source, 
-            Worker.State oldState, 
+        (ObservableValue<? extends Worker.State> source,
+            Worker.State oldState,
             Worker.State newState) -> {
-      if (newState.equals(Worker.State.SUCCEEDED)) {
-        log.info("Successfully logged in as user '{}'", username);
-        mainController.showMenu();  
-      } else if (newState.equals(Worker.State.FAILED)) {
-        Throwable exception = loginTask.getException();
-        if (exception instanceof BadCredentialsException) {
-          log.debug("Invalid login attempt");
-          statusLabel.setText("Invalid username or password");
-        } else {
-          log.error("Login failed: ", exception);
-          statusLabel.setText("Login failed! Check logs for exception.");
+          if (newState.equals(Worker.State.SUCCEEDED)) {
+            log.info("Successfully logged in as user '{}'", username);
+            mainController.showMenu();
+          } else if (newState.equals(Worker.State.FAILED)) {
+            Throwable exception = loginTask.getException();
+            if (exception instanceof BadCredentialsException) {
+              log.debug("Invalid login attempt");
+              statusLabel.setText("Invalid username or password");
+            } else {
+              log.error("Login failed: ", exception);
+              statusLabel.setText("Login failed! Check logs for exception.");
+            }
+          }
         }
-      }
-    });
+    );
 
     new Thread(loginTask).start();
   }

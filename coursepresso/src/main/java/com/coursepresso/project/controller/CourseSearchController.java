@@ -10,12 +10,16 @@ import com.coursepresso.project.repository.TermRepository;
 import com.coursepresso.project.service.SearchService;
 import com.google.common.collect.Lists;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.concurrent.Worker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,6 +30,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FXML Controller class
@@ -78,6 +84,12 @@ public class CourseSearchController implements Initializable {
   @Inject
   private SearchResultsController searchResultsController;
 
+  private List<CourseSection> result;
+
+  private static final Logger log = LoggerFactory.getLogger(
+      CourseSearchController.class
+  );
+
   /**
    * Initializes the controller class.
    */
@@ -98,53 +110,75 @@ public class CourseSearchController implements Initializable {
   @FXML
   private void searchButtonClick(ActionEvent event) {
     Map<String, Object> params = new HashMap<>();
+    result = new ArrayList<>();
+
+    final Task<Void> searchTask = new Task<Void>() {
+      @Override
+      protected Void call() throws Exception {
+        log.info("Performing course section search");
+        result = searchService.searchSections(params);
+        return null;
+      }
+    };
+
+    if (departmentCombo.getValue() != null) {
+      params.put("department", (Department) departmentCombo.getValue());
+    }
+    if (termCombo.getValue() != null) {
+      params.put("term", (Term) termCombo.getValue());
+    }
+    if (courseNumberCombo.getValue() != null) {
+      params.put("course", (Course) courseNumberCombo.getValue());
+    }
+    if (instructorCombo.getValue() != null) {
+      params.put("professor", (Professor) instructorCombo.getValue());
+    }
+    if (courseLevelCombo.getValue() != null) {
+      params.put("courseLevel", (String) courseLevelCombo.getValue());
+    }
+    if (courseNumberCombo.getValue() != null) {
+      Course c = (Course) courseNumberCombo.getValue();
+      params.put("courseNumber", c.getCourseNumber());
+    }
+    if (lineNumberText.getText() != null) {
+      params.put("lineNumber", Integer.valueOf(lineNumberText.getText()));
+    }
+    if (creditsCombo.getValue() != null) {
+      String credits = (String) creditsCombo.getValue();
+      params.put("credits", Integer.valueOf(credits));
+    }
+    if (mondayCheckbox.isSelected()) {
+      params.put("monday", "M");
+    }
+    if (tuesdayCheckbox.isSelected()) {
+      params.put("tuesday", "T");
+    }
+    if (wednesdayCheckbox.isSelected()) {
+      params.put("wednesday", "W");
+    }
+    if (thursdayCheckbox.isSelected()) {
+      params.put("thursday", "TH");
+    }
+    if (fridayCheckbox.isSelected()) {
+      params.put("friday", "F");
+    }
+
+    searchTask.stateProperty().addListener(
+        (ObservableValue<? extends Worker.State> source,
+            Worker.State oldState,
+            Worker.State newState) -> {
+          if (newState.equals(Worker.State.SUCCEEDED)) {
+            log.info("Successfully retrieved search results");
+            searchResultsController.setResults(result);
+            mainController.showSearchResults();
+          } else if (newState.equals(Worker.State.FAILED)) {
+            Throwable exception = searchTask.getException();
+            log.error("Retrieval of search results failed: ", exception);
+          }
+        }
+    );
     
-   if (departmentCombo.getValue() != null) {
-     params.put("department", (Department) departmentCombo.getValue());
-   }
-   if (termCombo.getValue() != null) {
-     params.put("term", (Term) termCombo.getValue());
-   }
-   if (courseNumberCombo.getValue() != null) {
-     params.put("course", (Course) courseNumberCombo.getValue());
-   }
-   if (instructorCombo.getValue() != null) {
-     params.put("professor", (Professor) instructorCombo.getValue());
-   }
-   if (courseLevelCombo.getValue() != null) {
-     params.put("courseLevel", (String) courseLevelCombo.getValue());
-   }
-   if (courseNumberCombo.getValue() != null) {
-     Course c = (Course) courseNumberCombo.getValue();
-     params.put("courseNumber", c.getCourseNumber());
-   }
-   if (lineNumberText.getText() != null) {
-     params.put("lineNumber", Integer.valueOf(lineNumberText.getText()));
-   }
-   if (creditsCombo.getValue() != null) {
-     String credits = (String) creditsCombo.getValue();
-     params.put("credits", Integer.valueOf(credits));
-   }
-   if (mondayCheckbox.isSelected()) {
-     params.put("monday", "M");
-   }
-   if (tuesdayCheckbox.isSelected()) {
-     params.put("tuesday", "T");
-   }
-   if (wednesdayCheckbox.isSelected()) {
-     params.put("wednesday", "W");
-   }
-   if (thursdayCheckbox.isSelected()) {
-     params.put("thursday", "TH");
-   }
-   if (fridayCheckbox.isSelected()) {
-     params.put("friday", "F");
-   }
-
-   List<CourseSection> result = searchService.searchSections(params);
-
-   searchResultsController.setResults(result);
-   mainController.showSearchResults();
+    new Thread(searchTask).start();
   }
 
   @FXML
@@ -160,22 +194,22 @@ public class CourseSearchController implements Initializable {
 
         // Build course number combo box
         department = departmentRepository.findByNameWithCourses(
-                department.getName()
+            department.getName()
         );
         ObservableList<Course> courses = FXCollections.observableArrayList(
-                // Get course list for selected department
-                department.getCourseList()
+            // Get course list for selected department
+            department.getCourseList()
         );
         courseNumberCombo.setItems(courses);
         courseNumberCombo.setVisibleRowCount(4);
 
         // Build professor combo box
         department = departmentRepository.findByNameWithProfessors(
-                department.getName()
+            department.getName()
         );
         ObservableList<Professor> professors = FXCollections.observableArrayList(
-                // Get professor list for selected department
-                department.getProfessorList()
+            // Get professor list for selected department
+            department.getProfessorList()
         );
         instructorCombo.setItems(professors);
         instructorCombo.setVisibleRowCount(4);
@@ -208,28 +242,28 @@ public class CourseSearchController implements Initializable {
   public void buildView() {
     // Build department combo box
     ObservableList<Department> departments = FXCollections.observableArrayList(
-            Lists.newArrayList(departmentRepository.findAll())
+        Lists.newArrayList(departmentRepository.findAll())
     );
     departmentCombo.setItems(departments);
     departmentCombo.setVisibleRowCount(4);
 
     // Build term combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
-            Lists.newArrayList(termRepository.findAll())
+        Lists.newArrayList(termRepository.findAll())
     );
     termCombo.setItems(terms);
     termCombo.setVisibleRowCount(4);
 
     // Build type combo box
     ObservableList<String> levels = FXCollections.observableArrayList(
-            "100", "200", "300", "400"
+        "100", "200", "300", "400"
     );
     courseLevelCombo.setItems(levels);
     courseLevelCombo.setVisibleRowCount(4);
 
     // Build type combo box
     ObservableList<String> credits = FXCollections.observableArrayList(
-            "1", "2", "3", "4"
+        "1", "2", "3", "4"
     );
     creditsCombo.setItems(credits);
     creditsCombo.setVisibleRowCount(4);
