@@ -36,6 +36,11 @@ public class ServiceConfig {
   }
 
   @Bean
+  public AuthorityRepository authorityRepository() {
+    return createService("authority.repository", AuthorityRepository.class);
+  }
+
+  @Bean
   public CoursePrerequisiteRepository coursePrerequisiteRepository() {
     return createService(
         "course-prerequisite.repository", CoursePrerequisiteRepository.class
@@ -82,6 +87,11 @@ public class ServiceConfig {
   @Bean
   public TermRepository termRepository() {
     return createService("term.repository", TermRepository.class);
+  }
+
+  @Bean
+  public UserRepository userRepository() {
+    return createService("user.repository", UserRepository.class);
   }
 
   @SuppressWarnings("unchecked")

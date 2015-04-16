@@ -9,7 +9,7 @@ import javax.persistence.*;
  * @author Caleb Miller
  */
 @Entity
-@Table(name = "new_authorities")
+@Table(name = "authorities")
 public class Authority implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id

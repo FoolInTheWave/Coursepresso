@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Caleb Miller
  */
 @Entity
-@Table(name = "new_users")
+@Table(name = "users")
 public class User implements Serializable {
   private static final long serialVersionUID = 1L;
   @Id
