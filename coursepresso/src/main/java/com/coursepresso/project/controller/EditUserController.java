@@ -24,7 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  *
  * @author Caleb Miller
  */
-public class CreateUserController implements Initializable {
+public class EditUserController implements Initializable {
 
   @FXML
   private Node root;
@@ -51,6 +51,8 @@ public class CreateUserController implements Initializable {
   private MainController mainController;
   @Inject
   private UserRepository userRepository;
+  
+  private User user;
 
   public Node getView() {
     return root;
@@ -88,8 +90,7 @@ public class CreateUserController implements Initializable {
                 passwordField.getText()
             );
 
-            // Create new user
-            User user = new User();
+            // Save user changes
             user.setUsername(usernameField.getText());
             user.setPassword(hashedPassword);
             user.setAuthorityList(authorities);
@@ -132,12 +133,20 @@ public class CreateUserController implements Initializable {
     mainController.showMenu();
   }
 
-  public void buildView() {
+  public void buildView(User user) {
+    // Build username text field
+    usernameField.setText(user.getUsername());
+    
     // Build authority combo box
     ObservableList<String> authorities = FXCollections.observableArrayList(
         "ADMIN", "CHAIR", "DEAN", "PROFESSOR", "SCHEDULING STAFF", "USER"
     );
     authorityCombo.setItems(authorities);
+    authorityCombo.getSelectionModel().select(
+        user.getAuthorityList().get(0).getAuthority()
+    );
+    
+    this.user = user;
   }
 
 }

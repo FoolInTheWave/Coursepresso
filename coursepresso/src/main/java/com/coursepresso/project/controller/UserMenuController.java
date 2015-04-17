@@ -1,10 +1,5 @@
 package com.coursepresso.project.controller;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -18,7 +13,7 @@ import javax.inject.Inject;
 /**
  * FXML Controller class
  *
- * @author Steve
+ * @author Steve Foco
  */
 public class UserMenuController implements Initializable {
 

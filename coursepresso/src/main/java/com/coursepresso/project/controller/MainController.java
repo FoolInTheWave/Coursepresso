@@ -11,11 +11,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
 import javax.inject.Inject;
 import javax.swing.JOptionPane;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.access.prepost.PreAuthorize;
 
 public class MainController {
 
@@ -112,8 +109,6 @@ public class MainController {
   public void showMenu() {
     String auth = securityService.getAuthority();
     
-    System.out.println(auth);
-    
     if(auth.equals("[ADMIN]"))
       showAdminMenu();
     else
@@ -158,6 +153,7 @@ public class MainController {
   }
   
   public void showViewUsers() {
+    viewUsersController.buildView();
     contentArea.setCenter(viewUsersController.getView());
   }
 }

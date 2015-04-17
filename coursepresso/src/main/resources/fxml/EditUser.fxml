@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="576.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.CreateUserController">
+<AnchorPane id="AnchorPane" prefHeight="576.0" prefWidth="1024.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.EditUserController">
   <stylesheets>
     <URL value="@/styles/Styles.css" />
   </stylesheets>
