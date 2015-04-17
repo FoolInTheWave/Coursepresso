@@ -2,7 +2,7 @@ package com.coursepresso.project.controller;
 
 import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.Main;
-import com.coursepresso.project.entity.Course;
+import com.coursepresso.project.entity.User;
 import com.coursepresso.project.service.SecurityService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -55,6 +55,8 @@ public class MainController {
   @Inject
   private ViewUsersController viewUsersController;
   @Inject
+  private EditUserController editUserController;
+  @Inject
   private SecurityService securityService;
 
   public Parent getView() {
@@ -75,7 +77,7 @@ public class MainController {
 
     alert.showAndWait();
   }
-  
+
   @FXML
   private void importCoursesMnuClick(ActionEvent event) {
 
@@ -116,12 +118,13 @@ public class MainController {
 
   public void showMenu() {
     String auth = securityService.getAuthority();
-    
-    if(auth.equals("[ADMIN]"))
+
+    if (auth.equals("[ADMIN]")) {
       showAdminMenu();
-    else
+    } else {
       showUserMenu();
-    
+    }
+
   }
 
   public void showAdminMenu() {
@@ -159,9 +162,14 @@ public class MainController {
     createUserController.buildView();
     contentArea.setCenter(createUserController.getView());
   }
-  
+
   public void showViewUsers() {
     viewUsersController.buildView();
     contentArea.setCenter(viewUsersController.getView());
+  }
+
+  public void showEditUser(User user) {
+    editUserController.buildView(user);
+    contentArea.setCenter(editUserController.getView());
   }
 }

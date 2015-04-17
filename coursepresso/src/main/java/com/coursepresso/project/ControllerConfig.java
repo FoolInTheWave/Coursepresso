@@ -72,10 +72,15 @@ public class ControllerConfig {
   public CreateUserController createUserController() {
     return loadController("/fxml/CreateUser.fxml");
   }
-  
+
   @Bean
   public ViewUsersController viewUsersController() {
-    return loadController("/fxml/viewUsers.fxml");
+    return loadController("/fxml/ViewUsers.fxml");
+  }
+
+  @Bean
+  public EditUserController editUserController() {
+    return loadController("/fxml/EditUser.fxml");
   }
 
   @SuppressWarnings("unchecked")

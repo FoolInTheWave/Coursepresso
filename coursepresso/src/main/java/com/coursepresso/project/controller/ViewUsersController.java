@@ -7,6 +7,7 @@ import com.google.common.base.Joiner;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -15,7 +16,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -38,6 +42,8 @@ public class ViewUsersController implements Initializable {
   private Button deleteUserButton;
   @FXML
   private Button editUserButton;
+  @FXML
+  private Button createUserButton;
   @FXML
   private Button backButton;
   @FXML
@@ -66,11 +72,11 @@ public class ViewUsersController implements Initializable {
         user -> {
           SimpleStringProperty property = new SimpleStringProperty();
           List<String> authorities = new ArrayList<>();
-          
+
           for (Authority authority : user.getValue().getAuthorityList()) {
             authorities.add(authority.getAuthority());
           }
-          
+
           // Generate delimited string of authorities at the cell value
           property.setValue(
               Joiner.on(", ").join(authorities)
@@ -86,21 +92,47 @@ public class ViewUsersController implements Initializable {
 
   @FXML
   void editUserButtonClick(ActionEvent event) {
-
+    mainController.showEditUser(
+        userTable.getSelectionModel().getSelectedItem()
+    );
   }
 
   @FXML
   void deleteUserButtonClick(ActionEvent event) {
+    Alert alert = new Alert(AlertType.CONFIRMATION);
+    alert.setTitle(null);
+    alert.setHeaderText("Warning");
+    alert.setContentText("Are you sure you want to delete this user?");
 
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.get() == ButtonType.OK) {
+      userRepository.delete(
+          userTable.getSelectionModel().getSelectedItem().getUsername()
+      );
+      users.remove(userTable.getSelectionModel().getSelectedItem());
+
+      alert = new Alert(AlertType.INFORMATION);
+      alert.setTitle(null);
+      alert.setHeaderText(null);
+      alert.setContentText("User deleted successfully!");
+
+      alert.showAndWait();
+    }
+  }
+
+  @FXML
+  void createUserButtonClick(ActionEvent event) {
+    mainController.showCreateUser();
   }
 
   @FXML
   void backButtonClick(ActionEvent event) {
-    users.clear();
     mainController.showMenu();
   }
 
   public void buildView() {
+    users.clear();
     users.addAll(userRepository.findAllWithAuthorities());
   }
 }

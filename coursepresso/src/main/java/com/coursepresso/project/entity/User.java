@@ -13,6 +13,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @Entity
 @Table(name = "users")
 public class User implements Serializable {
+
   private static final long serialVersionUID = 1L;
   @Id
   @Basic(optional = false)
@@ -34,9 +35,12 @@ public class User implements Serializable {
   @Column(name = "enabled")
   private boolean enabled;
   @Basic(optional = false)
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
+  @JoinColumn(name = "department", referencedColumnName = "name")
+  @ManyToOne(optional = false)
+  private Department department;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
   private List<Authority> authorityList;
 
@@ -47,7 +51,7 @@ public class User implements Serializable {
     this.username = username;
   }
 
-  public User(String username, String password, String firstname, String lastname, 
+  public User(String username, String password, String firstname, String lastname,
       String email, boolean enabled, Date updatedAt) {
     this.username = username;
     this.password = password;
@@ -114,6 +118,14 @@ public class User implements Serializable {
     this.updatedAt = updatedAt;
   }
 
+  public Department getDepartment() {
+    return department;
+  }
+
+  public void setDepartment(Department department) {
+    this.department = department;
+  }
+
   @XmlTransient
   public List<Authority> getAuthorityList() {
     return authorityList;
@@ -137,8 +149,8 @@ public class User implements Serializable {
       return false;
     }
     User other = (User) object;
-    if ((this.username == null && other.username != null) || 
-        (this.username != null && !this.username.equals(other.username))) {
+    if ((this.username == null && other.username != null)
+        || (this.username != null && !this.username.equals(other.username))) {
       return false;
     }
     return true;
@@ -148,5 +160,5 @@ public class User implements Serializable {
   public String toString() {
     return username;
   }
-  
+
 }

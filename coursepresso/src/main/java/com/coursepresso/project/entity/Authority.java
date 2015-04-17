@@ -21,7 +21,7 @@ public class Authority implements Serializable {
   @Column(name = "authority")
   private String authority;
   @Basic(optional = false)
-  @Column(name = "updated_at")
+  @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
   @JoinColumn(name = "username", referencedColumnName = "username")

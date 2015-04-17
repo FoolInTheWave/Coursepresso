@@ -20,14 +20,14 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="576.0" prefWidth="1024.0">
                      <children>
-                        <VBox prefHeight="576.0" prefWidth="1024.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <VBox prefHeight="576.0" prefWidth="1024.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
                               <Label text="Username">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <TextField fx:id="usernameField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0">
+                              <TextField fx:id="usernameField" editable="false" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
@@ -88,6 +88,12 @@
                                     <Font size="13.0" />
                                  </font>
                               </TextField>
+                              <Label text="Department">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="departmentCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" visibleRowCount="5" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -99,7 +105,7 @@
             </ScrollPane>
             <HBox alignment="CENTER" prefHeight="41.0" prefWidth="1024.0" spacing="70.0">
                <children>
-                  <Button fx:id="createUserButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createUserButtonClick" prefHeight="30.0" prefWidth="150.0" text="Create User">
+                  <Button fx:id="createUserButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#createUserButtonClick" prefHeight="30.0" prefWidth="150.0" text="Save Changes">
                      <font>
                         <Font size="13.0" />
                      </font>

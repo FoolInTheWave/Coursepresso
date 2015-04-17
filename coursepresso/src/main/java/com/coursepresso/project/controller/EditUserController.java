@@ -1,8 +1,12 @@
 package com.coursepresso.project.controller;
 
 import com.coursepresso.project.entity.Authority;
+import com.coursepresso.project.entity.Department;
 import com.coursepresso.project.entity.User;
+import com.coursepresso.project.repository.AuthorityRepository;
+import com.coursepresso.project.repository.DepartmentRepository;
 import com.coursepresso.project.repository.UserRepository;
+import com.google.common.collect.Lists;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -37,6 +41,8 @@ public class EditUserController implements Initializable {
   @FXML
   private ComboBox<String> authorityCombo;
   @FXML
+  private ComboBox<Department> departmentCombo;
+  @FXML
   private TextField firstnameField;
   @FXML
   private TextField lastnameField;
@@ -51,7 +57,11 @@ public class EditUserController implements Initializable {
   private MainController mainController;
   @Inject
   private UserRepository userRepository;
-  
+  @Inject
+  private AuthorityRepository authorityRepository;
+  @Inject
+  private DepartmentRepository departmentRepository;
+
   private User user;
 
   public Node getView() {
@@ -70,7 +80,7 @@ public class EditUserController implements Initializable {
   private void createUserButtonClick() {
     ArrayList<Authority> authorities = new ArrayList<>();
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    alert.setTitle("User Creation");
+    alert.setTitle(null);
     alert.setHeaderText(null);
 
     if (!usernameField.getText().equals("")) {
@@ -93,22 +103,30 @@ public class EditUserController implements Initializable {
             // Save user changes
             user.setUsername(usernameField.getText());
             user.setPassword(hashedPassword);
-            user.setAuthorityList(authorities);
             user.setFirstname(firstnameField.getText());
             user.setLastname(lastnameField.getText());
             user.setEmail(emailField.getText());
+            user.setDepartment(departmentCombo.getValue());
+            for (Authority a : authorities) {
+              a.setUsername(user);
+            }
 
             // Call the repository to save the user
             userRepository.save(user);
+            for (Authority a : user.getAuthorityList()) {
+              authorityRepository.delete(a.getId());
+            }
+            authorityRepository.save(authorities);
 
             // Nofify user
-            alert.setContentText("The new user account has been created successfully!");
+            alert
+                .setContentText("The user account has been saved successfully!");
             alert.showAndWait();
 
             mainController.showMenu();
           } else {
             // Notify user of no authority error
-            alert.setContentText("The new user must have an authority!");
+            alert.setContentText("The user must have an authority!");
             alert.showAndWait();
           }
         } else {
@@ -118,25 +136,25 @@ public class EditUserController implements Initializable {
         }
       } else {
         // Notify user of no password error
-        alert.setContentText("The new user must have a password!");
+        alert.setContentText("The user must have a password!");
         alert.showAndWait();
       }
     } else {
       // Notify user of no username error
-      alert.setContentText("The new user must have a username!");
+      alert.setContentText("The user must have a username!");
       alert.showAndWait();
     }
   }
 
   @FXML
   private void backButtonClick() {
-    mainController.showMenu();
+    mainController.showViewUsers();
   }
 
   public void buildView(User user) {
     // Build username text field
     usernameField.setText(user.getUsername());
-    
+
     // Build authority combo box
     ObservableList<String> authorities = FXCollections.observableArrayList(
         "ADMIN", "CHAIR", "DEAN", "PROFESSOR", "SCHEDULING STAFF", "USER"
@@ -145,7 +163,23 @@ public class EditUserController implements Initializable {
     authorityCombo.getSelectionModel().select(
         user.getAuthorityList().get(0).getAuthority()
     );
-    
+
+    // Populate other fields
+    passwordField.clear();
+    confirmPasswordField.clear();
+    firstnameField.setText(user.getFirstname());
+    lastnameField.setText(user.getLastname());
+    emailField.setText(user.getEmail());
+
+    // Build department combo box
+    ObservableList<Department> departments = FXCollections.observableArrayList(
+        Lists.newArrayList(departmentRepository.findAll())
+    );
+    departmentCombo.setItems(departments);
+    departmentCombo.getSelectionModel().select(
+        user.getDepartment()
+    );
+
     this.user = user;
   }
 
