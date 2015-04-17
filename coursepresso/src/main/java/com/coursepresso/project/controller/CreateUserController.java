@@ -106,6 +106,7 @@ public class CreateUserController implements Initializable {
             user.setLastname(lastnameField.getText());
             user.setEmail(emailField.getText());
             user.setDepartment(departmentCombo.getValue());
+            user.setEnabled(true);
             for (Authority a : authorities) {
               a.setUsername(user);
             }

@@ -92,9 +92,11 @@ public class ViewUsersController implements Initializable {
 
   @FXML
   void editUserButtonClick(ActionEvent event) {
-    mainController.showEditUser(
-        userTable.getSelectionModel().getSelectedItem()
-    );
+    if (userTable.getSelectionModel().getSelectedItem() != null) {
+      mainController.showEditUser(
+          userTable.getSelectionModel().getSelectedItem()
+      );
+    }
   }
 
   @FXML
