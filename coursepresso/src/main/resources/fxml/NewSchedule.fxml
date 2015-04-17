@@ -34,6 +34,17 @@
                                  </font>
                               </Label>
                               <ComboBox fx:id="yearCombo" layoutX="558.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" />
+                              <Label text="Import From File">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="chooseFileButton" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#chooseFileButtonClick" prefHeight="30.0" prefWidth="150.0" text="Choose File">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                              <Label fx:id="fileNameLabel" prefHeight="17.0" prefWidth="692.0" />
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

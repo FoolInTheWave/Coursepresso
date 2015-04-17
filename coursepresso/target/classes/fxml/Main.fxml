@@ -20,6 +20,11 @@
               <MenuItem fx:id="logoutMnu" mnemonicParsing="false" onAction="#logoutMnuClick" text="Logout" />
             </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Import/Export">
+              <items>
+                <MenuItem fx:id="importCoursesMnu" mnemonicParsing="false" onAction="#importCoursesMnuClick" text="Import Courses" />
+              </items>
+            </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
               <MenuItem fx:id="aboutMnu" mnemonicParsing="false" onAction="#aboutMnuClick" text="About" />

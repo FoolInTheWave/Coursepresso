@@ -2,6 +2,7 @@ package com.coursepresso.project.controller;
 
 import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.Main;
+import com.coursepresso.project.entity.Course;
 import com.coursepresso.project.service.SecurityService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,6 +30,8 @@ public class MainController {
   private MenuItem aboutMnu;
   @FXML
   private MenuItem closeMnu;
+  @FXML
+  private MenuItem importCoursesMnu;
 
   @Inject
   private NewCourseSectionController newCourseSectionController;
@@ -74,6 +77,11 @@ public class MainController {
     alert.setContentText("I have a great message for you!");
 
     alert.showAndWait();
+  }
+  
+  @FXML
+  private void importCoursesMnuClick(ActionEvent event) {
+
   }
 
   @FXML
