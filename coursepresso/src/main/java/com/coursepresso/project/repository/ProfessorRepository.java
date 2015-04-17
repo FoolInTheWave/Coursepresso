@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ProfessorRepository extends CrudRepository<Professor, Integer> {
   
-    /**
+  /**
    * Custom FIND method retrieves a Professor record from the database
    * 
    * @param id The id to match.

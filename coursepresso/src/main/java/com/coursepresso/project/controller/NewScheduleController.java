@@ -1,13 +1,9 @@
 package com.coursepresso.project.controller;
 
 import com.coursepresso.project.Main;
-import com.coursepresso.project.entity.Course;
 import com.coursepresso.project.entity.CourseSection;
-import com.coursepresso.project.entity.Department;
 import com.coursepresso.project.entity.MeetingDay;
-import com.coursepresso.project.entity.Professor;
 import com.coursepresso.project.entity.Term;
-import com.coursepresso.project.helper.DateHelper;
 import com.coursepresso.project.repository.CourseRepository;
 import com.coursepresso.project.repository.CourseSectionRepository;
 import com.coursepresso.project.repository.DepartmentRepository;
@@ -24,11 +20,9 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Date;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -154,9 +148,9 @@ public class NewScheduleController implements Initializable {
 
         String[] courseNum = column[0].split("*");
         courseSection.setCourseNumber(
-                courseRepository.findByCourseNumber(courseNum[0] + courseNum[1])
+            courseRepository.findByCourseNumber(courseNum[0] + courseNum[1])
         );
-                
+
         courseSection.setSectionNumber(Integer.parseInt(column[4]));
         courseSection.setAvailable(true);
         courseSection.setCapacity(Integer.parseInt(column[3]));
@@ -169,34 +163,33 @@ public class NewScheduleController implements Initializable {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
         courseSection.setStartDate(formatter.parse(column[10]));
         courseSection.setEndDate(formatter.parse(column[11]));
-        
+
         courseSection.setDepartment(
-                departmentRepository.findByAbbreviation(courseNum[0])
-        );        
-        
+            departmentRepository.findByAbbreviation(courseNum[0])
+        );
+
         courseSection.setProfessorId(
-                professorRepository.findById(column[1])
+            professorRepository.findById(column[1])
         );
 
         courseSection = courseSectionRepository.save(courseSection);
 
-        
         MeetingDay day = new MeetingDay();
-        
+
         DateFormat df = new SimpleDateFormat("hh:mm a");
         String[] times = column[12].split("-");
         day.setStartTime(df.parse(times[0]));
         day.setEndTime(df.parse(times[1]));
-        
+
         String[] rooms = column[9].split(",");
         day.setRoomNumber(
-                roomRepository.findByRoomNumber(rooms[0])
+            roomRepository.findByRoomNumber(rooms[0])
         );
-        
+
         // Save MeetingDays for CourseSection
         day.setCourseSectionId(courseSection);
         day.setTerm(courseSection.getTerm());
-        
+
         meetingDayRepository.save(day);
 
       }
@@ -211,14 +204,14 @@ public class NewScheduleController implements Initializable {
   public void buildView() {
     // Build type combo box
     ObservableList<String> semesters = FXCollections.observableArrayList(
-            "FA", "WI", "SP", "SU"
+        "FA", "WI", "SP", "SU"
     );
     semesterCombo.setItems(semesters);
     semesterCombo.setVisibleRowCount(4);
 
     // Build type combo box
     ObservableList<String> years = FXCollections.observableArrayList(
-            "2015", "2016", "2017", "2018", "2019", "2020"
+        "2015", "2016", "2017", "2018", "2019", "2020"
     );
     yearCombo.setItems(years);
     yearCombo.setVisibleRowCount(4);

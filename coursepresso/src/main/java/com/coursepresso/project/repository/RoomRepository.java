@@ -13,12 +13,12 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RoomRepository extends CrudRepository<Room, String> {
   
-    /**
+  /**
    * Custom FIND method retrieves a Department record from the database
    * 
-   * @param room_number The room number to match.
+   * @param roomNumber The room number to match.
    * @return A Department record as a Department object.
    */
-  @Query("SELECT r FROM Room r WHERE r.room_number = (:room_number)")
-  public Room findByRoomNumber(@Param("room_number") String room_number);
+  @Query("SELECT r FROM Room r WHERE r.roomNumber = (:roomNumber)")
+  public Room findByRoomNumber(@Param("roomNumber") String roomNumber);
 }
