@@ -22,4 +22,13 @@ public interface CourseRepository extends CrudRepository<Course, String>  {
    */
   @Query("SELECT c FROM Course c LEFT JOIN FETCH c.courseSectionList WHERE c.courseNumber = (:courseNumber)")
   public Course findByCourseNumberWithCourseSections(@Param("courseNumber") String courseNumber);
+  
+  /**
+   * Custom FIND method retrieves a Course record from the database 
+   * 
+   * @param courseNumber The courseNumber to match.
+   * @return A Course record as a Course object.
+   */
+  @Query("SELECT c FROM Course c WHERE c.courseNumber = (:courseNumber)")
+  public Course findByCourseNumber(@Param("courseNumber") String courseNumber);
 }

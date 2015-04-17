@@ -20,6 +20,9 @@ public class Department implements Serializable {
   @Column(name = "name")
   private String name;
   @Basic(optional = false)
+  @Column(name = "abbreviation")
+  private String abbreviation;
+  @Basic(optional = false)
   @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
@@ -49,7 +52,15 @@ public class Department implements Serializable {
   public void setName(String name) {
     this.name = name;
   }
+  
+  public String getAbbreviation() {
+    return abbreviation;
+  }
 
+  public void setAbbreviation(String abbreviation) {
+    this.abbreviation = abbreviation;
+  }
+  
   public Date getUpdatedAt() {
     return updatedAt;
   }

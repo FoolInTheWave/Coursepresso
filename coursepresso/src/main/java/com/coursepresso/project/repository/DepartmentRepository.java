@@ -32,4 +32,14 @@ public interface DepartmentRepository extends CrudRepository<Department, String>
    */
   @Query("SELECT d FROM Department d LEFT JOIN FETCH d.professorList WHERE d.name = (:name)")
   public Department findByNameWithProfessors(@Param("name") String name);
+  
+  /**
+   * Custom FIND method retrieves a Department record from the database
+   * 
+   * @param abbreviation The abbreviation to match.
+   * @return A Department record as a Department object.
+   */
+  @Query("SELECT d FROM Department d WHERE d.abbreviation = (:abbreviation)")
+  public Department findByAbbreviation(@Param("abbreviation") String abbreviation);
+  
 }
