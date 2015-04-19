@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -89,10 +90,14 @@ public class ConflictController implements Initializable {
   }
 
   @FXML
-  private void backButtonClick() {
+  private void backButtonClick(ActionEvent event) {
     mainController.showScheduleSelection();
   }
 
+  @FXML
+  private void resolveManuallyButtonClick(ActionEvent event) {
+    
+  }
   public void buildView(Term selectedTerm) {
     CourseSection cs1, cs2;
     conflicts.clear();

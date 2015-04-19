@@ -3,7 +3,9 @@ package com.coursepresso.project.controller;
 import com.coursepresso.project.Main;
 import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.entity.MeetingDay;
+import com.coursepresso.project.entity.Room;
 import com.coursepresso.project.entity.Term;
+import com.coursepresso.project.helper.DateHelper;
 import com.coursepresso.project.repository.CourseRepository;
 import com.coursepresso.project.repository.CourseSectionRepository;
 import com.coursepresso.project.repository.DepartmentRepository;
@@ -20,6 +22,8 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,6 +81,7 @@ public class NewScheduleController implements Initializable {
   private MainController mainController;
 
   private static File file;
+  private ArrayList<MeetingDay> meetingDays;
 
   @FXML
   private void backButtonClick(ActionEvent event) {
@@ -104,10 +109,11 @@ public class NewScheduleController implements Initializable {
     String termName = year + "/" + semesterCombo.getValue();
 
     term.setTerm(termName);
+    term.setStatus("Open");
 
     termRepository.save(term);
 
-    if (fileNameLabel.getText().isEmpty()) {
+    if (!fileNameLabel.getText().equals("")) {
       importSections(term);
     }
 
@@ -137,60 +143,106 @@ public class NewScheduleController implements Initializable {
     BufferedReader br = null;
     String line = "";
     String splitBy = ",";
+    String prevCourseNumber = "";
+    int sectionNumber;
 
     try {
       br = new BufferedReader(new FileReader(file));
 
+      sectionNumber = 1;
       while ((line = br.readLine()) != null) {
         String[] column = line.split(splitBy);
 
         CourseSection courseSection = new CourseSection();
 
-        String[] courseNum = column[0].split("*");
+        String[] courseNum = column[0].split("\\*");
         courseSection.setCourseNumber(
-            courseRepository.findByCourseNumber(courseNum[0] + courseNum[1])
+                courseRepository.findByCourseNumber(courseNum[0] + courseNum[1])
         );
 
-        courseSection.setSectionNumber(Integer.parseInt(column[4]));
-        courseSection.setAvailable(true);
-        courseSection.setCapacity(Integer.parseInt(column[3]));
-        courseSection.setSeatsAvailable(courseSection.getCapacity());
-        courseSection.setStatus("Open");
-        courseSection.setTerm(term);
-        courseSection.setStudentCount(Integer.parseInt(column[2]));
-        courseSection.setType(column[6]);
+        if ((courseSection.getCourseNumber() != null)
+                && (courseSection.getCourseNumber().getCourseNumber().equals(prevCourseNumber))) {
+          sectionNumber++;
+        } else {
+          sectionNumber = 1;
+        }
 
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        courseSection.setStartDate(formatter.parse(column[10]));
-        courseSection.setEndDate(formatter.parse(column[11]));
+        if (courseSection.getCourseNumber() != null) {
+          courseSection.setSectionNumber(sectionNumber);
+          courseSection.setAvailable(true);
+          courseSection.setCapacity(Integer.parseInt(column[3]));
+          courseSection.setSeatsAvailable(courseSection.getCapacity());
+          courseSection.setStatus("Open");
+          courseSection.setTerm(term);
+          courseSection.setStudentCount(0);
+          courseSection.setType(column[6]);
 
-        courseSection.setDepartment(
-            departmentRepository.findByAbbreviation(courseNum[0])
-        );
+          SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 
-        courseSection.setProfessorId(
-            professorRepository.findById(column[1])
-        );
+        //courseSection.setStartDate(formatter.parse(column[10]));
+          //courseSection.setEndDate(formatter.parse(column[11]));
+          LocalDate myDate = LocalDate.parse("2014-04-28");
+          courseSection.setStartDate(DateHelper.asDate(myDate));
+          myDate = LocalDate.parse("2014-04-29");
+          courseSection.setEndDate(DateHelper.asDate(myDate));
 
-        courseSection = courseSectionRepository.save(courseSection);
+          courseSection.setDepartment(
+                  departmentRepository.findByAbbreviation(courseNum[0])
+          );
 
-        MeetingDay day = new MeetingDay();
+          courseSection.setProfessorId(
+                  professorRepository.findById(Integer.parseInt(column[1]))
+          );
 
-        DateFormat df = new SimpleDateFormat("hh:mm a");
-        String[] times = column[12].split("-");
-        day.setStartTime(df.parse(times[0]));
-        day.setEndTime(df.parse(times[1]));
+          System.out.println("TEST");
+          System.out.println(courseSection.getCourseNumber());
+          System.out.println(courseSection.getSectionNumber());
+          System.out.println(courseSection.getCapacity());
+          System.out.println(courseSection.getStudentCount());
+          System.out.println(courseSection.getType());
+          System.out.println(courseSection.getStartDate());
+          System.out.println(courseSection.getEndDate());
+          System.out.println(courseSection.getDepartment());
+          System.out.println(courseSection.getProfessorId());
 
-        String[] rooms = column[9].split(",");
-        day.setRoomNumber(
-            roomRepository.findByRoomNumber(rooms[0])
-        );
+          courseSection = courseSectionRepository.save(courseSection);
 
-        // Save MeetingDays for CourseSection
-        day.setCourseSectionId(courseSection);
-        day.setTerm(courseSection.getTerm());
+          prevCourseNumber = courseNum[0] + courseNum[1];
 
-        meetingDayRepository.save(day);
+          MeetingDay day = new MeetingDay();
+
+          DateFormat df = new SimpleDateFormat("hh:mma");
+          String[] times = column[12].split("-");
+          day.setStartTime(df.parse(times[0]));
+          day.setEndTime(df.parse(times[1]));
+          day.setDay("M");
+
+          String[] rooms = column[9].split(";");
+          System.out.println("ROOM : " + rooms[0]);
+          Room room = roomRepository.findByRoomNumber(rooms[0]);
+          if (room == null) {
+            room = new Room();
+            room.setRoomNumber(rooms[0]);
+            room.setBuilding("CHANGEME");
+            room.setCapacity(courseSection.getCapacity());
+            room.setType("Classroom");
+
+            room = roomRepository.save(room);
+          }
+
+          day.setRoomNumber(room);
+
+          meetingDays = new ArrayList<>();
+          meetingDays.add(day);
+
+          // Save MeetingDays for CourseSection
+          for (MeetingDay days : meetingDays) {
+            days.setCourseSectionId(courseSection);
+            days.setTerm(courseSection.getTerm());
+          }
+
+          meetingDayRepository.save(new ArrayList<MeetingDay>(meetingDays));
+        }
 
       }
     } catch (FileNotFoundException ex) {
@@ -204,14 +256,14 @@ public class NewScheduleController implements Initializable {
   public void buildView() {
     // Build type combo box
     ObservableList<String> semesters = FXCollections.observableArrayList(
-        "FA", "WI", "SP", "SU"
+            "FA", "WI", "SP", "SU"
     );
     semesterCombo.setItems(semesters);
     semesterCombo.setVisibleRowCount(4);
 
     // Build type combo box
     ObservableList<String> years = FXCollections.observableArrayList(
-        "2015", "2016", "2017", "2018", "2019", "2020"
+            "2015", "2016", "2017", "2018", "2019", "2020"
     );
     yearCombo.setItems(years);
     yearCombo.setVisibleRowCount(4);
