@@ -1,20 +1,8 @@
 package com.coursepresso.project.controller;
 
-import com.coursepresso.project.entity.Course;
-import com.coursepresso.project.entity.CourseSection;
-import com.coursepresso.project.entity.Department;
-import com.coursepresso.project.entity.MeetingDay;
-import com.coursepresso.project.entity.MeetingTime;
-import com.coursepresso.project.entity.Professor;
-import com.coursepresso.project.entity.Room;
-import com.coursepresso.project.entity.Term;
-import com.coursepresso.project.repository.CourseSectionRepository;
-import com.coursepresso.project.repository.DepartmentRepository;
-import com.coursepresso.project.repository.MeetingTimeRepository;
-import com.coursepresso.project.repository.RoomRepository;
-import com.coursepresso.project.repository.TermRepository;
+import com.coursepresso.project.entity.*;
+import com.coursepresso.project.repository.*;
 import com.coursepresso.project.helper.DateHelper;
-import com.coursepresso.project.repository.MeetingDayRepository;
 
 import com.google.common.collect.Lists;
 import java.net.URL;
@@ -51,9 +39,9 @@ public class NewCourseSectionController implements Initializable {
   @FXML
   private Node root;
   @FXML
-  private ComboBox departmentCombo;
+  private ComboBox<Department> departmentCombo;
   @FXML
-  private ComboBox courseNumberCombo;
+  private ComboBox<Course> courseNumberCombo;
   @FXML
   private TextField titleField;
   @FXML
@@ -61,9 +49,9 @@ public class NewCourseSectionController implements Initializable {
   @FXML
   private TextField capacityField;
   @FXML
-  private ComboBox typeCombo;
+  private ComboBox<String> typeCombo;
   @FXML
-  private ComboBox termCombo;
+  private ComboBox<Term> termCombo;
   @FXML
   private DatePicker startDatePicker;
   @FXML
@@ -79,15 +67,15 @@ public class NewCourseSectionController implements Initializable {
   @FXML
   private TableColumn<MeetingDay, String> dayColumn;
   @FXML
-  private ComboBox startTimeCombo;
+  private ComboBox<MeetingTime> startTimeCombo;
   @FXML
-  private ComboBox endTimeCombo;
+  private ComboBox<MeetingTime> endTimeCombo;
   @FXML
-  private ComboBox roomCombo;
+  private ComboBox<Room> roomCombo;
   @FXML
-  private ComboBox dayCombo;
+  private ComboBox<String> dayCombo;
   @FXML
-  private ComboBox instructorCombo;
+  private ComboBox<Professor> instructorCombo;
   @FXML
   private Button addDayButton;
   @FXML
@@ -97,6 +85,8 @@ public class NewCourseSectionController implements Initializable {
 
   @Inject
   private CourseSectionRepository courseSectionRepository;
+  @Inject
+  private CourseRepository courseRepository;
   @Inject
   private DepartmentRepository departmentRepository;
   @Inject
@@ -111,10 +101,6 @@ public class NewCourseSectionController implements Initializable {
   private MainController mainController;
 
   private ObservableList<MeetingDay> meetingDays;
-  
-  public Node getView() {
-    return root;
-  }
 
   /**
    * Initializes the controller class.
@@ -130,7 +116,7 @@ public class NewCourseSectionController implements Initializable {
           SimpleStringProperty property = new SimpleStringProperty();
           DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
           property.setValue(dateFormat.format(
-              meetingDay.getValue().getStartTime())
+                  meetingDay.getValue().getStartTime())
           );
           return property;
         }
@@ -141,7 +127,7 @@ public class NewCourseSectionController implements Initializable {
           SimpleStringProperty property = new SimpleStringProperty();
           DateFormat dateFormat = new SimpleDateFormat("hh:mm a");
           property.setValue(dateFormat.format(
-              meetingDay.getValue().getEndTime())
+                  meetingDay.getValue().getEndTime())
           );
           return property;
         }
@@ -154,30 +140,34 @@ public class NewCourseSectionController implements Initializable {
     meetingDayTable.setItems(meetingDays);
   }
 
+  public Node getView() {
+    return root;
+  }
+
   @FXML
   private void submitCourseButtonClick(ActionEvent event) {
     CourseSection courseSection = new CourseSection();
 
-    courseSection.setCourseNumber((Course) courseNumberCombo.getValue());
+    courseSection.setCourse(courseNumberCombo.getValue());
     courseSection.setSectionNumber(Integer.parseInt(sectionField.getText()));
     courseSection.setAvailable(true);
     courseSection.setCapacity(Integer.parseInt(capacityField.getText()));
     courseSection.setSeatsAvailable(courseSection.getCapacity());
     courseSection.setStatus("Open");
-    courseSection.setTerm((Term) termCombo.getValue());
+    courseSection.setTerm(termCombo.getValue());
     courseSection.setStudentCount(0);
-    courseSection.setType(typeCombo.getValue().toString());
+    courseSection.setType(typeCombo.getValue());
     // Save LocalDate as Date
     courseSection.setStartDate(DateHelper.asDate(startDatePicker.getValue()));
     courseSection.setEndDate(DateHelper.asDate(endDatePicker.getValue()));
-    courseSection.setDepartment((Department) departmentCombo.getValue());
-    courseSection.setProfessorId((Professor) instructorCombo.getValue());
+    courseSection.setDepartment(departmentCombo.getValue());
+    courseSection.setProfessor(instructorCombo.getValue());
 
     courseSection = courseSectionRepository.save(courseSection);
 
     // Save MeetingDays for CourseSection
     for (MeetingDay day : meetingDays) {
-      day.setCourseSectionId(courseSection);
+      day.setCourseSection(courseSection);
       day.setTerm(courseSection.getTerm());
     }
     meetingDayRepository.save(new ArrayList<MeetingDay>(meetingDays));
@@ -187,7 +177,7 @@ public class NewCourseSectionController implements Initializable {
     alert.setHeaderText(null);
     alert.setContentText("The course section has been saved successfully!");
     alert.showAndWait();
-    
+
     mainController.showMenu();
   }
 
@@ -202,8 +192,8 @@ public class NewCourseSectionController implements Initializable {
     } catch (ParseException ex) {
       System.err.println(ex);
     }
-    day.setRoomNumber((Room) roomCombo.getValue());
-    day.setDay(dayCombo.getValue().toString());
+    day.setRoom(roomCombo.getValue());
+    day.setDay(dayCombo.getValue());
 
     meetingDays.add(day);
 
@@ -212,10 +202,9 @@ public class NewCourseSectionController implements Initializable {
         Integer.toString(
             // Find the room with the lowest capacity from the current day list
             meetingDays.stream()
-            .min((m1, m2) -> Integer.compare(
-                    m1.getRoomNumber().getCapacity(),
-                    m2.getRoomNumber().getCapacity()
-                )).get().getRoomNumber().getCapacity()
+            .min((m1, m2) -> Integer.compare(m1.getRoom().getCapacity(),
+                    m2.getRoom().getCapacity()
+                )).get().getRoom().getCapacity()
         )
     );
 
@@ -225,7 +214,7 @@ public class NewCourseSectionController implements Initializable {
     roomCombo.setValue(null);
     dayCombo.setValue(null);
   }
-  
+
   @FXML
   private void backButtonClick(ActionEvent event) {
     mainController.showMenu();
@@ -233,18 +222,17 @@ public class NewCourseSectionController implements Initializable {
 
   @FXML
   private void departmentComboSelect(ActionEvent event) {
-    Department department = (Department) departmentCombo.getValue();
+    Department department;
 
     // Build course number combo box
     department = departmentRepository.findByNameWithCourses(
-        department.getName()
+        departmentCombo.getValue().getName()
     );
     ObservableList<Course> courses = FXCollections.observableArrayList(
         // Get course list for selected department
         department.getCourseList()
     );
     courseNumberCombo.setItems(courses);
-    courseNumberCombo.setVisibleRowCount(4);
 
     // Build professor combo box
     department = departmentRepository.findByNameWithProfessors(
@@ -255,12 +243,13 @@ public class NewCourseSectionController implements Initializable {
         department.getProfessorList()
     );
     instructorCombo.setItems(professors);
-    instructorCombo.setVisibleRowCount(4);
   }
 
   @FXML
   private void courseNumberComboSelect(ActionEvent event) {
-    Course course = (Course) courseNumberCombo.getValue();
+    Course course = courseRepository.findByCourseNumberWithCourseSections(
+        courseNumberCombo.getValue().getCourseNumber()
+    );
 
     if (course != null) {
       titleField.setText(course.getTitle());
@@ -291,44 +280,37 @@ public class NewCourseSectionController implements Initializable {
         Lists.newArrayList(departmentRepository.findAll())
     );
     departmentCombo.setItems(departments);
-    departmentCombo.setVisibleRowCount(4);
 
     // Build type combo box
     ObservableList<String> types = FXCollections.observableArrayList(
         "HYB", "LEC", "ONL"
     );
     typeCombo.setItems(types);
-    typeCombo.setVisibleRowCount(4);
 
     // Build term combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
         Lists.newArrayList(termRepository.findAll())
     );
     termCombo.setItems(terms);
-    termCombo.setVisibleRowCount(4);
 
     // Build time combo boxes
     ObservableList<MeetingTime> meetingTimes = FXCollections.observableArrayList(
         Lists.newArrayList(meetingTimeRepository.findAll())
     );
     startTimeCombo.setItems(meetingTimes);
-    startTimeCombo.setVisibleRowCount(4);
     endTimeCombo.setItems(meetingTimes);
-    endTimeCombo.setVisibleRowCount(4);
 
     // Build room combo box
     ObservableList<Room> roomNumbers = FXCollections.observableArrayList(
         Lists.newArrayList(roomRepository.findAll())
     );
     roomCombo.setItems(roomNumbers);
-    roomCombo.setVisibleRowCount(4);
 
     // Build day combo box
     ObservableList<String> days = FXCollections.observableArrayList(
         "M", "T", "W", "TH", "F", "S", "SU"
     );
     dayCombo.setItems(days);
-    dayCombo.setVisibleRowCount(4);
   }
 
 }

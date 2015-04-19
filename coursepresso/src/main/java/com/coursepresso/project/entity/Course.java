@@ -36,11 +36,11 @@ public class Course implements Serializable {
   @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseNumber")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
   private List<CoursePrerequisite> coursePrerequisiteList;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "prerequisite")
   private List<CoursePrerequisite> coursePrerequisiteList1;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "courseNumber")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "course")
   private List<CourseSection> courseSectionList;
   @JoinColumn(name = "department", referencedColumnName = "name")
   @ManyToOne(optional = false)

@@ -41,7 +41,7 @@ public class User implements Serializable {
   @JoinColumn(name = "department", referencedColumnName = "name")
   @ManyToOne(optional = false)
   private Department department;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "username")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
   private List<Authority> authorityList;
 
   public User() {

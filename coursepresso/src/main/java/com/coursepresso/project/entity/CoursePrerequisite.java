@@ -24,7 +24,7 @@ public class CoursePrerequisite implements Serializable {
   private Date updatedAt;
   @JoinColumn(name = "course_number", referencedColumnName = "course_number")
   @ManyToOne(optional = false)
-  private Course courseNumber;
+  private Course course;
   @JoinColumn(name = "prerequisite", referencedColumnName = "course_number")
   @ManyToOne(optional = false)
   private Course prerequisite;
@@ -57,12 +57,12 @@ public class CoursePrerequisite implements Serializable {
     this.updatedAt = updatedAt;
   }
 
-  public Course getCourseNumber() {
-    return courseNumber;
+  public Course getCourse() {
+    return course;
   }
 
-  public void setCourseNumber(Course courseNumber) {
-    this.courseNumber = courseNumber;
+  public void setCourse(Course course) {
+    this.course = course;
   }
 
   public Course getPrerequisite() {

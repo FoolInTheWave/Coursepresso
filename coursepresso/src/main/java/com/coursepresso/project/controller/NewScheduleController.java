@@ -147,7 +147,7 @@ public class NewScheduleController implements Initializable {
         CourseSection courseSection = new CourseSection();
 
         String[] courseNum = column[0].split("*");
-        courseSection.setCourseNumber(
+        courseSection.setCourse(
             courseRepository.findByCourseNumber(courseNum[0] + courseNum[1])
         );
 
@@ -168,7 +168,7 @@ public class NewScheduleController implements Initializable {
             departmentRepository.findByAbbreviation(courseNum[0])
         );
 
-        courseSection.setProfessorId(
+        courseSection.setProfessor(
             professorRepository.findById(column[1])
         );
 
@@ -182,12 +182,12 @@ public class NewScheduleController implements Initializable {
         day.setEndTime(df.parse(times[1]));
 
         String[] rooms = column[9].split(",");
-        day.setRoomNumber(
-            roomRepository.findByRoomNumber(rooms[0])
+        day.setRoom(
+            roomRepository.findOne(rooms[0])
         );
 
         // Save MeetingDays for CourseSection
-        day.setCourseSectionId(courseSection);
+        day.setCourseSection(courseSection);
         day.setTerm(courseSection.getTerm());
 
         meetingDayRepository.save(day);

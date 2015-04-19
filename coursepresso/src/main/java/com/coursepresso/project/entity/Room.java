@@ -32,9 +32,9 @@ public class Room implements Serializable {
   @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomNumber")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
   private List<Appliance> applianceList;
-  @OneToMany(cascade = CascadeType.ALL, mappedBy = "roomNumber")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
   private List<MeetingDay> meetingDayList;
 
   public Room() {

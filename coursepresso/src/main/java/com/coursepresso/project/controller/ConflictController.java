@@ -114,7 +114,7 @@ public class ConflictController implements Initializable {
       );
       
       conflicts.add(new Conflict(
-          cs1.getCourseNumber().getTitle(), 
+          cs1.getCourse().getTitle(), 
           Integer.toString(cs1.getSectionNumber()), 
           cs1.getId().toString(), 
           cs2.getId().toString())
