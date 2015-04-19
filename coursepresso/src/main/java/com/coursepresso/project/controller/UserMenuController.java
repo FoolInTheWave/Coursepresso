@@ -56,7 +56,7 @@ public class UserMenuController implements Initializable {
 
   @FXML
   void newSectionButtonClick(ActionEvent event) {
-    mainController.showNewCourseSection();
+    mainController.showNewCourseSection("MENU");
   }
 
   @FXML

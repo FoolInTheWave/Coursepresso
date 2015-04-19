@@ -50,6 +50,11 @@
             </ScrollPane>
             <HBox alignment="CENTER" spacing="70.0">
                <children>
+                  <Button fx:id="addSectionButton" layoutX="227.0" layoutY="15.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#addSectionButtonClick" prefHeight="30.0" prefWidth="150.0" text="Add Section">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Button>
                   <Button fx:id="modifySectionButton" layoutX="323.0" layoutY="6.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#modifySectionButtonClick" prefHeight="30.0" prefWidth="150.0" text="Modify Section">
                      <font>
                         <Font size="13.0" />

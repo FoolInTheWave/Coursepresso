@@ -41,9 +41,9 @@ public class MainController {
   @Inject
   private ScheduleSelectionController scheduleSelectionController;
   @Inject
-  private ConflictController conflictController;
+  public ConflictController conflictController;
   @Inject
-  private CourseSearchController courseSearchController;
+  public CourseSearchController courseSearchController;
   @Inject
   private SearchResultsController searchResultsController;
   @Inject
@@ -102,13 +102,13 @@ public class MainController {
     }
   }
 
-  public void showNewCourseSection() {
-    newCourseSectionController.buildView();
+  public void showNewCourseSection(String sourcePage) {
+    newCourseSectionController.buildView(sourcePage);
     contentArea.setCenter(newCourseSectionController.getView());
   }
 
-  public void showEditCourseSection(CourseSection cs) {
-    editCourseSectionController.buildView(cs);
+  public void showEditCourseSection(CourseSection cs, String sourcePage) {
+    editCourseSectionController.buildView(cs, sourcePage);
     contentArea.setCenter(editCourseSectionController.getView());
   }
 

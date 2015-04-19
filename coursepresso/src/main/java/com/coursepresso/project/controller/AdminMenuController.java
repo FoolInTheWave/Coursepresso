@@ -62,7 +62,7 @@ public class AdminMenuController implements Initializable {
 
   @FXML
   private void newCourseButtonClick(ActionEvent event) {
-    mainController.showNewCourseSection();
+    mainController.showNewCourseSection("MENU");
   }
 
   @FXML

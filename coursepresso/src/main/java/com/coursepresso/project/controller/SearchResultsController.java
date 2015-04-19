@@ -64,6 +64,8 @@ public class SearchResultsController implements Initializable {
   private TableColumn<CourseSection, String> studentsColumn;
   @FXML
   private Button deleteSectionButton;
+  @FXML
+  private Button addSectionButton;
 
   @Inject
   private MainController mainController;
@@ -180,6 +182,11 @@ public class SearchResultsController implements Initializable {
   }
 
   @FXML
+  void addSectionButtonClick(ActionEvent event) {
+    mainController.showNewCourseSection("SEARCH");
+  }
+  
+  @FXML
   void backButtonClick(ActionEvent event) {
     mainController.showCourseSearch();
   }
@@ -187,7 +194,8 @@ public class SearchResultsController implements Initializable {
   @FXML
   void modifySectionButtonClick(ActionEvent event) {
     mainController.showEditCourseSection(
-        courseSectionTable.getSelectionModel().getSelectedItem()
+        courseSectionTable.getSelectionModel().getSelectedItem(),
+        "SEARCH"
     );
   }
 
