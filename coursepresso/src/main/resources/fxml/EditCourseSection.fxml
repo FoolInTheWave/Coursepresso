@@ -45,13 +45,13 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="departmentCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#departmentComboSelect" prefHeight="30.0" prefWidth="480.0" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="departmentCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="480.0" visibleRowCount="5" GridPane.rowIndex="1" />
                                     <Label prefHeight="25.0" text="Course Number" GridPane.columnIndex="1">
                                        <font>
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="courseNumberCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#courseNumberComboSelect" prefHeight="30.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="courseNumberCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#courseNumberComboSelect" prefHeight="30.0" prefWidth="480.0" visibleRowCount="5" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                     <Label prefHeight="25.0" text="Title" GridPane.rowIndex="2">
                                        <font>
                                           <Font size="13.0" />
@@ -67,7 +67,7 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="termCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <ComboBox fx:id="termCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="480.0" visibleRowCount="5" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                     <Label prefHeight="25.0" text="Section" GridPane.rowIndex="4">
                                        <font>
                                           <Font size="13.0" />
@@ -83,7 +83,7 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="typeCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <ComboBox fx:id="typeCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="480.0" visibleRowCount="5" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                     <Label prefHeight="25.0" text="Capacity" GridPane.rowIndex="6">
                                        <font>
                                           <Font size="13.0" />
@@ -99,7 +99,7 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="instructorCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="480.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <ComboBox fx:id="instructorCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="480.0" visibleRowCount="5" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                     <Label prefHeight="25.0" text="Start Date" GridPane.rowIndex="8">
                                        <font>
                                           <Font size="13.0" />
@@ -159,10 +159,10 @@
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
-                                    <ComboBox fx:id="dayCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" GridPane.rowIndex="1" />
-                                    <ComboBox fx:id="startTimeCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <ComboBox fx:id="endTimeCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                                    <ComboBox fx:id="roomCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="dayCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" visibleRowCount="4" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="startTimeCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" visibleRowCount="4" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="endTimeCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" visibleRowCount="4" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="roomCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="160.0" visibleRowCount="4" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                     <Button fx:id="addDayButton" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addDayButtonClick" prefHeight="30.0" prefWidth="160.0" text="Add Day" GridPane.columnIndex="4" GridPane.rowIndex="1">
                                        <font>
                                           <Font size="13.0" />

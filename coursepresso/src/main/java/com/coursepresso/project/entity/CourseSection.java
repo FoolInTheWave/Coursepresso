@@ -53,20 +53,20 @@ public class CourseSection implements Serializable {
   @Column(name = "updated_at", insertable = false, updatable = false)
   @Temporal(TemporalType.TIMESTAMP)
   private Date updatedAt;
-  @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "courseSectionId")
+  @OneToMany(cascade = CascadeType.ALL, mappedBy = "courseSection", fetch = FetchType.EAGER)
   private List<MeetingDay> meetingDayList;
   @JoinColumn(name = "course_number", referencedColumnName = "course_number")
-  @ManyToOne(fetch = FetchType.EAGER, optional = false)
-  private Course courseNumber;
+  @ManyToOne(optional = false, fetch = FetchType.EAGER)
+  private Course course;
   @JoinColumn(name = "term", referencedColumnName = "term")
-  @ManyToOne(optional = false)
+  @ManyToOne(optional = false, fetch = FetchType.EAGER)
   private Term term;
   @JoinColumn(name = "department", referencedColumnName = "name")
-  @ManyToOne(optional = false)
+  @ManyToOne(optional = false, fetch = FetchType.EAGER)
   private Department department;
   @JoinColumn(name = "professor_id", referencedColumnName = "id")
-  @ManyToOne(fetch = FetchType.EAGER, optional = false)
-  private Professor professorId;
+  @ManyToOne(optional = false, fetch = FetchType.EAGER)
+  private Professor professor;
 
   public CourseSection() {
   }
@@ -188,12 +188,12 @@ public class CourseSection implements Serializable {
     this.meetingDayList = meetingDayList;
   }
 
-  public Course getCourseNumber() {
-    return courseNumber;
+  public Course getCourse() {
+    return course;
   }
 
-  public void setCourseNumber(Course courseNumber) {
-    this.courseNumber = courseNumber;
+  public void setCourse(Course course) {
+    this.course = course;
   }
 
   public Term getTerm() {
@@ -212,12 +212,12 @@ public class CourseSection implements Serializable {
     this.department = department;
   }
   
-  public Professor getProfessorId() {
-    return professorId;
+  public Professor getProfessor() {
+    return professor;
   }
 
-  public void setProfessorId(Professor professorId) {
-    this.professorId = professorId;
+  public void setProfessor(Professor professor) {
+    this.professor = professor;
   }
 
   @Override

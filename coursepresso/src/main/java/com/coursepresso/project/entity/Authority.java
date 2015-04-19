@@ -26,7 +26,7 @@ public class Authority implements Serializable {
   private Date updatedAt;
   @JoinColumn(name = "username", referencedColumnName = "username")
   @ManyToOne(optional = false)
-  private User username;
+  private User user;
 
   public Authority() {
   }
@@ -65,12 +65,12 @@ public class Authority implements Serializable {
     this.updatedAt = updatedAt;
   }
 
-  public User getUsername() {
-    return username;
+  public User getUser() {
+    return user;
   }
 
-  public void setUsername(User username) {
-    this.username = username;
+  public void setUser(User user) {
+    this.user = user;
   }
 
   @Override

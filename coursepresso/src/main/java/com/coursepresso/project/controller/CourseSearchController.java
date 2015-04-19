@@ -1,12 +1,7 @@
 package com.coursepresso.project.controller;
 
-import com.coursepresso.project.entity.Course;
-import com.coursepresso.project.entity.CourseSection;
-import com.coursepresso.project.entity.Department;
-import com.coursepresso.project.entity.Professor;
-import com.coursepresso.project.entity.Term;
-import com.coursepresso.project.repository.DepartmentRepository;
-import com.coursepresso.project.repository.TermRepository;
+import com.coursepresso.project.entity.*;
+import com.coursepresso.project.repository.*;
 import com.coursepresso.project.service.SearchService;
 import com.google.common.collect.Lists;
 import java.net.URL;
@@ -49,29 +44,29 @@ public class CourseSearchController implements Initializable {
   @FXML
   private Button searchButton;
   @FXML
-  private ComboBox courseLevelCombo;
+  private ComboBox<String> courseLevelCombo;
   @FXML
-  private ComboBox termCombo;
+  private ComboBox<Term> termCombo;
   @FXML
   private TextField lineNumberText;
   @FXML
-  private ComboBox departmentCombo;
+  private ComboBox<Department> departmentCombo;
   @FXML
   private CheckBox fridayCheckbox;
   @FXML
   private CheckBox thursdayCheckbox;
   @FXML
-  private ComboBox courseNumberCombo;
+  private ComboBox<Course> courseNumberCombo;
   @FXML
   private CheckBox tuesdayCheckbox;
   @FXML
-  private ComboBox instructorCombo;
+  private ComboBox<Professor> instructorCombo;
   @FXML
   private CheckBox mondayCheckbox;
   @FXML
   private Button backButton;
   @FXML
-  private ComboBox creditsCombo;
+  private ComboBox<Integer> creditsCombo;
 
   @Inject
   private DepartmentRepository departmentRepository;
@@ -121,31 +116,30 @@ public class CourseSearchController implements Initializable {
       }
     };
 
-    if (departmentCombo.getValue() != null) {
-      params.put("department", (Department) departmentCombo.getValue());
-    }
     if (termCombo.getValue() != null) {
-      params.put("term", (Term) termCombo.getValue());
+      params.put("term", termCombo.getValue());
+    }
+    if (departmentCombo.getValue() != null) {
+      params.put("department", departmentCombo.getValue());
     }
     if (courseNumberCombo.getValue() != null) {
-      params.put("course", (Course) courseNumberCombo.getValue());
+      params.put("course", courseNumberCombo.getValue());
     }
     if (instructorCombo.getValue() != null) {
-      params.put("professor", (Professor) instructorCombo.getValue());
+      params.put("professor", instructorCombo.getValue());
     }
     if (courseLevelCombo.getValue() != null) {
       params.put("courseLevel", (String) courseLevelCombo.getValue());
     }
     if (courseNumberCombo.getValue() != null) {
-      Course c = (Course) courseNumberCombo.getValue();
+      Course c = courseNumberCombo.getValue();
       params.put("courseNumber", c.getCourseNumber());
     }
     if (lineNumberText.getText() != null) {
       params.put("lineNumber", Integer.valueOf(lineNumberText.getText()));
     }
     if (creditsCombo.getValue() != null) {
-      String credits = (String) creditsCombo.getValue();
-      params.put("credits", Integer.valueOf(credits));
+      params.put("credits", creditsCombo.getValue());
     }
     if (mondayCheckbox.isSelected()) {
       params.put("monday", "M");
@@ -177,13 +171,8 @@ public class CourseSearchController implements Initializable {
           }
         }
     );
-    
+
     new Thread(searchTask).start();
-  }
-
-  @FXML
-  void courseNumberComboSelect(ActionEvent event) {
-
   }
 
   @FXML
@@ -219,54 +208,30 @@ public class CourseSearchController implements Initializable {
     }
   }
 
-  @FXML
-  void termComboSelect(ActionEvent event) {
-
-  }
-
-  @FXML
-  void courseLevelComboSelect(ActionEvent event) {
-
-  }
-
-  @FXML
-  void instructorComboSelect(ActionEvent event) {
-
-  }
-
-  @FXML
-  void creditsComboSelect(ActionEvent event) {
-
-  }
-
   public void buildView() {
     // Build department combo box
     ObservableList<Department> departments = FXCollections.observableArrayList(
         Lists.newArrayList(departmentRepository.findAll())
     );
     departmentCombo.setItems(departments);
-    departmentCombo.setVisibleRowCount(4);
 
     // Build term combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
         Lists.newArrayList(termRepository.findAll())
     );
     termCombo.setItems(terms);
-    termCombo.setVisibleRowCount(4);
 
     // Build type combo box
     ObservableList<String> levels = FXCollections.observableArrayList(
         "100", "200", "300", "400"
     );
     courseLevelCombo.setItems(levels);
-    courseLevelCombo.setVisibleRowCount(4);
 
     // Build type combo box
-    ObservableList<String> credits = FXCollections.observableArrayList(
-        "1", "2", "3", "4"
+    ObservableList<Integer> credits = FXCollections.observableArrayList(
+        1, 2, 3, 4, 5
     );
     creditsCombo.setItems(credits);
-    creditsCombo.setVisibleRowCount(4);
 
     departmentCombo.getSelectionModel().clearSelection();
     termCombo.getSelectionModel().clearSelection();

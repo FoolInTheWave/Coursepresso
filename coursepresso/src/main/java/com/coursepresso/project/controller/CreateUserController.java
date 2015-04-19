@@ -108,7 +108,7 @@ public class CreateUserController implements Initializable {
             user.setDepartment(departmentCombo.getValue());
             user.setEnabled(true);
             for (Authority a : authorities) {
-              a.setUsername(user);
+              a.setUser(user);
             }
 
             // Call the repository to save the user

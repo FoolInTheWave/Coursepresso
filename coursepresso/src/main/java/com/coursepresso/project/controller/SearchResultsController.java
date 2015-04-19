@@ -82,8 +82,8 @@ public class SearchResultsController implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     lineNumColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-    courseNumColumn.setCellValueFactory(new PropertyValueFactory<>("courseNumber"));
-    professorColumn.setCellValueFactory(new PropertyValueFactory<>("professorId"));
+    courseNumColumn.setCellValueFactory(new PropertyValueFactory<>("course"));
+    professorColumn.setCellValueFactory(new PropertyValueFactory<>("professor"));
     studentsColumn.setCellValueFactory(new PropertyValueFactory<>("studentCount"));
     capacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
 
@@ -92,7 +92,7 @@ public class SearchResultsController implements Initializable {
         courseSection -> {
           SimpleStringProperty property = new SimpleStringProperty();
           property.setValue(
-              courseSection.getValue().getCourseNumber().getTitle()
+              courseSection.getValue().getCourse().getTitle()
           );
           return property;
         }
@@ -168,7 +168,7 @@ public class SearchResultsController implements Initializable {
           if (!courseSection.getValue().getMeetingDayList().isEmpty()) {
             // Get first meeting day of the course section
             day = courseSection.getValue().getMeetingDayList().get(0);
-            property.setValue(day.getRoomNumber().toString());
+            property.setValue(day.getRoom().toString());
           }
           return property;
         }

@@ -35,10 +35,10 @@ public class MeetingDay implements Serializable {
   private Date updatedAt;
   @JoinColumn(name = "course_section_id", referencedColumnName = "id")
   @ManyToOne(optional = false)
-  private CourseSection courseSectionId;
+  private CourseSection courseSection;
   @JoinColumn(name = "room_number", referencedColumnName = "room_number")
   @ManyToOne(optional = false)
-  private Room roomNumber;
+  private Room room;
   @JoinColumn(name = "term", referencedColumnName = "term")
   @ManyToOne(optional = false)
   private Term term;
@@ -99,20 +99,20 @@ public class MeetingDay implements Serializable {
     this.updatedAt = updatedAt;
   }
 
-  public CourseSection getCourseSectionId() {
-    return courseSectionId;
+  public CourseSection getCourseSection() {
+    return courseSection;
   }
 
-  public void setCourseSectionId(CourseSection courseSectionId) {
-    this.courseSectionId = courseSectionId;
+  public void setCourseSection(CourseSection courseSection) {
+    this.courseSection = courseSection;
   }
 
-  public Room getRoomNumber() {
-    return roomNumber;
+  public Room getRoom() {
+    return room;
   }
 
-  public void setRoomNumber(Room roomNumber) {
-    this.roomNumber = roomNumber;
+  public void setRoom(Room room) {
+    this.room = room;
   }
   
   public Term getTerm() {

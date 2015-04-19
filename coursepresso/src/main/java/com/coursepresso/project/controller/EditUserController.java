@@ -108,7 +108,7 @@ public class EditUserController implements Initializable {
             user.setEmail(emailField.getText());
             user.setDepartment(departmentCombo.getValue());
             for (Authority a : authorities) {
-              a.setUsername(user);
+              a.setUser(user);
             }
 
             // Call the repository to save the user

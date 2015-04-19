@@ -1,9 +1,9 @@
 package com.coursepresso.project.repository;
 
 import com.coursepresso.project.entity.Room;
+import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -12,13 +12,13 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface RoomRepository extends CrudRepository<Room, String> {
-  
+
   /**
-   * Custom FIND method retrieves a Department record from the database
-   * 
-   * @param roomNumber The room number to match.
-   * @return A Department record as a Department object.
+   * Custom GET method retrieves all Room records from the database with the
+   * MeetingDay list initialized.
+   *
+   * @return A List of Room objects.
    */
-  @Query("SELECT r FROM Room r WHERE r.roomNumber = (:roomNumber)")
-  public Room findByRoomNumber(@Param("roomNumber") String roomNumber);
+  @Query("SELECT r FROM Room r JOIN FETCH r.meetingDayList")
+  public List<Room> getRoomsWithMeetingDays();
 }

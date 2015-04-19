@@ -22,42 +22,42 @@
                      <children>
                         <VBox layoutX="195.0" layoutY="179.0" prefHeight="701.0" prefWidth="1005.0" spacing="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label layoutX="195.0" layoutY="179.0" prefWidth="410.0" text="Department">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                              <ComboBox fx:id="departmentCombo" layoutX="195.0" layoutY="203.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#departmentComboSelect" prefHeight="30.0" prefWidth="410.0" visibleRowCount="4" VBox.vgrow="ALWAYS" />
                               <Label layoutX="655.0" layoutY="179.0" prefWidth="410.0" text="Semester">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="termCombo" layoutX="655.0" layoutY="203.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#termComboSelect" prefHeight="30.0" prefWidth="410.0" visibleRowCount="4" />
+                              <ComboBox fx:id="termCombo" layoutX="655.0" layoutY="203.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="410.0" visibleRowCount="5" />
+                              <Label layoutX="195.0" layoutY="179.0" prefWidth="410.0" text="Department">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="departmentCombo" layoutX="195.0" layoutY="203.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#departmentComboSelect" prefHeight="30.0" prefWidth="410.0" visibleRowCount="5" VBox.vgrow="ALWAYS" />
                               <Label layoutX="424.0" layoutY="273.0" prefWidth="410.0" text="Course Number">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="courseNumberCombo" layoutX="424.0" layoutY="297.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#courseNumberComboSelect" prefHeight="30.0" prefWidth="410.0" visibleRowCount="4" />
+                              <ComboBox fx:id="courseNumberCombo" layoutX="424.0" layoutY="297.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="410.0" visibleRowCount="5" />
                               <Label layoutX="195.0" layoutY="273.0" prefWidth="410.0" text="Course Level">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="courseLevelCombo" layoutX="195.0" layoutY="297.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#courseLevelComboSelect" prefHeight="30.0" prefWidth="410.0" visibleRowCount="4" />
+                              <ComboBox fx:id="courseLevelCombo" layoutX="195.0" layoutY="297.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="410.0" visibleRowCount="5" />
                               <Label layoutX="655.0" layoutY="273.0" prefWidth="410.0" text="Instructor">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="instructorCombo" layoutX="655.0" layoutY="297.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#instructorComboSelect" prefHeight="30.0" prefWidth="410.0" visibleRowCount="4" />
+                              <ComboBox fx:id="instructorCombo" layoutX="655.0" layoutY="297.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="410.0" visibleRowCount="5" />
                               <Label layoutX="935.0" layoutY="377.0" prefWidth="410.0" text="Credits">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="creditsCombo" layoutX="935.0" layoutY="401.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#creditsComboSelect" prefHeight="30.0" prefWidth="410.0" visibleRowCount="4" />
+                              <ComboBox fx:id="creditsCombo" layoutX="935.0" layoutY="401.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="410.0" visibleRowCount="5" />
                               <Label alignment="TOP_LEFT" layoutX="196.0" layoutY="374.0" text="Line Number" VBox.vgrow="ALWAYS">
                                  <font>
                                     <Font size="13.0" />

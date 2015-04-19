@@ -155,95 +155,51 @@ public class NewScheduleController implements Initializable {
 
         CourseSection courseSection = new CourseSection();
 
-        String[] courseNum = column[0].split("\\*");
-        courseSection.setCourseNumber(
-                courseRepository.findByCourseNumber(courseNum[0] + courseNum[1])
+        String[] courseNum = column[0].split("*");
+        courseSection.setCourse(
+            courseRepository.findByCourseNumber(courseNum[0] + courseNum[1])
         );
 
-        if ((courseSection.getCourseNumber() != null)
-                && (courseSection.getCourseNumber().getCourseNumber().equals(prevCourseNumber))) {
-          sectionNumber++;
-        } else {
-          sectionNumber = 1;
-        }
+        courseSection.setSectionNumber(Integer.parseInt(column[4]));
+        courseSection.setAvailable(true);
+        courseSection.setCapacity(Integer.parseInt(column[3]));
+        courseSection.setSeatsAvailable(courseSection.getCapacity());
+        courseSection.setStatus("Open");
+        courseSection.setTerm(term);
+        courseSection.setStudentCount(Integer.parseInt(column[2]));
+        courseSection.setType(column[6]);
 
-        if (courseSection.getCourseNumber() != null) {
-          courseSection.setSectionNumber(sectionNumber);
-          courseSection.setAvailable(true);
-          courseSection.setCapacity(Integer.parseInt(column[3]));
-          courseSection.setSeatsAvailable(courseSection.getCapacity());
-          courseSection.setStatus("Open");
-          courseSection.setTerm(term);
-          courseSection.setStudentCount(0);
-          courseSection.setType(column[6]);
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        courseSection.setStartDate(formatter.parse(column[10]));
+        courseSection.setEndDate(formatter.parse(column[11]));
 
-          SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+        courseSection.setDepartment(
+            departmentRepository.findByAbbreviation(courseNum[0])
+        );
 
-        //courseSection.setStartDate(formatter.parse(column[10]));
-          //courseSection.setEndDate(formatter.parse(column[11]));
-          LocalDate myDate = LocalDate.parse("2014-04-28");
-          courseSection.setStartDate(DateHelper.asDate(myDate));
-          myDate = LocalDate.parse("2014-04-29");
-          courseSection.setEndDate(DateHelper.asDate(myDate));
+        courseSection.setProfessor(
+            professorRepository.findById(Integer.parseInt(column[1]))
+        );
 
-          courseSection.setDepartment(
-                  departmentRepository.findByAbbreviation(courseNum[0])
-          );
+        courseSection = courseSectionRepository.save(courseSection);
 
-          courseSection.setProfessorId(
-                  professorRepository.findById(Integer.parseInt(column[1]))
-          );
+        MeetingDay day = new MeetingDay();
 
-          System.out.println("TEST");
-          System.out.println(courseSection.getCourseNumber());
-          System.out.println(courseSection.getSectionNumber());
-          System.out.println(courseSection.getCapacity());
-          System.out.println(courseSection.getStudentCount());
-          System.out.println(courseSection.getType());
-          System.out.println(courseSection.getStartDate());
-          System.out.println(courseSection.getEndDate());
-          System.out.println(courseSection.getDepartment());
-          System.out.println(courseSection.getProfessorId());
+        DateFormat df = new SimpleDateFormat("hh:mm a");
+        String[] times = column[12].split("-");
+        day.setStartTime(df.parse(times[0]));
+        day.setEndTime(df.parse(times[1]));
 
-          courseSection = courseSectionRepository.save(courseSection);
+        String[] rooms = column[9].split(",");
+        day.setRoom(
+            roomRepository.findOne(rooms[0])
+        );
 
-          prevCourseNumber = courseNum[0] + courseNum[1];
+        // Save MeetingDays for CourseSection
+        day.setCourseSection(courseSection);
+        day.setTerm(courseSection.getTerm());
 
-          MeetingDay day = new MeetingDay();
-
-          DateFormat df = new SimpleDateFormat("hh:mma");
-          String[] times = column[12].split("-");
-          day.setStartTime(df.parse(times[0]));
-          day.setEndTime(df.parse(times[1]));
-          day.setDay("M");
-
-          String[] rooms = column[9].split(";");
-          System.out.println("ROOM : " + rooms[0]);
-          Room room = roomRepository.findByRoomNumber(rooms[0]);
-          if (room == null) {
-            room = new Room();
-            room.setRoomNumber(rooms[0]);
-            room.setBuilding("CHANGEME");
-            room.setCapacity(courseSection.getCapacity());
-            room.setType("Classroom");
-
-            room = roomRepository.save(room);
-          }
-
-          day.setRoomNumber(room);
-
-          meetingDays = new ArrayList<>();
-          meetingDays.add(day);
-
-          // Save MeetingDays for CourseSection
-          for (MeetingDay days : meetingDays) {
-            days.setCourseSectionId(courseSection);
-            days.setTerm(courseSection.getTerm());
-          }
-
-          meetingDayRepository.save(new ArrayList<MeetingDay>(meetingDays));
-        }
-
+        meetingDayRepository.save(day);
       }
     } catch (FileNotFoundException ex) {
       Logger.getLogger(NewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
