@@ -34,6 +34,11 @@ public class ServiceConfig {
   public ExportService exportService() {
     return createService("export.service", ExportService.class);
   }
+  
+  @Bean
+  public CopyScheduleService copyScheduleService() {
+    return createService("copyschedule.service", CopyScheduleService.class);
+  }
 
   @Bean
   public ApplianceRepository applianceRepository() {

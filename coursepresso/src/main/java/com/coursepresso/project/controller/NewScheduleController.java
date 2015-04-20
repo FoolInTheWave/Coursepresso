@@ -13,6 +13,8 @@ import com.coursepresso.project.repository.MeetingDayRepository;
 import com.coursepresso.project.repository.ProfessorRepository;
 import com.coursepresso.project.repository.RoomRepository;
 import com.coursepresso.project.repository.TermRepository;
+import com.coursepresso.project.service.CopyScheduleService;
+import com.google.common.collect.Lists;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,11 +34,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.RadioButton;
+import javafx.scene.layout.Pane;
 import javax.inject.Inject;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -62,6 +67,22 @@ public class NewScheduleController implements Initializable {
   private Button chooseFileButton;
   @FXML
   private Label fileNameLabel;
+  @FXML
+  private RadioButton blankRdo;
+  @FXML
+  private RadioButton copyRdo;
+  @FXML
+  private RadioButton importRdo;
+  @FXML
+  private Label importLabel;
+  @FXML
+  private Pane importPane;
+  @FXML 
+  private Pane copyPane;
+  @FXML 
+  private ComboBox termCombo;
+  @FXML
+  private Group paneGroup;
 
   @Inject
   private TermRepository termRepository;
@@ -79,6 +100,8 @@ public class NewScheduleController implements Initializable {
   private RoomRepository roomRepository;
   @Inject
   private MainController mainController;
+  @Inject 
+  private CopyScheduleService copyScheduleService;
 
   private static File file;
   private ArrayList<MeetingDay> meetingDays;
@@ -88,6 +111,24 @@ public class NewScheduleController implements Initializable {
     mainController.showMenu();
   }
 
+  @FXML
+  private void blankRdoSelected(ActionEvent event) {
+    copyPane.setVisible(false);
+    importPane.setVisible(false);
+  }
+  
+  @FXML
+  private void copyRdoSelected(ActionEvent event) {
+    copyPane.setVisible(true);
+    importPane.setVisible(false);
+  }
+  
+  @FXML
+  private void importRdoSelected(ActionEvent event) {
+    importPane.setVisible(true);
+    copyPane.setVisible(false);
+  }
+  
   @FXML
   private void chooseFileButtonClick(ActionEvent event) {
     final FileChooser fileChooser = new FileChooser();
@@ -113,9 +154,10 @@ public class NewScheduleController implements Initializable {
 
     termRepository.save(term);
 
-    if (!fileNameLabel.getText().equals("")) {
+    if(importRdo.isSelected())
       importSections(term);
-    }
+    else if(copyRdo.isSelected())
+      copyPrevious(term);
 
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
     alert.setTitle("Term Saved");
@@ -138,6 +180,14 @@ public class NewScheduleController implements Initializable {
     return root;
   }
 
+  public void copyPrevious(Term newTerm) {
+    Term prevTerm = termRepository.findByTermWithCourseSections(
+            termCombo.getSelectionModel().getSelectedItem().toString()
+    );
+    
+    copyScheduleService.copySchedule(prevTerm, newTerm);
+  }
+  
   public void importSections(Term term) {
 
     BufferedReader br = null;
@@ -223,5 +273,11 @@ public class NewScheduleController implements Initializable {
     );
     yearCombo.setItems(years);
     yearCombo.setVisibleRowCount(4);
+    
+    // Build term combo box
+    ObservableList<Term> terms = FXCollections.observableArrayList(
+        Lists.newArrayList(termRepository.findAll())
+    );
+    termCombo.setItems(terms);
   }
 }

@@ -34,17 +34,62 @@
                                  </font>
                               </Label>
                               <ComboBox fx:id="yearCombo" layoutX="558.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" />
-                              <Label text="Import From File">
+                              <Label text="How would you like to create the schedule?">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="chooseFileButton" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#chooseFileButtonClick" prefHeight="30.0" prefWidth="150.0" text="Choose File">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Button>
-                              <Label fx:id="fileNameLabel" prefHeight="17.0" prefWidth="692.0" />
+                              <HBox prefHeight="34.0" prefWidth="1012.0">
+                                 <children>
+                                    <RadioButton fx:id="blankRdo" mnemonicParsing="false" onAction="#blankRdoSelected" prefHeight="17.0" prefWidth="187.0" text="Blank schedule">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                       <toggleGroup>
+                                          <ToggleGroup fx:id="toggleGroup" />
+                                       </toggleGroup>
+                                    </RadioButton>
+                                    <RadioButton fx:id="importRdo" mnemonicParsing="false" onAction="#importRdoSelected" prefHeight="17.0" prefWidth="175.0" text="Import from file" toggleGroup="$toggleGroup">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </RadioButton>
+                                    <RadioButton fx:id="copyRdo" mnemonicParsing="false" onAction="#copyRdoSelected" prefHeight="17.0" prefWidth="182.0" text="Copy a previous schedule" toggleGroup="$toggleGroup">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </RadioButton>
+                                 </children>
+                              </HBox>
+                              <Group fx:id="paneGroup">
+                                 <children>
+                                    <Pane fx:id="importPane" prefHeight="104.0" prefWidth="1012.0" visible="false">
+                                       <children>
+                                          <Label fx:id="importLabel" text="Import From File">
+                                             <font>
+                                                <Font size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <Button fx:id="chooseFileButton" layoutY="22.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#chooseFileButtonClick" prefHeight="30.0" prefWidth="150.0" text="Choose File">
+                                             <font>
+                                                <Font size="13.0" />
+                                             </font>
+                                          </Button>
+                                          <Label fx:id="fileNameLabel" layoutY="73.0" prefHeight="17.0" prefWidth="692.0" />
+                                       </children>
+                                    </Pane>
+                                    <Pane fx:id="copyPane" prefHeight="103.0" prefWidth="1012.0" visible="false">
+                                       <children>
+                                          <Label fx:id="importLabel1" layoutX="-2.0" text="Copy Previous Schedule">
+                                             <font>
+                                                <Font size="13.0" />
+                                             </font>
+                                          </Label>
+                                          <ComboBox fx:id="termCombo" layoutX="-2.0" layoutY="24.0" prefHeight="30.0" prefWidth="150.0" />
+                                       </children>
+                                    </Pane>
+                                 </children>
+                              </Group>
                            </children>
                            <padding>
                               <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
