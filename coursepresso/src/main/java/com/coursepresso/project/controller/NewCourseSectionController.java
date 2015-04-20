@@ -133,7 +133,7 @@ public class NewCourseSectionController implements Initializable {
           return property;
         }
     );
-    roomColumn.setCellValueFactory(new PropertyValueFactory<>("roomNumber"));
+    roomColumn.setCellValueFactory(new PropertyValueFactory<>("room"));
     dayColumn.setCellValueFactory(new PropertyValueFactory<>("day"));
 
     // Initialize the meeting day observable list and table view
