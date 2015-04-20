@@ -60,12 +60,13 @@ public class ExportDataController implements Initializable {
 
   @FXML
   void exportButtonClick(ActionEvent event) {
-    String table = tableCombo.getValue();
+    String table = (tableCombo.getValue() != null) ? tableCombo.getValue() : "";
+    String term = (termCombo.getValue() != null) ? termCombo.getValue().getTerm() : "";
     String data = "";
     
     switch (table) {
       case "Course Sections":
-        data = exportService.exportCourseSections(termCombo.getValue().getTerm());
+        data = exportService.exportCourseSections(term);
         break;
     }
 
@@ -82,6 +83,7 @@ public class ExportDataController implements Initializable {
     ObservableList<Term> terms = FXCollections.observableArrayList(
         Lists.newArrayList(termRepository.findAll())
     );
+    terms.add(0, null);
     termCombo.setItems(terms);
 
     // Build table names combo box
