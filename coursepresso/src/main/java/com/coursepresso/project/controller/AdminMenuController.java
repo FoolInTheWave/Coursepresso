@@ -30,14 +30,6 @@ public class AdminMenuController implements Initializable {
   @FXML
   private Button userManagementButton;
   @FXML
-  private Label displayConflictsLabel;
-  @FXML
-  private Label searchCoursesLabel;
-  @FXML
-  private Label newCourseLabel;
-  @FXML
-  private Label newScheduleLabel;
-  @FXML
   private Label headerLabel;
 
   @Inject
@@ -89,6 +81,11 @@ public class AdminMenuController implements Initializable {
   @FXML
   private void userManagementButtonClick(ActionEvent event) {
     mainController.showViewUsers();
+  }
+
+  @FXML
+  private void exportDataButtonClick(ActionEvent event) {
+    mainController.showExportData();
   }
 
 }
