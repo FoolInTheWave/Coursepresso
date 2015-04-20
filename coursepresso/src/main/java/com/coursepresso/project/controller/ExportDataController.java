@@ -63,10 +63,49 @@ public class ExportDataController implements Initializable {
     String table = (tableCombo.getValue() != null) ? tableCombo.getValue() : "";
     String term = (termCombo.getValue() != null) ? termCombo.getValue().getTerm() : "";
     String data = "";
-    
+
     switch (table) {
+      case "Appliances":
+        data = exportService.exportAppliances();
+        break;
+      case "Authorities":
+        data = exportService.exportAuthorities();
+        break;
+      case "Course Prerequisites":
+        data = exportService.exportCoursePrerequisites();
+        break;
       case "Course Sections":
         data = exportService.exportCourseSections(term);
+        break;
+      case "Courses":
+        data = exportService.exportCourses();
+        break;
+      case "Departments":
+        data = exportService.exportDepartments();
+        break;
+      case "Group Authorities":
+        data = exportService.exportGroupAuthorities();
+        break;
+      case "Group Members":
+        data = exportService.exportGroupMembers();
+        break;
+      case "Groups":
+        data = exportService.exportGroups();
+        break;
+      case "Meeting Days":
+        data = exportService.exportMeetingDays(term);
+        break;
+      case "Professors":
+        data = exportService.exportProfessors();
+        break;
+      case "Rooms":
+        data = exportService.exportRooms();
+        break;
+      case "Terms":
+        data = exportService.exportTerms();
+        break;
+      case "Users":
+        data = exportService.exportUsers();
         break;
     }
 
@@ -97,7 +136,7 @@ public class ExportDataController implements Initializable {
         tableNames
     );
     tableCombo.setItems(tables);
-    
+
     termCombo.getSelectionModel().clearSelection();
     tableCombo.getSelectionModel().clearSelection();
     previewArea.clear();

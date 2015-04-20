@@ -10,5 +10,31 @@ public interface ExportService {
   
   List<String> getTableNames();
   
+  String exportAppliances();
+  
+  String exportAuthorities();
+  
+  String exportCoursePrerequisites();
+  
   String exportCourseSections(String term);
+  
+  String exportCourses();
+  
+  String exportDepartments();
+  
+  String exportGroupAuthorities();
+  
+  String exportGroupMembers();
+  
+  String exportGroups();
+  
+  String exportMeetingDays(String term);
+  
+  String exportProfessors();
+  
+  String exportRooms();
+  
+  String exportTerms();
+  
+  String exportUsers();
 }
