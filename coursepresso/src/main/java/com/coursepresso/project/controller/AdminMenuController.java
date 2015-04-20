@@ -20,9 +20,9 @@ public class AdminMenuController implements Initializable {
   @FXML
   private Node root;
   @FXML
-  private Button searchCoursesButton;
+  private Button manageSectionsButton;
   @FXML
-  private Button newCourseButton;
+  private Button exportDataButton;
   @FXML
   private Button displayConflictsButton;
   @FXML
@@ -61,8 +61,8 @@ public class AdminMenuController implements Initializable {
   }
 
   @FXML
-  private void newCourseButtonClick(ActionEvent event) {
-    mainController.showNewCourseSection();
+  private void exportDataButtonClick(ActionEvent event) {
+    mainController.showExportData();
   }
 
   @FXML
@@ -72,7 +72,7 @@ public class AdminMenuController implements Initializable {
   }
 
   @FXML
-  private void displayCourseSearchButtonClick(ActionEvent event) {
+  private void manageSectionsButtonClick(ActionEvent event) {
     mainController.showCourseSearch();
   }
 

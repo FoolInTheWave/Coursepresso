@@ -43,15 +43,11 @@ public class SearchResultsController implements Initializable {
   @FXML
   private TableColumn<CourseSection, String> lineNumColumn;
   @FXML
-  private Button modifySectionButton;
-  @FXML
   private TableColumn<CourseSection, String> capacityColumn;
   @FXML
   private TableColumn<CourseSection, String> roomNumColumn;
   @FXML
   private TableColumn<CourseSection, String> startTimeColumn;
-  @FXML
-  private Button backButton;
   @FXML
   private TableColumn<CourseSection, String> daysColumn;
   @FXML
@@ -63,7 +59,13 @@ public class SearchResultsController implements Initializable {
   @FXML
   private TableColumn<CourseSection, String> studentsColumn;
   @FXML
+  private Button modifySectionButton;
+  @FXML
   private Button deleteSectionButton;
+  @FXML
+  private Button addSectionButton;
+  @FXML
+  private Button backButton;
 
   @Inject
   private MainController mainController;
@@ -180,11 +182,6 @@ public class SearchResultsController implements Initializable {
   }
 
   @FXML
-  void backButtonClick(ActionEvent event) {
-    mainController.showCourseSearch();
-  }
-
-  @FXML
   void modifySectionButtonClick(ActionEvent event) {
     mainController.showEditCourseSection(
         courseSectionTable.getSelectionModel().getSelectedItem()
@@ -213,8 +210,14 @@ public class SearchResultsController implements Initializable {
     }
   }
 
-  public void buildView() {
+  @FXML
+  void addSectionButtonClick(ActionEvent event) {
+    mainController.showNewCourseSection();
+  }
 
+  @FXML
+  void backButtonClick(ActionEvent event) {
+    mainController.showCourseSearch();
   }
 
   public void setResults(List<CourseSection> results) {

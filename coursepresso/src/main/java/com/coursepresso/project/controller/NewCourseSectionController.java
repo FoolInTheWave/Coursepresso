@@ -178,7 +178,7 @@ public class NewCourseSectionController implements Initializable {
     alert.setContentText("The course section has been saved successfully!");
     alert.showAndWait();
 
-    mainController.showMenu();
+    mainController.showSearchResults();
   }
 
   @FXML
@@ -217,7 +217,7 @@ public class NewCourseSectionController implements Initializable {
 
   @FXML
   private void backButtonClick(ActionEvent event) {
-    mainController.showMenu();
+    mainController.showSearchResults();
   }
 
   @FXML

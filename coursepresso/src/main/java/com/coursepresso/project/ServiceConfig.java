@@ -31,6 +31,11 @@ public class ServiceConfig {
   }
 
   @Bean
+  public ExportService exportService() {
+    return createService("export.service", ExportService.class);
+  }
+
+  @Bean
   public ApplianceRepository applianceRepository() {
     return createService("appliance.repository", ApplianceRepository.class);
   }

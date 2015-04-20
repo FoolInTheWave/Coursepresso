@@ -57,6 +57,8 @@ public class MainController {
   @Inject
   private EditUserController editUserController;
   @Inject
+  private ExportDataController exportDataController;
+  @Inject
   private SecurityService securityService;
 
   public Parent getView() {
@@ -149,7 +151,6 @@ public class MainController {
   }
 
   public void showSearchResults() {
-    searchResultsController.buildView();
     contentArea.setCenter(searchResultsController.getView());
   }
 
@@ -171,5 +172,10 @@ public class MainController {
   public void showEditUser(User user) {
     editUserController.buildView(user);
     contentArea.setCenter(editUserController.getView());
+  }
+
+  public void showExportData() {
+    exportDataController.buildView();
+    contentArea.setCenter(exportDataController.getView());
   }
 }

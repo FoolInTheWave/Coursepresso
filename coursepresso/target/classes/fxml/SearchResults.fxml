@@ -60,6 +60,11 @@
                         <Font size="13.0" />
                      </font>
                   </Button>
+                  <Button fx:id="addSectionButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addSectionButtonClick" prefHeight="30.0" prefWidth="150.0" text="Add Section">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Button>
                   <Button fx:id="backButton" layoutX="550.0" layoutY="6.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#backButtonClick" prefHeight="30.0" prefWidth="150.0" text="Back">
                      <font>
                         <Font size="13.0" />

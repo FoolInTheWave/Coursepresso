@@ -83,6 +83,11 @@ public class ControllerConfig {
     return loadController("/fxml/EditUser.fxml");
   }
 
+  @Bean
+  public ExportDataController exportDataController() {
+    return loadController("/fxml/ExportData.fxml");
+  }
+
   @SuppressWarnings("unchecked")
   private <T> T loadController(String fxmlFile) {
     try {
