@@ -20,6 +20,6 @@ public interface ProfessorRepository extends CrudRepository<Professor, Integer> 
    * @return A Professor record as a Professor object.
    */
   @Query("SELECT p FROM Professor p WHERE p.id = (:id)")
-  public Professor findById(@Param("id") String id);
+  public Professor findById(@Param("id") Integer id);
   
 }

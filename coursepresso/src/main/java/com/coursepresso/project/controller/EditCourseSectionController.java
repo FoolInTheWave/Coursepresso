@@ -114,7 +114,7 @@ public class EditCourseSectionController implements Initializable {
   private ObservableList<MeetingDay> meetingDays;
   private ArrayList<MeetingDay> daysToDelete;
   private CourseSection courseSection;
-
+  private String sourcePage;
   /**
    * Initializes the controller class.
    */
@@ -157,7 +157,10 @@ public class EditCourseSectionController implements Initializable {
 
   @FXML
   private void backButtonClick(ActionEvent event) {
-    mainController.showSearchResults();
+    if(sourcePage.equals("SEARCH"))
+      mainController.showSearchResults();
+    else if(sourcePage.equals("CONFLICT"))
+      mainController.showConflict();
   }
 
   @FXML
@@ -192,7 +195,12 @@ public class EditCourseSectionController implements Initializable {
     alert.setContentText("The course section has been saved successfully!");
     alert.showAndWait();
 
-    mainController.showCourseSearch();
+    if(sourcePage.equals("SEARCH"))
+      mainController.courseSearchController.searchButtonClick(event);
+    else if(sourcePage.equals("CONFLICT")) {
+      mainController.conflictController.buildView(courseSection.getTerm());
+      mainController.showConflict();
+    }
   }
 
   @FXML
@@ -268,9 +276,10 @@ public class EditCourseSectionController implements Initializable {
     }
   }
 
-  public void buildView(CourseSection cs) {
-    courseSection = cs;
-
+  public void buildView(CourseSection cs, String sourcePage) {
+    this.courseSection = cs;
+    this.sourcePage = sourcePage;
+    
     // Build department combo box
     departmentCombo.getSelectionModel().select(cs.getDepartment());
 

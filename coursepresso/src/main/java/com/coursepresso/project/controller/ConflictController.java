@@ -8,8 +8,10 @@ import com.coursepresso.project.service.ConflictService;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -71,13 +73,31 @@ public class ConflictController implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     lineNoColumn.setCellValueFactory(
-        new PropertyValueFactory<Conflict, String>("lineNo")
+        conflict -> {
+          SimpleStringProperty property = new SimpleStringProperty();
+          property.setValue(
+                  conflict.getValue().getSection().getId().toString()
+          );
+          return property;
+        }        
     );
     courseColumn.setCellValueFactory(
-        new PropertyValueFactory<Conflict, String>("course")
+        conflict -> {
+          SimpleStringProperty property = new SimpleStringProperty();
+          property.setValue(
+                  conflict.getValue().getSection().getCourse().getTitle()
+          );
+          return property;
+        } 
     );
     sectionColumn.setCellValueFactory(
-        new PropertyValueFactory<Conflict, String>("sectionNum")
+        conflict -> {
+          SimpleStringProperty property = new SimpleStringProperty();
+          property.setValue(
+                  conflict.getValue().getSection().toString()
+          );
+          return property;
+        } 
     );
     reasonColumn.setCellValueFactory(
         new PropertyValueFactory<Conflict, String>("reason")
@@ -89,10 +109,18 @@ public class ConflictController implements Initializable {
   }
 
   @FXML
-  private void backButtonClick() {
+  private void backButtonClick(ActionEvent event) {
     mainController.showScheduleSelection();
   }
 
+  @FXML
+  private void resolveManuallyButtonClick(ActionEvent event) {
+    mainController.showEditCourseSection(
+        conflictTable.getSelectionModel().getSelectedItem().getSection(),
+        "CONFLICT"
+    );
+  }
+  
   public void buildView(Term selectedTerm) {
     CourseSection cs1, cs2;
     conflicts.clear();
@@ -113,12 +141,7 @@ public class ConflictController implements Initializable {
           Integer.parseInt(sections[1])
       );
       
-      conflicts.add(new Conflict(
-          cs1.getCourse().getTitle(), 
-          Integer.toString(cs1.getSectionNumber()), 
-          cs1.getId().toString(), 
-          cs2.getId().toString())
-      );
+      conflicts.add(new Conflict(cs1, cs2.getId().toString()));
     }
     
     numberLabel.setText(conflicts.size() + " Conflicts Found");

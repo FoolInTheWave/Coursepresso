@@ -39,12 +39,12 @@ public class AdminMenuController implements Initializable {
   private Label newScheduleLabel;
   @FXML
   private Label headerLabel;
-  
+
   @Inject
   private MainController mainController;
   @Inject
   private ScheduleSelectionController scheduleSelectionController;
-  
+
   public Node getView() {
     return root;
   }
@@ -61,8 +61,13 @@ public class AdminMenuController implements Initializable {
   }
 
   @FXML
-  private void exportDataButtonClick(ActionEvent event) {
-    mainController.showExportData();
+  void displayCourseSearchButtonClick(ActionEvent event) {
+    mainController.showCourseSearch();
+  }
+
+  @FXML
+  private void newCourseButtonClick(ActionEvent event) {
+    mainController.showNewCourseSection("MENU");
   }
 
   @FXML

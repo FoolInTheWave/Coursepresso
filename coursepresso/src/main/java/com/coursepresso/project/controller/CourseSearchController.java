@@ -103,7 +103,7 @@ public class CourseSearchController implements Initializable {
   }
 
   @FXML
-  private void searchButtonClick(ActionEvent event) {
+  public void searchButtonClick(ActionEvent event) {
     Map<String, Object> params = new HashMap<>();
     result = new ArrayList<>();
 

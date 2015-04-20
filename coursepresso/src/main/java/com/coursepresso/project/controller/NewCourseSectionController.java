@@ -101,6 +101,7 @@ public class NewCourseSectionController implements Initializable {
   private MainController mainController;
 
   private ObservableList<MeetingDay> meetingDays;
+  private String sourcePage;
 
   /**
    * Initializes the controller class.
@@ -160,6 +161,7 @@ public class NewCourseSectionController implements Initializable {
     // Save LocalDate as Date
     courseSection.setStartDate(DateHelper.asDate(startDatePicker.getValue()));
     courseSection.setEndDate(DateHelper.asDate(endDatePicker.getValue()));
+
     courseSection.setDepartment(departmentCombo.getValue());
     courseSection.setProfessor(instructorCombo.getValue());
 
@@ -177,8 +179,11 @@ public class NewCourseSectionController implements Initializable {
     alert.setHeaderText(null);
     alert.setContentText("The course section has been saved successfully!");
     alert.showAndWait();
-
-    mainController.showSearchResults();
+    if (sourcePage.equals("MENU")) {
+      mainController.showMenu();
+    } else if (sourcePage.equals("SEARCH")) {
+      mainController.courseSearchController.searchButtonClick(event);
+    }
   }
 
   @FXML
@@ -217,7 +222,11 @@ public class NewCourseSectionController implements Initializable {
 
   @FXML
   private void backButtonClick(ActionEvent event) {
-    mainController.showSearchResults();
+    if (sourcePage.equals("MENU")) {
+      mainController.showMenu();
+    } else if (sourcePage.equals("SEARCH")) {
+      mainController.showSearchResults();
+    }
   }
 
   @FXML
@@ -274,7 +283,9 @@ public class NewCourseSectionController implements Initializable {
     }
   }
 
-  public void buildView() {
+  public void buildView(String sourcePage) {
+    this.sourcePage = sourcePage;
+
     // Build department combo box
     ObservableList<Department> departments = FXCollections.observableArrayList(
         Lists.newArrayList(departmentRepository.findAll())

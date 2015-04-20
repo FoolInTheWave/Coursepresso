@@ -3,7 +3,9 @@ package com.coursepresso.project.controller;
 import com.coursepresso.project.Main;
 import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.entity.MeetingDay;
+import com.coursepresso.project.entity.Room;
 import com.coursepresso.project.entity.Term;
+import com.coursepresso.project.helper.DateHelper;
 import com.coursepresso.project.repository.CourseRepository;
 import com.coursepresso.project.repository.CourseSectionRepository;
 import com.coursepresso.project.repository.DepartmentRepository;
@@ -20,6 +22,8 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,6 +81,7 @@ public class NewScheduleController implements Initializable {
   private MainController mainController;
 
   private static File file;
+  private ArrayList<MeetingDay> meetingDays;
 
   @FXML
   private void backButtonClick(ActionEvent event) {
@@ -104,10 +109,11 @@ public class NewScheduleController implements Initializable {
     String termName = year + "/" + semesterCombo.getValue();
 
     term.setTerm(termName);
+    term.setStatus("Open");
 
     termRepository.save(term);
 
-    if (fileNameLabel.getText().isEmpty()) {
+    if (!fileNameLabel.getText().equals("")) {
       importSections(term);
     }
 
@@ -137,10 +143,13 @@ public class NewScheduleController implements Initializable {
     BufferedReader br = null;
     String line = "";
     String splitBy = ",";
+    String prevCourseNumber = "";
+    int sectionNumber;
 
     try {
       br = new BufferedReader(new FileReader(file));
 
+      sectionNumber = 1;
       while ((line = br.readLine()) != null) {
         String[] column = line.split(splitBy);
 
@@ -169,7 +178,7 @@ public class NewScheduleController implements Initializable {
         );
 
         courseSection.setProfessor(
-            professorRepository.findById(column[1])
+            professorRepository.findById(Integer.parseInt(column[1]))
         );
 
         courseSection = courseSectionRepository.save(courseSection);
@@ -191,7 +200,6 @@ public class NewScheduleController implements Initializable {
         day.setTerm(courseSection.getTerm());
 
         meetingDayRepository.save(day);
-
       }
     } catch (FileNotFoundException ex) {
       Logger.getLogger(NewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
@@ -204,14 +212,14 @@ public class NewScheduleController implements Initializable {
   public void buildView() {
     // Build type combo box
     ObservableList<String> semesters = FXCollections.observableArrayList(
-        "FA", "WI", "SP", "SU"
+            "FA", "WI", "SP", "SU"
     );
     semesterCombo.setItems(semesters);
     semesterCombo.setVisibleRowCount(4);
 
     // Build type combo box
     ObservableList<String> years = FXCollections.observableArrayList(
-        "2015", "2016", "2017", "2018", "2019", "2020"
+            "2015", "2016", "2017", "2018", "2019", "2020"
     );
     yearCombo.setItems(years);
     yearCombo.setVisibleRowCount(4);

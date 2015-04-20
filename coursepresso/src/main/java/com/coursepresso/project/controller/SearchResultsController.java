@@ -182,9 +182,20 @@ public class SearchResultsController implements Initializable {
   }
 
   @FXML
+  void addSectionButtonClick(ActionEvent event) {
+    mainController.showNewCourseSection("SEARCH");
+  }
+
+  @FXML
+  void backButtonClick(ActionEvent event) {
+    mainController.showCourseSearch();
+  }
+
+  @FXML
   void modifySectionButtonClick(ActionEvent event) {
     mainController.showEditCourseSection(
-        courseSectionTable.getSelectionModel().getSelectedItem()
+        courseSectionTable.getSelectionModel().getSelectedItem(),
+        "SEARCH"
     );
   }
 
@@ -208,16 +219,6 @@ public class SearchResultsController implements Initializable {
     } else {
       //Do Nothing
     }
-  }
-
-  @FXML
-  void addSectionButtonClick(ActionEvent event) {
-    mainController.showNewCourseSection();
-  }
-
-  @FXML
-  void backButtonClick(ActionEvent event) {
-    mainController.showCourseSearch();
   }
 
   public void setResults(List<CourseSection> results) {

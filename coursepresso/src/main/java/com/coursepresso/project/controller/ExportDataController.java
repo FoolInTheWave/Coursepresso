@@ -60,7 +60,14 @@ public class ExportDataController implements Initializable {
 
   @FXML
   void exportButtonClick(ActionEvent event) {
-    String data = exportService.exportCourseSections(termCombo.getValue().getTerm());
+    String table = tableCombo.getValue();
+    String data = "";
+    
+    switch (table) {
+      case "Course Sections":
+        data = exportService.exportCourseSections(termCombo.getValue().getTerm());
+        break;
+    }
 
     previewArea.setText(data);
   }
