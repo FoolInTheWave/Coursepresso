@@ -80,7 +80,7 @@ public class CourseSearchController implements Initializable {
   private SearchResultsController searchResultsController;
 
   private List<CourseSection> result;
-
+  
   private static final Logger log = LoggerFactory.getLogger(
       CourseSearchController.class
   );

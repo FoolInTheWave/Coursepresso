@@ -31,6 +31,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -40,6 +41,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.RadioButton;
 import javafx.scene.layout.Pane;
 import javax.inject.Inject;
@@ -77,12 +79,14 @@ public class NewScheduleController implements Initializable {
   private Label importLabel;
   @FXML
   private Pane importPane;
-  @FXML 
+  @FXML
   private Pane copyPane;
-  @FXML 
+  @FXML
   private ComboBox termCombo;
   @FXML
   private Group paneGroup;
+  @FXML
+  private ProgressBar progressBar;
 
   @Inject
   private TermRepository termRepository;
@@ -100,7 +104,7 @@ public class NewScheduleController implements Initializable {
   private RoomRepository roomRepository;
   @Inject
   private MainController mainController;
-  @Inject 
+  @Inject
   private CopyScheduleService copyScheduleService;
 
   private static File file;
@@ -116,19 +120,19 @@ public class NewScheduleController implements Initializable {
     copyPane.setVisible(false);
     importPane.setVisible(false);
   }
-  
+
   @FXML
   private void copyRdoSelected(ActionEvent event) {
     copyPane.setVisible(true);
     importPane.setVisible(false);
   }
-  
+
   @FXML
   private void importRdoSelected(ActionEvent event) {
     importPane.setVisible(true);
     copyPane.setVisible(false);
   }
-  
+
   @FXML
   private void chooseFileButtonClick(ActionEvent event) {
     final FileChooser fileChooser = new FileChooser();
@@ -154,10 +158,11 @@ public class NewScheduleController implements Initializable {
 
     termRepository.save(term);
 
-    if(importRdo.isSelected())
+    if (importRdo.isSelected()) {
       importSections(term);
-    else if(copyRdo.isSelected())
+    } else if (copyRdo.isSelected()) {
       copyPrevious(term);
+    }
 
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
     alert.setTitle("Term Saved");
@@ -184,10 +189,11 @@ public class NewScheduleController implements Initializable {
     Term prevTerm = termRepository.findByTermWithCourseSections(
             termCombo.getSelectionModel().getSelectedItem().toString()
     );
-    
+
     copyScheduleService.copySchedule(prevTerm, newTerm);
+
   }
-  
+
   public void importSections(Term term) {
 
     BufferedReader br = null;
@@ -207,7 +213,7 @@ public class NewScheduleController implements Initializable {
 
         String[] courseNum = column[0].split("*");
         courseSection.setCourse(
-            courseRepository.findByCourseNumber(courseNum[0] + courseNum[1])
+                courseRepository.findByCourseNumber(courseNum[0] + courseNum[1])
         );
 
         courseSection.setSectionNumber(Integer.parseInt(column[4]));
@@ -224,11 +230,11 @@ public class NewScheduleController implements Initializable {
         courseSection.setEndDate(formatter.parse(column[11]));
 
         courseSection.setDepartment(
-            departmentRepository.findByAbbreviation(courseNum[0])
+                departmentRepository.findByAbbreviation(courseNum[0])
         );
 
         courseSection.setProfessor(
-            professorRepository.findById(Integer.parseInt(column[1]))
+                professorRepository.findById(Integer.parseInt(column[1]))
         );
 
         courseSection = courseSectionRepository.save(courseSection);
@@ -242,7 +248,7 @@ public class NewScheduleController implements Initializable {
 
         String[] rooms = column[9].split(",");
         day.setRoom(
-            roomRepository.findOne(rooms[0])
+                roomRepository.findOne(rooms[0])
         );
 
         // Save MeetingDays for CourseSection
@@ -273,10 +279,10 @@ public class NewScheduleController implements Initializable {
     );
     yearCombo.setItems(years);
     yearCombo.setVisibleRowCount(4);
-    
+
     // Build term combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
-        Lists.newArrayList(termRepository.findAll())
+            Lists.newArrayList(termRepository.findAll())
     );
     termCombo.setItems(terms);
   }
