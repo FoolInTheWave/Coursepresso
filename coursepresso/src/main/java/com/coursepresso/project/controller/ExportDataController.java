@@ -1,10 +1,14 @@
 package com.coursepresso.project.controller;
 
+import com.coursepresso.project.Main;
 import com.coursepresso.project.entity.Term;
 import com.coursepresso.project.helper.StringHelper;
 import com.coursepresso.project.repository.TermRepository;
 import com.coursepresso.project.service.ExportService;
 import com.google.common.collect.Lists;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -17,7 +21,12 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import javafx.stage.Stage;
 import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FXML Controller class
@@ -25,6 +34,10 @@ import javax.inject.Inject;
  * @author Caleb Miller
  */
 public class ExportDataController implements Initializable {
+
+  private static final Logger log = LoggerFactory.getLogger(
+      ExportDataController.class
+  );
 
   @FXML
   private Node root;
@@ -110,6 +123,22 @@ public class ExportDataController implements Initializable {
     }
 
     previewArea.setText(data);
+
+    FileChooser fileChooser = new FileChooser();
+    Stage stage = (Stage) Main.getScene().getWindow();
+
+    // Set extension filters
+    ArrayList<ExtensionFilter> extensions = new ArrayList<>();
+    extensions.add(new ExtensionFilter("CSV (*.csv)", "*.csv"));
+    extensions.add(new ExtensionFilter("Text (*.txt)", "*.txt"));
+    fileChooser.getExtensionFilters().addAll(extensions);
+
+    // Show save file dialog
+    File file = fileChooser.showSaveDialog(stage);
+
+    if (file != null) {
+      SaveFile(data, file);
+    }
   }
 
   @FXML
@@ -140,6 +169,19 @@ public class ExportDataController implements Initializable {
     termCombo.getSelectionModel().clearSelection();
     tableCombo.getSelectionModel().clearSelection();
     previewArea.clear();
+  }
+
+  private void SaveFile(String content, File file) {
+    try {
+      FileWriter fileWriter = null;
+
+      fileWriter = new FileWriter(file);
+      fileWriter.write(content);
+      fileWriter.close();
+    } catch (IOException ex) {
+      log.error("Save file failed: ", ex);
+    }
+
   }
 
 }
