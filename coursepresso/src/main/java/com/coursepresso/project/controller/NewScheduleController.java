@@ -71,6 +71,8 @@ public class NewScheduleController implements Initializable {
   private Group paneGroup;
   @FXML
   private ProgressBar progressBar;
+  @FXML
+  private ComboBox statusCombo;
 
   @Inject
   private TermRepository termRepository;
@@ -84,7 +86,7 @@ public class NewScheduleController implements Initializable {
   private static File file;
 
   private static final org.slf4j.Logger log = LoggerFactory.getLogger(
-      NewScheduleController.class
+          NewScheduleController.class
   );
 
   /**
@@ -148,7 +150,7 @@ public class NewScheduleController implements Initializable {
     termName.append(semesterCombo.getValue().substring(0, 2).toUpperCase());
 
     term.setTerm(termName.toString());
-    term.setStatus("Open");
+    term.setStatus(statusCombo.getValue().toString());
 
     termRepository.save(term);
 
@@ -169,7 +171,7 @@ public class NewScheduleController implements Initializable {
 
   public void copyPrevious(Term newTerm) {
     Term prevTerm = termRepository.findByTermWithCourseSections(
-        termCombo.getSelectionModel().getSelectedItem().toString()
+            termCombo.getSelectionModel().getSelectedItem().toString()
     );
 
     copyScheduleService.copySchedule(prevTerm, newTerm);
@@ -195,20 +197,26 @@ public class NewScheduleController implements Initializable {
   public void buildView() {
     // Build type combo box
     ObservableList<String> semesters = FXCollections.observableArrayList(
-        "Fall", "Winter", "Spring", "Summer"
+            "Fall", "Winter", "Spring", "Summer"
     );
     semesterCombo.setItems(semesters);
     semesterCombo.setVisibleRowCount(4);
 
     ObservableList<Integer> years = FXCollections.observableArrayList(
-        2015, 2016, 2017, 2018, 2019, 2020
+            2015, 2016, 2017, 2018, 2019, 2020
     );
     yearCombo.setItems(years);
     yearCombo.setVisibleRowCount(4);
 
+    ObservableList<String> statuses = FXCollections.observableArrayList(
+            "Open", "Closed"
+    );
+    statusCombo.setItems(statuses);
+    statusCombo.setVisibleRowCount(4);
+
     // Build term combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
-        Lists.newArrayList(termRepository.findAll())
+            Lists.newArrayList(termRepository.findAll())
     );
     termCombo.setItems(terms);
   }

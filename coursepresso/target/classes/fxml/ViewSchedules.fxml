@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.coursepresso.project.controller.ViewSchedulesController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.ViewSchedulesController">
     <stylesheets>
         <URL value="@/styles/Styles.css" />
     </stylesheets>
@@ -24,12 +24,16 @@
                            <children>
                               <HBox>
                                  <children>
-                                    <Label fx:id="numberLabel" layoutX="14.0" layoutY="14.0" prefHeight="19.0" prefWidth="24.0" text="0">
+                                    <Label fx:id="numberLabel" layoutX="14.0" layoutY="14.0" prefHeight="19.0" prefWidth="20.0" text="0">
                                        <font>
                                           <Font size="13.0" />
                                        </font>
                                     </Label>
-                                    <Label text="Schedules Found" />
+                                    <Label text="Schedules Found">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </Label>
                                  </children>
                               </HBox>
                               <TableView fx:id="scheduleTable" layoutX="14.0" layoutY="41.0" prefHeight="490.0" prefWidth="975.0" VBox.vgrow="ALWAYS">
@@ -58,6 +62,11 @@
                      </font>
                   </Button>
                   <Button fx:id="deleteButton" layoutX="337.0" layoutY="15.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#deleteButtonClick" prefHeight="30.0" prefWidth="150.0" text="Delete Schedule">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="toggleButton" layoutX="447.0" layoutY="15.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#toggleButtonClick" prefHeight="30.0" prefWidth="150.0" text="Toggle Status">
                      <font>
                         <Font size="13.0" />
                      </font>

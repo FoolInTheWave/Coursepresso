@@ -46,6 +46,8 @@ public class ViewSchedulesController implements Initializable {
   private Button addButton;
   @FXML
   private Button deleteButton;
+  @FXML
+  private Button toggleButton;
 
   @Inject
   private MainController mainController;
@@ -82,8 +84,36 @@ public class ViewSchedulesController implements Initializable {
   }
 
   @FXML
-  public void addButtonClick() {
+  private void addButtonClick() {
     mainController.showNewSchedule();
+  }
+  
+  @FXML
+  private void toggleButtonClick() {
+    Term term = scheduleTable.getSelectionModel().getSelectedItem();
+    String newStatus = "";
+    
+    if(term.getStatus().equals("Open"))
+      newStatus = "Closed";
+    else
+      newStatus = "Open";
+    
+    term.setStatus(newStatus);
+    
+    termRepository.save(term);
+    
+    buildView();
+    /*
+    for(Term oldTerm : terms) {
+      if(oldTerm.getTerm().equals(term.getTerm())) {
+        oldTerm.setStatus(newStatus);
+        break;
+      }
+    }
+    
+    scheduleTable.setItems(terms);
+            
+    */
   }
 
   @FXML

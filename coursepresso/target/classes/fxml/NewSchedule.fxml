@@ -34,6 +34,12 @@
                                  </font>
                               </Label>
                               <ComboBox fx:id="yearCombo" layoutX="558.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" />
+                              <Label layoutX="15.0" layoutY="84.0" text="Status">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="statusCombo" layoutX="15.0" layoutY="113.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" />
                               <Label text="How would you like to create the schedule?">
                                  <font>
                                     <Font size="13.0" />

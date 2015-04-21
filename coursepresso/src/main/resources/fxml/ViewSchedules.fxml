@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.coursepresso.project.controller.ViewSchedulesController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.coursepresso.project.controller.ViewSchedulesController">
     <stylesheets>
         <URL value="@/styles/Styles.css" />
     </stylesheets>
@@ -62,6 +62,11 @@
                      </font>
                   </Button>
                   <Button fx:id="deleteButton" layoutX="337.0" layoutY="15.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#deleteButtonClick" prefHeight="30.0" prefWidth="150.0" text="Delete Schedule">
+                     <font>
+                        <Font size="13.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="toggleButton" layoutX="447.0" layoutY="15.0" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#toggleButtonClick" prefHeight="30.0" prefWidth="150.0" text="Toggle Status">
                      <font>
                         <Font size="13.0" />
                      </font>
