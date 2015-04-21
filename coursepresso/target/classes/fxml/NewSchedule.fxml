@@ -27,13 +27,13 @@
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="semesterCombo" layoutX="313.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" />
+                              <ComboBox fx:id="semesterCombo" layoutX="313.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#termComboClick" prefHeight="30.0" prefWidth="150.0" />
                               <Label layoutX="558.0" layoutY="193.0" text="Year">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="yearCombo" layoutX="558.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" />
+                              <ComboBox fx:id="yearCombo" layoutX="558.0" layoutY="220.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#yearComboClick" prefHeight="30.0" prefWidth="150.0" />
                               <Label layoutX="15.0" layoutY="84.0" text="Status">
                                  <font>
                                     <Font size="13.0" />

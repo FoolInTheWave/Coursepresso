@@ -13,6 +13,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -85,9 +86,11 @@ public class NewScheduleController implements Initializable {
   private ImportScheduleService importScheduleService;
 
   private static File file;
+  ObservableList<String> semesters;
+  ObservableList<Integer> years;
 
   private static final org.slf4j.Logger log = LoggerFactory.getLogger(
-      NewScheduleController.class
+          NewScheduleController.class
   );
 
   public Node getView() {
@@ -176,9 +179,42 @@ public class NewScheduleController implements Initializable {
     mainController.showViewSchedules();
   }
 
+  @FXML
+  private void termComboClick(ActionEvent event) {
+    String selectedSeason = semesterCombo.getSelectionModel().getSelectedItem();
+    ObservableList<Term> terms = FXCollections.observableArrayList(
+            Lists.newArrayList(termRepository.findAll())
+    );
+
+    for (Term term : terms) {
+      if (term.getSeason().equals(selectedSeason)) {
+        years.remove((Object) term.getYear());
+      }
+    }
+
+    yearCombo.setItems(years);
+  }
+
+  @FXML
+  private void yearComboClick(ActionEvent event) {
+    int selectedYear = yearCombo.getSelectionModel().getSelectedItem();
+
+    ObservableList<Term> terms = FXCollections.observableArrayList(
+            Lists.newArrayList(termRepository.findAll())
+    );
+
+    for (Term term : terms) {
+      if (term.getYear() == selectedYear) {
+        semesters.remove(term.getSeason());
+      }
+    }
+
+    semesterCombo.setItems(semesters);
+  }
+
   public void copyPrevious(Term newTerm) {
     Term prevTerm = termRepository.findByTermWithCourseSections(
-        termCombo.getSelectionModel().getSelectedItem().toString()
+            termCombo.getSelectionModel().getSelectedItem().toString()
     );
 
     copyScheduleService.copySchedule(prevTerm, newTerm);
@@ -203,27 +239,32 @@ public class NewScheduleController implements Initializable {
 
   public void buildView() {
     // Build type combo box
-    ObservableList<String> semesters = FXCollections.observableArrayList(
-        "Fall", "Winter", "Spring", "Summer"
+    semesters = FXCollections.observableArrayList(
+            "Fall", "Winter", "Spring", "Summer"
     );
     semesterCombo.setItems(semesters);
     semesterCombo.setVisibleRowCount(4);
+    semesterCombo.getSelectionModel().select(null);
 
-    ObservableList<Integer> years = FXCollections.observableArrayList(
-        2015, 2016, 2017, 2018, 2019, 2020
+    int year = Calendar.getInstance().get(Calendar.YEAR);
+
+    years = FXCollections.observableArrayList(
+            year - 1, year, year + 1, year + 2, year + 3, year + 4, year + 5
     );
     yearCombo.setItems(years);
     yearCombo.setVisibleRowCount(4);
+    yearCombo.getSelectionModel().select(null);
 
     ObservableList<String> statuses = FXCollections.observableArrayList(
-        "Open", "Closed"
+            "Open", "Closed"
     );
     statusCombo.setItems(statuses);
     statusCombo.setVisibleRowCount(4);
+    statusCombo.getSelectionModel().select("");
 
     // Build term combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
-        Lists.newArrayList(termRepository.findAll())
+            Lists.newArrayList(termRepository.findAll())
     );
     termCombo.setItems(terms);
   }
