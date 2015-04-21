@@ -17,10 +17,8 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -131,9 +129,7 @@ public class ImportDataController implements Initializable {
   @FXML
   void importButtonClick(ActionEvent event) {
     String table = (tableCombo.getValue() != null) ? tableCombo.getValue() : "";
-    String term = (termCombo.getValue() != null)
-        ? termCombo.getValue().getTerm() : "";
-    String data = "";
+    Term term = termCombo.getValue();
 
     Alert alert = new Alert(Alert.AlertType.INFORMATION);
     alert.setTitle("Data Import");
@@ -150,8 +146,10 @@ public class ImportDataController implements Initializable {
         alert.setContentText("Course Prerequisites have been imported successfully!");
         break;
       case "Course Sections":
-        importService.importCourseSections(readCourseSectionFile());
-        alert.setContentText("Course Sections have been imported successfully!");
+        if (!term.getTerm().equals("")) {
+          importService.importCourseSections(readCourseSectionFile(term));
+          alert.setContentText("Course Sections have been imported successfully!");
+        }
         break;
       case "Courses":
         alert.setContentText("Courses have been imported successfully!");
@@ -183,6 +181,9 @@ public class ImportDataController implements Initializable {
       case "Users":
         alert.setContentText("Users have been imported successfully!");
         break;
+      default:
+        alert.setContentText("No data was imported!");
+        break;
     }
 
     alert.showAndWait();
@@ -213,7 +214,7 @@ public class ImportDataController implements Initializable {
     previewArea.clear();
   }
 
-  private List<CourseSection> readCourseSectionFile() {
+  private List<CourseSection> readCourseSectionFile(Term term) {
     // Create the CSVFormat object
     CSVFormat format = CSVFormat.DEFAULT.withHeader().withDelimiter(';');
     List<CourseSection> sections = new ArrayList<>();
@@ -225,7 +226,7 @@ public class ImportDataController implements Initializable {
 
         for (CSVRecord record : parser) {
           CourseSection section = new CourseSection();
-          section.setCourse(new Course("course_number"));
+          section.setCourse(new Course(record.get("course_number")));
           section.setSectionNumber(Integer.parseInt(record.get(
               "section_number"
           )));
@@ -235,7 +236,7 @@ public class ImportDataController implements Initializable {
               "seats_available"
           )));
           section.setStatus(record.get("status"));
-          section.setTerm(new Term(record.get("term")));
+          section.setTerm(term);
           section.setStudentCount(Integer.parseInt(record.get(
               "student_count"
           )));
