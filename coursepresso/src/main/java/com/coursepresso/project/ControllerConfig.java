@@ -54,6 +54,11 @@ public class ControllerConfig {
   }
 
   @Bean
+  public ViewSchedulesController viewSchedulesController() {
+    return loadController("/fxml/ViewSchedules.fxml");
+  }
+
+  @Bean
   public SearchResultsController searchResultsController() {
     return loadController("/fxml/SearchResults.fxml");
   }
@@ -96,7 +101,7 @@ public class ControllerConfig {
       return (T) loader.getController();
     } catch (IOException e) {
       throw new RuntimeException(
-          String.format("Unable to load FXML file '%s'", fxmlFile), e
+              String.format("Unable to load FXML file '%s'", fxmlFile), e
       );
     }
   }

@@ -26,7 +26,7 @@ public class AdminMenuController implements Initializable {
   @FXML
   private Button displayConflictsButton;
   @FXML
-  private Button newScheduleButton;
+  private Button manageSchedulesButton;
   @FXML
   private Button userManagementButton;
   @FXML
@@ -74,8 +74,8 @@ public class AdminMenuController implements Initializable {
   }
 
   @FXML
-  private void displayNewScheduleButtonClick(ActionEvent event) {
-    mainController.showNewSchedule();
+  private void manageSchedulesButtonClick(ActionEvent event) {
+    mainController.showViewSchedules();
   }
 
   @FXML

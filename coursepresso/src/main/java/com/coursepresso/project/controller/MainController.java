@@ -29,6 +29,8 @@ public class MainController {
   private MenuItem closeMnu;
   @FXML
   private MenuItem importCoursesMnu;
+  @FXML
+  private MenuItem homeMnu;
 
   @Inject
   private NewCourseSectionController newCourseSectionController;
@@ -59,6 +61,8 @@ public class MainController {
   @Inject
   private ExportDataController exportDataController;
   @Inject
+  private ViewSchedulesController viewSchedulesController;
+  @Inject
   private SecurityService securityService;
 
   public Parent getView() {
@@ -68,6 +72,11 @@ public class MainController {
   @FXML
   private void logoutMnuClick(ActionEvent event) {
     authenticationController.logout();
+  }
+
+  @FXML
+  private void homeMnuClick(ActionEvent event) {
+    showMenu();
   }
 
   @FXML
@@ -88,8 +97,8 @@ public class MainController {
   @FXML
   private void closeMnuClick(ActionEvent event) {
     int dialogResult = JOptionPane.showConfirmDialog(
-        null, "Are you sure you want to logout and close Coursepresso?",
-        "Warning", JOptionPane.YES_NO_OPTION
+            null, "Are you sure you want to logout and close Coursepresso?",
+            "Warning", JOptionPane.YES_NO_OPTION
     );
 
     if (dialogResult == JOptionPane.YES_OPTION) {
@@ -139,6 +148,11 @@ public class MainController {
 
   public void showScheduleSelection() {
     contentArea.setCenter(scheduleSelectionController.getView());
+  }
+
+  public void showViewSchedules() {
+    viewSchedulesController.buildView();
+    contentArea.setCenter(viewSchedulesController.getView());
   }
 
   public void showConflict() {

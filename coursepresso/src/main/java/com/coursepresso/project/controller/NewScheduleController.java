@@ -101,7 +101,7 @@ public class NewScheduleController implements Initializable {
 
   @FXML
   private void backButtonClick(ActionEvent event) {
-    mainController.showMenu();
+    mainController.showViewSchedules();
   }
 
   @FXML
@@ -164,7 +164,7 @@ public class NewScheduleController implements Initializable {
     alert.setContentText("The term has been saved successfully!");
     alert.showAndWait();
 
-    mainController.showMenu();
+    mainController.showViewSchedules();
   }
 
   public void copyPrevious(Term newTerm) {
