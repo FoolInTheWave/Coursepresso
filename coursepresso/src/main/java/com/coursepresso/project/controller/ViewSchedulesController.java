@@ -1,10 +1,5 @@
 package com.coursepresso.project.controller;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 import com.coursepresso.project.entity.Term;
 import com.coursepresso.project.repository.TermRepository;
 import com.google.common.collect.Lists;
@@ -22,11 +17,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javax.inject.Inject;
 import javax.swing.JOptionPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FXML Controller class
  *
- * @author Steve
+ * @author Steve Foco
  */
 public class ViewSchedulesController implements Initializable {
 
@@ -56,11 +53,15 @@ public class ViewSchedulesController implements Initializable {
   @Inject
   private TermRepository termRepository;
 
+  private ObservableList<Term> terms;
+
+  private static final Logger log = LoggerFactory.getLogger(
+      ViewSchedulesController.class
+  );
+
   public Node getView() {
     return root;
   }
-
-  private ObservableList<Term> terms;
 
   /**
    * Initializes the controller class.
@@ -87,52 +88,53 @@ public class ViewSchedulesController implements Initializable {
   private void addButtonClick() {
     mainController.showNewSchedule();
   }
-  
+
   @FXML
   private void toggleButtonClick() {
     Term term = scheduleTable.getSelectionModel().getSelectedItem();
     String newStatus = "";
-    
-    if(term.getStatus().equals("Open"))
+
+    if (term.getStatus().equals("Open")) {
       newStatus = "Closed";
-    else
+    } else {
       newStatus = "Open";
-    
+    }
+
     term.setStatus(newStatus);
-    
+
     termRepository.save(term);
-    
+
     buildView();
     /*
-    for(Term oldTerm : terms) {
-      if(oldTerm.getTerm().equals(term.getTerm())) {
-        oldTerm.setStatus(newStatus);
-        break;
-      }
-    }
+     for(Term oldTerm : terms) {
+     if(oldTerm.getTerm().equals(term.getTerm())) {
+     oldTerm.setStatus(newStatus);
+     break;
+     }
+     }
     
-    scheduleTable.setItems(terms);
+     scheduleTable.setItems(terms);
             
-    */
+     */
   }
 
   @FXML
   public void deleteButtonClick() {
     int dialogResult = JOptionPane.showConfirmDialog(
-            null, "Are you sure? All course sections in the term will be deleted as well.",
-            "Warning", JOptionPane.YES_NO_OPTION
+        null, "Are you sure? All course sections in the term will be deleted as well.",
+        "Warning", JOptionPane.YES_NO_OPTION
     );
 
     if (dialogResult == JOptionPane.YES_OPTION) {
       numberLabel.setText(
-              Integer.toString(Integer.parseInt(numberLabel.getText()) - 1)
+          Integer.toString(Integer.parseInt(numberLabel.getText()) - 1)
       );
-      
+
       termRepository.delete(
-              scheduleTable.getSelectionModel().getSelectedItem().getTerm()
+          scheduleTable.getSelectionModel().getSelectedItem().getTerm()
       );
       terms.remove(
-              scheduleTable.getSelectionModel().getSelectedItem()
+          scheduleTable.getSelectionModel().getSelectedItem()
       );
 
       JOptionPane.showMessageDialog(null, "Term deleted successfully!");
@@ -145,7 +147,7 @@ public class ViewSchedulesController implements Initializable {
   public void buildView() {
     terms.clear();
     terms = FXCollections.observableArrayList(
-            Lists.newArrayList(termRepository.findAll())
+        Lists.newArrayList(termRepository.findAll())
     );
 
     numberLabel.setText(Integer.toString(terms.size()));

@@ -16,6 +16,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FXML Controller class
@@ -46,11 +48,15 @@ public class ScheduleSelectionController implements Initializable {
   @Inject
   private TermRepository termRepository;
 
+  private ObservableList<Term> terms;
+
+  private static final Logger log = LoggerFactory.getLogger(
+      ScheduleSelectionController.class
+  );
+
   public Node getView() {
     return root;
   }
-
-  private ObservableList<Term> terms;
 
   /**
    * Initializes the controller class.
@@ -77,7 +83,7 @@ public class ScheduleSelectionController implements Initializable {
   public void submitButtonClick() {
     Term term = scheduleTable.getSelectionModel().getSelectedItem();
     conflictController.buildView(term);
-    
+
     mainController.showConflict();
   }
 

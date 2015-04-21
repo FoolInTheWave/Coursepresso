@@ -23,8 +23,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javax.inject.Inject;
 import org.slf4j.Logger;
@@ -33,7 +31,7 @@ import org.slf4j.LoggerFactory;
 /**
  * FXML Controller class
  *
- * @author steev_000, Caleb Miller
+ * @author Steve Foco, Caleb Miller
  */
 public class CourseSearchController implements Initializable {
 
@@ -84,8 +82,12 @@ public class CourseSearchController implements Initializable {
   private List<CourseSection> result;
 
   private static final Logger log = LoggerFactory.getLogger(
-          CourseSearchController.class
+      CourseSearchController.class
   );
+
+  public Node getView() {
+    return root;
+  }
 
   /**
    * Initializes the controller class.
@@ -93,10 +95,6 @@ public class CourseSearchController implements Initializable {
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     // TODO
-  }
-
-  public Node getView() {
-    return root;
   }
 
   @FXML
@@ -160,18 +158,18 @@ public class CourseSearchController implements Initializable {
     }
 
     searchTask.stateProperty().addListener(
-            (ObservableValue<? extends Worker.State> source,
-                    Worker.State oldState,
-                    Worker.State newState) -> {
-              if (newState.equals(Worker.State.SUCCEEDED)) {
-                log.info("Successfully retrieved search results");
-                searchResultsController.setResults(result);
-                mainController.showSearchResults();
-              } else if (newState.equals(Worker.State.FAILED)) {
-                Throwable exception = searchTask.getException();
-                log.error("Retrieval of search results failed: ", exception);
-              }
-            }
+        (ObservableValue<? extends Worker.State> source,
+            Worker.State oldState,
+            Worker.State newState) -> {
+          if (newState.equals(Worker.State.SUCCEEDED)) {
+            log.info("Successfully retrieved search results");
+            searchResultsController.setResults(result);
+            mainController.showSearchResults();
+          } else if (newState.equals(Worker.State.FAILED)) {
+            Throwable exception = searchTask.getException();
+            log.error("Retrieval of search results failed: ", exception);
+          }
+        }
     );
 
     new Thread(searchTask).start();
@@ -185,22 +183,22 @@ public class CourseSearchController implements Initializable {
 
         // Build course number combo box
         department = departmentRepository.findByNameWithCourses(
-                department.getName()
+            department.getName()
         );
         ObservableList<Course> courses = FXCollections.observableArrayList(
-                // Get course list for selected department
-                department.getCourseList()
+            // Get course list for selected department
+            department.getCourseList()
         );
         courseNumberCombo.setItems(courses);
         courseNumberCombo.setVisibleRowCount(4);
 
         // Build professor combo box
         department = departmentRepository.findByNameWithProfessors(
-                department.getName()
+            department.getName()
         );
         ObservableList<Professor> professors = FXCollections.observableArrayList(
-                // Get professor list for selected department
-                department.getProfessorList()
+            // Get professor list for selected department
+            department.getProfessorList()
         );
         instructorCombo.setItems(professors);
         instructorCombo.setVisibleRowCount(4);
@@ -213,25 +211,25 @@ public class CourseSearchController implements Initializable {
   public void buildView() {
     // Build department combo box
     ObservableList<Department> departments = FXCollections.observableArrayList(
-            Lists.newArrayList(departmentRepository.findAll())
+        Lists.newArrayList(departmentRepository.findAll())
     );
     departmentCombo.setItems(departments);
 
     // Build term combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
-            Lists.newArrayList(termRepository.findAll())
+        Lists.newArrayList(termRepository.findAll())
     );
     termCombo.setItems(terms);
 
     // Build type combo box
     ObservableList<String> levels = FXCollections.observableArrayList(
-            "100", "200", "300", "400"
+        "100", "200", "300", "400"
     );
     courseLevelCombo.setItems(levels);
 
     // Build type combo box
     ObservableList<Integer> credits = FXCollections.observableArrayList(
-            1, 2, 3, 4, 5
+        1, 2, 3, 4, 5
     );
     creditsCombo.setItems(credits);
 

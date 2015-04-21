@@ -14,6 +14,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javax.inject.Inject;
 import javax.swing.JOptionPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class MainController {
 
@@ -65,6 +67,10 @@ public class MainController {
   @Inject
   private SecurityService securityService;
 
+  private static final Logger log = LoggerFactory.getLogger(
+      MainController.class
+  );
+
   public Parent getView() {
     return root;
   }
@@ -97,8 +103,8 @@ public class MainController {
   @FXML
   private void closeMnuClick(ActionEvent event) {
     int dialogResult = JOptionPane.showConfirmDialog(
-            null, "Are you sure you want to logout and close Coursepresso?",
-            "Warning", JOptionPane.YES_NO_OPTION
+        null, "Are you sure you want to logout and close Coursepresso?",
+        "Warning", JOptionPane.YES_NO_OPTION
     );
 
     if (dialogResult == JOptionPane.YES_OPTION) {

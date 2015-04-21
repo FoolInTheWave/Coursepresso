@@ -3,7 +3,6 @@ package com.coursepresso.project.controller;
 import com.coursepresso.project.entity.*;
 import com.coursepresso.project.repository.*;
 import com.coursepresso.project.helper.DateHelper;
-
 import com.google.common.collect.Lists;
 import java.net.URL;
 import java.text.DateFormat;
@@ -28,6 +27,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FXML Controller class
@@ -103,6 +104,14 @@ public class NewCourseSectionController implements Initializable {
   private ObservableList<MeetingDay> meetingDays;
   private String sourcePage;
 
+  private static final Logger log = LoggerFactory.getLogger(
+      NewCourseSectionController.class
+  );
+
+  public Node getView() {
+    return root;
+  }
+
   /**
    * Initializes the controller class.
    *
@@ -139,10 +148,6 @@ public class NewCourseSectionController implements Initializable {
     // Initialize the meeting day observable list and table view
     meetingDays = FXCollections.observableArrayList();
     meetingDayTable.setItems(meetingDays);
-  }
-
-  public Node getView() {
-    return root;
   }
 
   @FXML

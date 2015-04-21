@@ -20,6 +20,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FXML Controller class
@@ -57,6 +59,10 @@ public class ConflictController implements Initializable {
   private CourseSectionRepository courseSectionRepository;
 
   private ObservableList<Conflict> conflicts;
+
+  private static final Logger log = LoggerFactory.getLogger(
+      ConflictController.class
+  );
 
   public Node getView() {
     return root;
@@ -114,7 +120,7 @@ public class ConflictController implements Initializable {
     // Fectch course section again to populate meeting day list
     CourseSection section = courseSectionRepository.findOne(
         conflictTable.getSelectionModel()
-            .getSelectedItem().getCourseSection().getId()
+        .getSelectedItem().getCourseSection().getId()
     );
     // Call edit course section controller to edit section stored in conflict
     mainController.showEditCourseSection(section, "CONFLICT");

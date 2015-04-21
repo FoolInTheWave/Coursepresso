@@ -24,6 +24,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FXML Controller class
@@ -55,6 +57,10 @@ public class ViewUsersController implements Initializable {
   private UserRepository userRepository;
 
   private ObservableList<User> users;
+
+  private static final Logger log = LoggerFactory.getLogger(
+      ViewUsersController.class
+  );
 
   public Node getView() {
     return root;

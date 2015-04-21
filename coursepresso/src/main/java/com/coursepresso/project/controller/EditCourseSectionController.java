@@ -41,10 +41,6 @@ import org.slf4j.LoggerFactory;
  */
 public class EditCourseSectionController implements Initializable {
 
-  private static final Logger log = LoggerFactory.getLogger(
-      EditCourseSectionController.class
-  );
-
   @FXML
   private Node root;
   @FXML
@@ -116,6 +112,14 @@ public class EditCourseSectionController implements Initializable {
   private CourseSection courseSection;
   private String sourcePage;
 
+  private static final Logger log = LoggerFactory.getLogger(
+      EditCourseSectionController.class
+  );
+
+  public Node getView() {
+    return root;
+  }
+
   /**
    * Initializes the controller class.
    */
@@ -150,10 +154,6 @@ public class EditCourseSectionController implements Initializable {
     meetingDays = FXCollections.observableArrayList();
     meetingDayTable.setItems(meetingDays);
     daysToDelete = new ArrayList<>();
-  }
-
-  public Node getView() {
-    return root;
   }
 
   @FXML

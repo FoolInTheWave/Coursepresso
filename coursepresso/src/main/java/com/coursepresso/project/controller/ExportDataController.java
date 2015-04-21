@@ -35,14 +35,10 @@ import org.slf4j.LoggerFactory;
  */
 public class ExportDataController implements Initializable {
 
-  private static final Logger log = LoggerFactory.getLogger(
-      ExportDataController.class
-  );
-
   @FXML
   private Node root;
   @FXML
-  private TextArea previewArea;
+  private TextArea resultArea;
   @FXML
   private ComboBox<String> tableCombo;
   @FXML
@@ -61,6 +57,10 @@ public class ExportDataController implements Initializable {
 
   private String data;
 
+  private static final Logger log = LoggerFactory.getLogger(
+      ExportDataController.class
+  );
+
   public Node getView() {
     return root;
   }
@@ -74,9 +74,10 @@ public class ExportDataController implements Initializable {
   }
 
   @FXML
-  void tableComboSelect(ActionEvent event) {
+  void getExportData(ActionEvent event) {
     String table = (tableCombo.getValue() != null) ? tableCombo.getValue() : "";
-    String term = (termCombo.getValue() != null) ? termCombo.getValue().getTerm() : "";
+    String term = (termCombo.getValue() != null)
+        ? termCombo.getValue().getTerm() : "";
     data = "";
 
     switch (table) {
@@ -124,25 +125,7 @@ public class ExportDataController implements Initializable {
         break;
     }
 
-    previewArea.setText(data);
-  }
-
-  @FXML
-  void termComboSelect(ActionEvent event) {
-    String table = (tableCombo.getValue() != null) ? tableCombo.getValue() : "";
-    String term = (termCombo.getValue() != null) ? termCombo.getValue().getTerm() : "";
-    data = "";
-
-    switch (table) {
-      case "Course Sections":
-        data = exportService.exportCourseSections(term);
-        break;
-      case "Meeting Days":
-        data = exportService.exportMeetingDays(term);
-        break;
-    }
-
-    previewArea.setText(data);
+    resultArea.setText(data);
   }
 
   @FXML
@@ -174,7 +157,7 @@ public class ExportDataController implements Initializable {
     ObservableList<Term> terms = FXCollections.observableArrayList(
         Lists.newArrayList(termRepository.findAll())
     );
-    terms.add(0, null);
+    terms.add(0, new Term(""));
     termCombo.setItems(terms);
 
     // Build table names combo box
@@ -191,7 +174,7 @@ public class ExportDataController implements Initializable {
 
     termCombo.getSelectionModel().clearSelection();
     tableCombo.getSelectionModel().clearSelection();
-    previewArea.clear();
+    resultArea.clear();
   }
 
   private void SaveFile(String content, File file) {

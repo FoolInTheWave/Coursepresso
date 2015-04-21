@@ -21,6 +21,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
@@ -63,6 +65,10 @@ public class EditUserController implements Initializable {
   private DepartmentRepository departmentRepository;
 
   private User user;
+
+  private static final Logger log = LoggerFactory.getLogger(
+      EditUserController.class
+  );
 
   public Node getView() {
     return root;

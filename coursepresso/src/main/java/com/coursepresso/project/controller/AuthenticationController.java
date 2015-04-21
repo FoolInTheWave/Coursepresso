@@ -46,6 +46,10 @@ public class AuthenticationController implements Initializable {
       AuthenticationController.class
   );
 
+  public Node getView() {
+    return root;
+  }
+
   /**
    * Initializes the controller class.
    *
@@ -95,10 +99,6 @@ public class AuthenticationController implements Initializable {
     );
 
     new Thread(logoutTask).start();
-  }
-
-  public Node getView() {
-    return root;
   }
 
   @FXML

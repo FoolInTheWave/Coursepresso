@@ -9,6 +9,8 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javax.inject.Inject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FXML Controller class
@@ -36,6 +38,10 @@ public class UserMenuController implements Initializable {
 
   @Inject
   private MainController mainController;
+
+  private static final Logger log = LoggerFactory.getLogger(
+      UserMenuController.class
+  );
 
   public Node getView() {
     return root;

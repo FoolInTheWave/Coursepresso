@@ -26,6 +26,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javax.inject.Inject;
 import javax.swing.JOptionPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FXML Controller class
@@ -75,6 +77,10 @@ public class SearchResultsController implements Initializable {
   private CourseSectionRepository courseSectionRepository;
 
   private ObservableList<CourseSection> courseSections;
+
+  private static final Logger log = LoggerFactory.getLogger(
+      SearchResultsController.class
+  );
 
   public Node getView() {
     return root;
@@ -185,8 +191,8 @@ public class SearchResultsController implements Initializable {
           DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy hh:mm a");
 
           property.setValue(dateFormat.format(
-              courseSection.getValue().getUpdatedAt()
-          ));
+                  courseSection.getValue().getUpdatedAt()
+              ));
           return property;
         }
     );
