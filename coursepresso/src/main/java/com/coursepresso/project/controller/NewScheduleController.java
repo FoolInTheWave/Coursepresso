@@ -12,6 +12,7 @@ import com.coursepresso.project.repository.ProfessorRepository;
 import com.coursepresso.project.repository.RoomRepository;
 import com.coursepresso.project.repository.TermRepository;
 import com.coursepresso.project.service.CopyScheduleService;
+import com.coursepresso.project.service.ImportScheduleService;
 import com.google.common.collect.Lists;
 import java.io.BufferedReader;
 import java.io.File;
@@ -103,6 +104,8 @@ public class NewScheduleController implements Initializable {
   private MainController mainController;
   @Inject
   private CopyScheduleService copyScheduleService;
+  @Inject
+  private ImportScheduleService importScheduleService;
 
   private static File file;
   private ArrayList<MeetingDay> meetingDays;
@@ -187,78 +190,23 @@ public class NewScheduleController implements Initializable {
     );
 
     copyScheduleService.copySchedule(prevTerm, newTerm);
-
   }
 
   public void importSections(Term term) {
-
-    BufferedReader br = null;
     String line = "";
-    String splitBy = ",";
-    String prevCourseNumber = "";
-    int sectionNumber;
-
+  
     try {
-      br = new BufferedReader(new FileReader(file));
-
-      sectionNumber = 1;
+      BufferedReader br = new BufferedReader(new FileReader(file));
+      
       while ((line = br.readLine()) != null) {
-        String[] column = line.split(splitBy);
-
-        CourseSection courseSection = new CourseSection();
-
-        String[] courseNum = column[0].split("*");
-        courseSection.setCourse(
-                courseRepository.findByCourseNumber(courseNum[0] + courseNum[1])
-        );
-
-        courseSection.setSectionNumber(Integer.parseInt(column[4]));
-        courseSection.setAvailable(true);
-        courseSection.setCapacity(Integer.parseInt(column[3]));
-        courseSection.setSeatsAvailable(courseSection.getCapacity());
-        courseSection.setStatus("Open");
-        courseSection.setTerm(term);
-        courseSection.setStudentCount(Integer.parseInt(column[2]));
-        courseSection.setType(column[6]);
-
-        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-        courseSection.setStartDate(formatter.parse(column[10]));
-        courseSection.setEndDate(formatter.parse(column[11]));
-
-        courseSection.setDepartment(
-                departmentRepository.findByAbbreviation(courseNum[0])
-        );
-
-        courseSection.setProfessor(
-                professorRepository.findById(Integer.parseInt(column[1]))
-        );
-
-        courseSection = courseSectionRepository.save(courseSection);
-
-        MeetingDay day = new MeetingDay();
-
-        DateFormat df = new SimpleDateFormat("hh:mm a");
-        String[] times = column[12].split("-");
-        day.setStartTime(df.parse(times[0]));
-        day.setEndTime(df.parse(times[1]));
-
-        String[] rooms = column[9].split(",");
-        day.setRoom(
-                roomRepository.findOne(rooms[0])
-        );
-
-        // Save MeetingDays for CourseSection
-        day.setCourseSection(courseSection);
-        day.setTerm(courseSection.getTerm());
-
-        meetingDayRepository.save(day);
+        importScheduleService.importSchedule(term, line);
       }
     } catch (FileNotFoundException ex) {
       Logger.getLogger(NewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
-    } catch (IOException | ParseException ex) {
+    } catch (IOException ex) {
       Logger.getLogger(NewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
     }
-
+  
   }
 
   public void buildView() {
