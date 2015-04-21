@@ -99,15 +99,6 @@ public class ExportDataController implements Initializable {
       case "Departments":
         data = exportService.exportDepartments();
         break;
-      case "Group Authorities":
-        data = exportService.exportGroupAuthorities();
-        break;
-      case "Group Members":
-        data = exportService.exportGroupMembers();
-        break;
-      case "Groups":
-        data = exportService.exportGroups();
-        break;
       case "Meeting Days":
         data = exportService.exportMeetingDays(term);
         break;

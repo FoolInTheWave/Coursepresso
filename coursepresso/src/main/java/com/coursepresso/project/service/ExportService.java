@@ -22,12 +22,6 @@ public interface ExportService {
   
   String exportDepartments();
   
-  String exportGroupAuthorities();
-  
-  String exportGroupMembers();
-  
-  String exportGroups();
-  
   String exportMeetingDays(String term);
   
   String exportProfessors();
