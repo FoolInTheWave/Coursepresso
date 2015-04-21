@@ -12,6 +12,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -128,6 +129,12 @@ public class NewScheduleController implements Initializable {
   private void chooseFileButtonClick(ActionEvent event) {
     final FileChooser fileChooser = new FileChooser();
     Stage stage = (Stage) Main.getScene().getWindow();
+
+    // Set extension filters
+    ArrayList<FileChooser.ExtensionFilter> extensions = new ArrayList<>();
+    extensions.add(new FileChooser.ExtensionFilter("CSV (*.csv)", "*.csv"));
+    extensions.add(new FileChooser.ExtensionFilter("Text (*.txt)", "*.txt"));
+    fileChooser.getExtensionFilters().addAll(extensions);
 
     file = fileChooser.showOpenDialog(stage);
     if (file != null) {

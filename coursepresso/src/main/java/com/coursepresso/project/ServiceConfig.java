@@ -37,12 +37,12 @@ public class ServiceConfig {
 
   @Bean
   public CopyScheduleService copyScheduleService() {
-    return createService("copyschedule.service", CopyScheduleService.class);
+    return createService("copy-schedule.service", CopyScheduleService.class);
   }
 
   @Bean
   public ImportScheduleService importScheduleService() {
-    return createService("importschedule.service", ImportScheduleService.class);
+    return createService("import-schedule.service", ImportScheduleService.class);
   }
 
   @Bean
