@@ -20,6 +20,12 @@ public class Term implements Serializable {
   @Column(name = "term")
   private String term;
   @Basic(optional = false)
+  @Column(name = "season")
+  private String season;
+  @Basic(optional = false)
+  @Column(name = "year")
+  private int year;
+  @Basic(optional = false)
   @Column(name = "status")
   private String status;
   @Basic(optional = false)
@@ -34,8 +40,15 @@ public class Term implements Serializable {
   public Term() {
   }
 
-  public Term(String term, String status, Date updatedAt) {
+  public Term(String term) {
     this.term = term;
+  }
+
+  public Term(String term, String season, int year, String status, 
+      Date updatedAt) {
+    this.term = term;
+    this.season = season;
+    this.year = year;
     this.status = status;
     this.updatedAt = updatedAt;
   }
@@ -48,14 +61,30 @@ public class Term implements Serializable {
     this.term = term;
   }
   
+  public String getSeason() {
+    return season;
+  }
+
+  public void setSeason(String season) {
+    this.season = season;
+  }
+
+  public int getYear() {
+    return year;
+  }
+
+  public void setYear(int year) {
+    this.year = year;
+  }
+
   public String getStatus() {
     return status;
   }
-  
+
   public void setStatus(String status) {
     this.status = status;
   }
-  
+
   public Date getUpdatedAt() {
     return updatedAt;
   }
@@ -72,7 +101,7 @@ public class Term implements Serializable {
   public void setCourseSectionList(List<CourseSection> courseSectionList) {
     this.courseSectionList = courseSectionList;
   }
-  
+
   @XmlTransient
   public List<MeetingDay> getMeetingDayList() {
     return meetingDayList;
@@ -96,8 +125,8 @@ public class Term implements Serializable {
       return false;
     }
     Term other = (Term) object;
-    if ((this.term == null && other.term != null) || 
-        (this.term != null && !this.term.equals(other.term))) {
+    if ((this.term == null && other.term != null)
+        || (this.term != null && !this.term.equals(other.term))) {
       return false;
     }
     return true;

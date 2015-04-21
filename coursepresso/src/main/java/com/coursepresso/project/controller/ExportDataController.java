@@ -59,6 +59,8 @@ public class ExportDataController implements Initializable {
   @Inject
   private TermRepository termRepository;
 
+  private String data;
+
   public Node getView() {
     return root;
   }
@@ -72,10 +74,10 @@ public class ExportDataController implements Initializable {
   }
 
   @FXML
-  void exportButtonClick(ActionEvent event) {
+  void tableComboSelect(ActionEvent event) {
     String table = (tableCombo.getValue() != null) ? tableCombo.getValue() : "";
     String term = (termCombo.getValue() != null) ? termCombo.getValue().getTerm() : "";
-    String data = "";
+    data = "";
 
     switch (table) {
       case "Appliances":
@@ -123,7 +125,28 @@ public class ExportDataController implements Initializable {
     }
 
     previewArea.setText(data);
+  }
 
+  @FXML
+  void termComboSelect(ActionEvent event) {
+    String table = (tableCombo.getValue() != null) ? tableCombo.getValue() : "";
+    String term = (termCombo.getValue() != null) ? termCombo.getValue().getTerm() : "";
+    data = "";
+
+    switch (table) {
+      case "Course Sections":
+        data = exportService.exportCourseSections(term);
+        break;
+      case "Meeting Days":
+        data = exportService.exportMeetingDays(term);
+        break;
+    }
+
+    previewArea.setText(data);
+  }
+
+  @FXML
+  void exportButtonClick(ActionEvent event) {
     FileChooser fileChooser = new FileChooser();
     Stage stage = (Stage) Main.getScene().getWindow();
 
@@ -178,8 +201,8 @@ public class ExportDataController implements Initializable {
       fileWriter = new FileWriter(file);
       fileWriter.write(content);
       fileWriter.close();
-    } catch (IOException ex) {
-      log.error("Save file failed: ", ex);
+    } catch (IOException e) {
+      log.error("Save file failed: ", e);
     }
 
   }

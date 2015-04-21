@@ -22,18 +22,18 @@
                      <children>
                         <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label text="Term">
-                                 <font>
-                                    <Font size="13.0" />
-                                 </font>
-                              </Label>
-                              <ComboBox fx:id="termCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" visibleRowCount="5" />
                               <Label text="Dataset">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="tableCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" visibleRowCount="5" />
+                              <ComboBox fx:id="tableCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#tableComboSelect" prefHeight="30.0" prefWidth="150.0" visibleRowCount="5" />
+                              <Label text="Term">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
+                              <ComboBox fx:id="termCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#termComboSelect" prefHeight="30.0" prefWidth="150.0" visibleRowCount="5" />
                               <Label text="Result">
                                  <font>
                                     <Font size="13.0" />

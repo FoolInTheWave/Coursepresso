@@ -1,15 +1,7 @@
 package com.coursepresso.project.controller;
 
 import com.coursepresso.project.Main;
-import com.coursepresso.project.entity.CourseSection;
-import com.coursepresso.project.entity.MeetingDay;
 import com.coursepresso.project.entity.Term;
-import com.coursepresso.project.repository.CourseRepository;
-import com.coursepresso.project.repository.CourseSectionRepository;
-import com.coursepresso.project.repository.DepartmentRepository;
-import com.coursepresso.project.repository.MeetingDayRepository;
-import com.coursepresso.project.repository.ProfessorRepository;
-import com.coursepresso.project.repository.RoomRepository;
 import com.coursepresso.project.repository.TermRepository;
 import com.coursepresso.project.service.CopyScheduleService;
 import com.coursepresso.project.service.ImportScheduleService;
@@ -20,16 +12,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,6 +30,7 @@ import javafx.scene.layout.Pane;
 import javax.inject.Inject;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.slf4j.LoggerFactory;
 
 /**
  * FXML Controller class
@@ -62,7 +48,7 @@ public class NewScheduleController implements Initializable {
   @FXML
   private Button backButton;
   @FXML
-  private ComboBox<String> yearCombo;
+  private ComboBox<Integer> yearCombo;
   @FXML
   private Button chooseFileButton;
   @FXML
@@ -89,18 +75,6 @@ public class NewScheduleController implements Initializable {
   @Inject
   private TermRepository termRepository;
   @Inject
-  private DepartmentRepository departmentRepository;
-  @Inject
-  private CourseRepository courseRepository;
-  @Inject
-  private CourseSectionRepository courseSectionRepository;
-  @Inject
-  private ProfessorRepository professorRepository;
-  @Inject
-  private MeetingDayRepository meetingDayRepository;
-  @Inject
-  private RoomRepository roomRepository;
-  @Inject
   private MainController mainController;
   @Inject
   private CopyScheduleService copyScheduleService;
@@ -108,7 +82,22 @@ public class NewScheduleController implements Initializable {
   private ImportScheduleService importScheduleService;
 
   private static File file;
-  private ArrayList<MeetingDay> meetingDays;
+
+  private static final org.slf4j.Logger log = LoggerFactory.getLogger(
+      NewScheduleController.class
+  );
+
+  /**
+   * Initializes the controller class.
+   */
+  @Override
+  public void initialize(URL url, ResourceBundle rb) {
+    // TODO
+  }
+
+  public Node getView() {
+    return root;
+  }
 
   @FXML
   private void backButtonClick(ActionEvent event) {
@@ -146,13 +135,19 @@ public class NewScheduleController implements Initializable {
 
   @FXML
   private void createScheduleButtonClick(ActionEvent event) {
+    StringBuilder termName = new StringBuilder();
+
+    // Build term object
     Term term = new Term();
-    String year = yearCombo.getValue();
+    term.setYear(yearCombo.getValue());
+    term.setSeason(semesterCombo.getValue());
 
-    year = year.substring(year.length() - 2);
-    String termName = year + "/" + semesterCombo.getValue();
+    // Get last two digits of year integer
+    termName.append(Integer.toString(yearCombo.getValue() % 100));
+    termName.append("/");
+    termName.append(semesterCombo.getValue().substring(0, 2).toUpperCase());
 
-    term.setTerm(termName);
+    term.setTerm(termName.toString());
     term.setStatus("Open");
 
     termRepository.save(term);
@@ -172,21 +167,9 @@ public class NewScheduleController implements Initializable {
     mainController.showMenu();
   }
 
-  /**
-   * Initializes the controller class.
-   */
-  @Override
-  public void initialize(URL url, ResourceBundle rb) {
-    // TODO
-  }
-
-  public Node getView() {
-    return root;
-  }
-
   public void copyPrevious(Term newTerm) {
     Term prevTerm = termRepository.findByTermWithCourseSections(
-            termCombo.getSelectionModel().getSelectedItem().toString()
+        termCombo.getSelectionModel().getSelectedItem().toString()
     );
 
     copyScheduleService.copySchedule(prevTerm, newTerm);
@@ -194,39 +177,38 @@ public class NewScheduleController implements Initializable {
 
   public void importSections(Term term) {
     String line = "";
-  
+
     try {
       BufferedReader br = new BufferedReader(new FileReader(file));
-      
+
       while ((line = br.readLine()) != null) {
         importScheduleService.importSchedule(term, line);
       }
     } catch (FileNotFoundException ex) {
-      Logger.getLogger(NewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+      log.error("File not found: ", ex);
     } catch (IOException ex) {
-      Logger.getLogger(NewScheduleController.class.getName()).log(Level.SEVERE, null, ex);
+      log.error("IO failure: ", ex);
     }
-  
+
   }
 
   public void buildView() {
     // Build type combo box
     ObservableList<String> semesters = FXCollections.observableArrayList(
-            "FA", "WI", "SP", "SU"
+        "Fall", "Winter", "Spring", "Summer"
     );
     semesterCombo.setItems(semesters);
     semesterCombo.setVisibleRowCount(4);
 
-    // Build type combo box
-    ObservableList<String> years = FXCollections.observableArrayList(
-            "2015", "2016", "2017", "2018", "2019", "2020"
+    ObservableList<Integer> years = FXCollections.observableArrayList(
+        2015, 2016, 2017, 2018, 2019, 2020
     );
     yearCombo.setItems(years);
     yearCombo.setVisibleRowCount(4);
 
     // Build term combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
-            Lists.newArrayList(termRepository.findAll())
+        Lists.newArrayList(termRepository.findAll())
     );
     termCombo.setItems(terms);
   }

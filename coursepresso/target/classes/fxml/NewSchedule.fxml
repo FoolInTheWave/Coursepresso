@@ -39,9 +39,9 @@
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <HBox prefHeight="34.0" prefWidth="1012.0">
+                              <HBox alignment="CENTER" prefHeight="23.0" prefWidth="1012.0" spacing="100.0">
                                  <children>
-                                    <RadioButton fx:id="blankRdo" mnemonicParsing="false" onAction="#blankRdoSelected" prefHeight="17.0" prefWidth="187.0" text="Blank schedule">
+                                    <RadioButton fx:id="blankRdo" minWidth="-Infinity" mnemonicParsing="false" onAction="#blankRdoSelected" prefHeight="17.0" prefWidth="175.0" text="Blank schedule">
                                        <font>
                                           <Font size="13.0" />
                                        </font>
@@ -49,12 +49,12 @@
                                           <ToggleGroup fx:id="toggleGroup" />
                                        </toggleGroup>
                                     </RadioButton>
-                                    <RadioButton fx:id="importRdo" mnemonicParsing="false" onAction="#importRdoSelected" prefHeight="17.0" prefWidth="175.0" text="Import from file" toggleGroup="$toggleGroup">
+                                    <RadioButton fx:id="importRdo" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#importRdoSelected" prefHeight="17.0" prefWidth="175.0" text="Import from file" toggleGroup="$toggleGroup">
                                        <font>
                                           <Font size="13.0" />
                                        </font>
                                     </RadioButton>
-                                    <RadioButton fx:id="copyRdo" mnemonicParsing="false" onAction="#copyRdoSelected" prefHeight="17.0" prefWidth="182.0" text="Copy a previous schedule" toggleGroup="$toggleGroup">
+                                    <RadioButton fx:id="copyRdo" maxWidth="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#copyRdoSelected" prefHeight="17.0" prefWidth="175.0" text="Copy a previous schedule" toggleGroup="$toggleGroup">
                                        <font>
                                           <Font size="13.0" />
                                        </font>
@@ -85,7 +85,7 @@
                                                 <Font size="13.0" />
                                              </font>
                                           </Label>
-                                          <ComboBox fx:id="termCombo" layoutX="-2.0" layoutY="24.0" prefHeight="30.0" prefWidth="150.0" />
+                                          <ComboBox fx:id="termCombo" layoutX="-2.0" layoutY="24.0" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" prefHeight="30.0" prefWidth="150.0" />
                                        </children>
                                     </Pane>
                                  </children>
