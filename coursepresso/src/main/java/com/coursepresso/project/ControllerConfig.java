@@ -93,6 +93,11 @@ public class ControllerConfig {
     return loadController("/fxml/ExportData.fxml");
   }
 
+  @Bean
+  public ImportDataController importDataController() {
+    return loadController("/fxml/ImportData.fxml");
+  }
+
   @SuppressWarnings("unchecked")
   private <T> T loadController(String fxmlFile) {
     try {
@@ -101,7 +106,7 @@ public class ControllerConfig {
       return (T) loader.getController();
     } catch (IOException e) {
       throw new RuntimeException(
-              String.format("Unable to load FXML file '%s'", fxmlFile), e
+          String.format("Unable to load FXML file '%s'", fxmlFile), e
       );
     }
   }

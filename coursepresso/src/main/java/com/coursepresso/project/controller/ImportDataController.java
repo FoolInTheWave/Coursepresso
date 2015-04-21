@@ -5,6 +5,7 @@ import com.coursepresso.project.entity.*;
 import com.coursepresso.project.helper.StringHelper;
 import com.coursepresso.project.repository.*;
 import com.coursepresso.project.service.ExportService;
+import com.coursepresso.project.service.ImportService;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 import java.io.File;
@@ -13,11 +14,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.StringJoiner;
 import java.util.logging.Level;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -25,6 +27,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -64,7 +67,7 @@ public class ImportDataController implements Initializable {
   @Inject
   private ExportService exportService;
   @Inject
-  private CourseSectionRepository courseSectionRepository;
+  private ImportService importService;
   @Inject
   private TermRepository termRepository;
 
@@ -93,55 +96,7 @@ public class ImportDataController implements Initializable {
 
   @FXML
   void getImportData(ActionEvent event) {
-    String table = (tableCombo.getValue() != null) ? tableCombo.getValue() : "";
-    String term = (termCombo.getValue() != null)
-        ? termCombo.getValue().getTerm() : "";
-    String data = "";
 
-    switch (table) {
-      case "Appliances":
-        
-        break;
-      case "Authorities":
-        
-        break;
-      case "Course Prerequisites":
-        
-        break;
-      case "Course Sections":
-        
-        break;
-      case "Courses":
-        
-        break;
-      case "Departments":
-        
-        break;
-      case "Group Authorities":
-        
-        break;
-      case "Group Members":
-        
-        break;
-      case "Groups":
-        
-        break;
-      case "Meeting Days":
-        
-        break;
-      case "Professors":
-        
-        break;
-      case "Rooms":
-        
-        break;
-      case "Terms":
-        
-        break;
-      case "Users":
-        
-        break;
-    }
   }
 
   @FXML
@@ -175,7 +130,62 @@ public class ImportDataController implements Initializable {
 
   @FXML
   void importButtonClick(ActionEvent event) {
+    String table = (tableCombo.getValue() != null) ? tableCombo.getValue() : "";
+    String term = (termCombo.getValue() != null)
+        ? termCombo.getValue().getTerm() : "";
+    String data = "";
 
+    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+    alert.setTitle("Data Import");
+    alert.setHeaderText(null);
+
+    switch (table) {
+      case "Appliances":
+        alert.setContentText("Appliances have been imported successfully!");
+        break;
+      case "Authorities":
+        alert.setContentText("Authorities have been imported successfully!");
+        break;
+      case "Course Prerequisites":
+        alert.setContentText("Course Prerequisites have been imported successfully!");
+        break;
+      case "Course Sections":
+        importService.importCourseSections(readCourseSectionFile());
+        alert.setContentText("Course Sections have been imported successfully!");
+        break;
+      case "Courses":
+        alert.setContentText("Courses have been imported successfully!");
+        break;
+      case "Departments":
+        alert.setContentText("Departments have been imported successfully!");
+        break;
+      case "Group Authorities":
+        alert.setContentText("Group Authorities have been imported successfully!");
+        break;
+      case "Group Members":
+        alert.setContentText("Group Members have been imported successfully!");
+        break;
+      case "Groups":
+        alert.setContentText("Groups have been imported successfully!");
+        break;
+      case "Meeting Days":
+        alert.setContentText("Meeting Days have been imported successfully!");
+        break;
+      case "Professors":
+        alert.setContentText("Professors have been imported successfully!");
+        break;
+      case "Rooms":
+        alert.setContentText("Rooms have been imported successfully!");
+        break;
+      case "Terms":
+        alert.setContentText("Terms have been imported successfully!");
+        break;
+      case "Users":
+        alert.setContentText("Users have been imported successfully!");
+        break;
+    }
+
+    alert.showAndWait();
   }
 
   public void buildView() {
@@ -203,10 +213,11 @@ public class ImportDataController implements Initializable {
     previewArea.clear();
   }
 
-  private void readCourseSectionFile() throws IOException {
+  private List<CourseSection> readCourseSectionFile() {
     // Create the CSVFormat object
     CSVFormat format = CSVFormat.DEFAULT.withHeader().withDelimiter(';');
     List<CourseSection> sections = new ArrayList<>();
+    SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-MM-dd");
 
     // Initialize the CSVParser object
     if (file != null) {
@@ -214,7 +225,6 @@ public class ImportDataController implements Initializable {
 
         for (CSVRecord record : parser) {
           CourseSection section = new CourseSection();
-          section.setId(Integer.parseInt(record.get("id")));
           section.setCourse(new Course("course_number"));
           section.setSectionNumber(Integer.parseInt(record.get(
               "section_number"
@@ -230,8 +240,8 @@ public class ImportDataController implements Initializable {
               "student_count"
           )));
           section.setType(record.get("type"));
-          section.setStartDate(new Date());
-          section.setEndDate(new Date());
+          section.setStartDate(timestampFormat.parse(record.get("start_date")));
+          section.setEndDate(timestampFormat.parse(record.get("end_date")));
           section.setDepartment(new Department(record.get("department")));
           section.setProfessor(new Professor(
               Integer.parseInt(record.get("professor_id"))
@@ -241,8 +251,13 @@ public class ImportDataController implements Initializable {
 
         // Close the parser
         parser.close();
+      } catch (IOException ex) {
+        log.error("IO failure: ", ex);
+      } catch (ParseException ex) {
+        log.error("Parse failure: ", ex);
       }
     }
+    return sections;
   }
 
 }

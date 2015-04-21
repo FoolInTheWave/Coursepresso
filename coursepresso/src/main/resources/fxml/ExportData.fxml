@@ -27,13 +27,13 @@
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="tableCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#getExportData" prefHeight="30.0" prefWidth="150.0" visibleRowCount="5" />
+                              <ComboBox fx:id="tableCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#getExportData" prefHeight="30.0" prefWidth="150.0" />
                               <Label text="Term">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Label>
-                              <ComboBox fx:id="termCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#getExportData" prefHeight="30.0" prefWidth="150.0" visibleRowCount="5" />
+                              <ComboBox fx:id="termCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" onAction="#getExportData" prefHeight="30.0" prefWidth="150.0" />
                               <Label text="Result">
                                  <font>
                                     <Font size="13.0" />

@@ -26,6 +26,8 @@ public class AdminMenuController implements Initializable {
   @FXML
   private Button exportDataButton;
   @FXML
+  private Button importDataButton;
+  @FXML
   private Button displayConflictsButton;
   @FXML
   private Button manageSchedulesButton;
@@ -92,6 +94,11 @@ public class AdminMenuController implements Initializable {
   @FXML
   private void exportDataButtonClick(ActionEvent event) {
     mainController.showExportData();
+  }
+
+  @FXML
+  private void importDataButtonClick(ActionEvent event) {
+    mainController.showImportData();
   }
 
 }

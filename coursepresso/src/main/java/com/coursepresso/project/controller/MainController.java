@@ -63,6 +63,8 @@ public class MainController {
   @Inject
   private ExportDataController exportDataController;
   @Inject
+  private ImportDataController importDataController;
+  @Inject
   private ViewSchedulesController viewSchedulesController;
   @Inject
   private SecurityService securityService;
@@ -197,5 +199,10 @@ public class MainController {
   public void showExportData() {
     exportDataController.buildView();
     contentArea.setCenter(exportDataController.getView());
+  }
+
+  public void showImportData() {
+    importDataController.buildView();
+    contentArea.setCenter(importDataController.getView());
   }
 }

@@ -36,6 +36,11 @@ public class ServiceConfig {
   }
 
   @Bean
+  public ImportService importService() {
+    return createService("import.service", ImportService.class);
+  }
+
+  @Bean
   public CopyScheduleService copyScheduleService() {
     return createService("copy-schedule.service", CopyScheduleService.class);
   }
@@ -58,7 +63,7 @@ public class ServiceConfig {
   @Bean
   public CoursePrerequisiteRepository coursePrerequisiteRepository() {
     return createService(
-            "course-prerequisite.repository", CoursePrerequisiteRepository.class
+        "course-prerequisite.repository", CoursePrerequisiteRepository.class
     );
   }
 
@@ -70,7 +75,7 @@ public class ServiceConfig {
   @Bean
   public CourseSectionRepository courseSectionRepository() {
     return createService(
-            "course-section.repository", CourseSectionRepository.class
+        "course-section.repository", CourseSectionRepository.class
     );
   }
 
@@ -114,8 +119,8 @@ public class ServiceConfig {
     HttpInvokerProxyFactoryBean factory = new HttpInvokerProxyFactoryBean();
 
     String serverUrl = String.format(
-            "https://ec2-54-152-123-197.compute-1.amazonaws.com:8443/coursepresso/%s",
-            endPoint
+        "https://ec2-54-152-123-197.compute-1.amazonaws.com:8443/coursepresso/%s",
+        endPoint
     );
     factory.setServiceUrl(serverUrl);
     factory.setServiceInterface(serviceInterface);
