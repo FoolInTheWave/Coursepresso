@@ -3,9 +3,7 @@ package com.coursepresso.project.controller;
 import com.coursepresso.project.Main;
 import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.entity.MeetingDay;
-import com.coursepresso.project.entity.Room;
 import com.coursepresso.project.entity.Term;
-import com.coursepresso.project.helper.DateHelper;
 import com.coursepresso.project.repository.CourseRepository;
 import com.coursepresso.project.repository.CourseSectionRepository;
 import com.coursepresso.project.repository.DepartmentRepository;
@@ -24,7 +22,6 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -138,7 +135,6 @@ public class NewScheduleController implements Initializable {
     if (file != null) {
       fileNameLabel.setText(file.toString());
     }
-
   }
 
   @FXML
