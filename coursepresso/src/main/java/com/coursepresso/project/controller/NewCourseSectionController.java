@@ -231,10 +231,8 @@ public class NewCourseSectionController implements Initializable {
 
   @FXML
   private void departmentComboSelect(ActionEvent event) {
-    Department department;
-
     // Build course number combo box
-    department = departmentRepository.findByNameWithCourses(
+    Department department = departmentRepository.findByNameWithCourses(
         departmentCombo.getValue().getName()
     );
     ObservableList<Course> courses = FXCollections.observableArrayList(

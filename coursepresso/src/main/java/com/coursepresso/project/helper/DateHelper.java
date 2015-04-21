@@ -37,8 +37,7 @@ public class DateHelper {
         .toLocalDateTime();
   }
   
-  public static boolean isOverlapping(Date start1, Date end1, Date start2, 
-      Date end2) {
+  public static boolean isOverlapping(Date start1, Date end1, Date start2, Date end2) {
     return start1.before(end2) && start2.before(end1);
   }
 }

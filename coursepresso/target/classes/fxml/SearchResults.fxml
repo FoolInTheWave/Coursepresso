@@ -34,6 +34,7 @@
                                     <TableColumn fx:id="roomNumColumn" minWidth="0.0" prefWidth="97.0" text="Room" />
                                     <TableColumn fx:id="studentsColumn" minWidth="0.0" prefWidth="78.0" text="Students" />
                                     <TableColumn fx:id="capacityColumn" prefWidth="82.0" text="Capacity" />
+                                    <TableColumn fx:id="updatedAtColumn" prefWidth="75.0" text="Updated At" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

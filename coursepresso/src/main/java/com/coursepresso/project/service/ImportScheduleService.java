@@ -4,7 +4,7 @@ import com.coursepresso.project.entity.Term;
 
 /**
  *
- * @author Steve
+ * @author Steve Foco
  */
 public interface ImportScheduleService {
   

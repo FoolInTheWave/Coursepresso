@@ -1,5 +1,6 @@
 package com.coursepresso.project.service;
 
+import com.coursepresso.project.entity.Conflict;
 import com.coursepresso.project.entity.Term;
 import java.util.List;
 
@@ -9,5 +10,5 @@ import java.util.List;
  */
 public interface ConflictService {
   
-  List<String> getConflicts(Term term);
+  List<Conflict> getConflicts(Term term);
 }

@@ -1,39 +1,61 @@
 package com.coursepresso.project.entity;
 
-import javafx.beans.property.SimpleStringProperty;
+import java.io.Serializable;
 
 /**
  *
  * @author Steve Foco
  */
-public class Conflict {
-  private CourseSection section;
-  private final SimpleStringProperty reason;
-  
+public class Conflict implements Serializable {
+
+  private static final long serialVersionUID = 1L;
+  private CourseSection courseSection;
+  private String reason;
+
   public Conflict(CourseSection section, String reason) {
-    this.section = section;
-    this.reason = new SimpleStringProperty("Conflicts with line #: " + reason);
+    this.courseSection = section;
+    this.reason = reason;
   }
-  
-  public CourseSection getSection() {
-    return section;
+
+  public CourseSection getCourseSection() {
+    return courseSection;
   }
-  
+
+  public void setCourseSection(CourseSection section) {
+    this.courseSection = section;
+  }
+
   public String getReason() {
-    return reason.get();
+    return reason;
   }
-  
-  public void setCourse1(CourseSection section1) {
-    this.section = section1;
-  }
-  
+
   public void setReason(String reason) {
-    this.reason.set("Conflicts with line #: " + reason);
+    this.reason = reason;
   }
-  
+
+  @Override
+  public int hashCode() {
+    int hash = 0;
+    hash += (courseSection != null ? courseSection.hashCode() : 0);
+    return hash;
+  }
+
+  @Override
+  public boolean equals(Object object) {
+    // TODO: Warning - this method won't work in the case the id fields are not set
+    if (!(object instanceof Conflict)) {
+      return false;
+    }
+    Conflict other = (Conflict) object;
+    if ((this.courseSection == null && other.courseSection != null)
+        || (this.courseSection != null && !this.courseSection.equals(other.courseSection))) {
+      return false;
+    }
+    return true;
+  }
+
   @Override
   public String toString() {
-    return section.getId() + " " + section.getCourse().getTitle()
-            + " " + section.getSectionNumber() + " " + reason;
+    return courseSection.getId() + " " + reason;
   }
 }

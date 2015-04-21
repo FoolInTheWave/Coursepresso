@@ -59,6 +59,8 @@ public class SearchResultsController implements Initializable {
   @FXML
   private TableColumn<CourseSection, String> studentsColumn;
   @FXML
+  private TableColumn<CourseSection, String> updatedAtColumn;
+  @FXML
   private Button modifySectionButton;
   @FXML
   private Button deleteSectionButton;
@@ -172,6 +174,19 @@ public class SearchResultsController implements Initializable {
             day = courseSection.getValue().getMeetingDayList().get(0);
             property.setValue(day.getRoom().toString());
           }
+          return property;
+        }
+    );
+
+    // setCellValueFactory to display updated at
+    updatedAtColumn.setCellValueFactory(
+        courseSection -> {
+          SimpleStringProperty property = new SimpleStringProperty();
+          DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy hh:mm a");
+
+          property.setValue(dateFormat.format(
+              courseSection.getValue().getUpdatedAt()
+          ));
           return property;
         }
     );

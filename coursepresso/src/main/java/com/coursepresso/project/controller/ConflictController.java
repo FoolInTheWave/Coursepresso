@@ -1,12 +1,11 @@
 package com.coursepresso.project.controller;
 
-import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.entity.Term;
 import com.coursepresso.project.entity.Conflict;
+import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.repository.CourseSectionRepository;
 import com.coursepresso.project.service.ConflictService;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -25,7 +24,7 @@ import javax.inject.Inject;
 /**
  * FXML Controller class
  *
- * @author Caleb Miller, Steve Foco
+ * @author Steve Foco, Caleb Miller
  */
 public class ConflictController implements Initializable {
 
@@ -56,14 +55,13 @@ public class ConflictController implements Initializable {
   private ConflictService conflictService;
   @Inject
   private CourseSectionRepository courseSectionRepository;
-  
+
+  private ObservableList<Conflict> conflicts;
+
   public Node getView() {
     return root;
   }
-  
-  private static List<String> conflictsStr;
-  private ObservableList<Conflict> conflicts;
-  
+
   /**
    * Initializes the controller class.
    *
@@ -76,33 +74,31 @@ public class ConflictController implements Initializable {
         conflict -> {
           SimpleStringProperty property = new SimpleStringProperty();
           property.setValue(
-                  conflict.getValue().getSection().getId().toString()
+              conflict.getValue().getCourseSection().getId().toString()
           );
           return property;
-        }        
+        }
     );
     courseColumn.setCellValueFactory(
         conflict -> {
           SimpleStringProperty property = new SimpleStringProperty();
           property.setValue(
-                  conflict.getValue().getSection().getCourse().getTitle()
+              conflict.getValue().getCourseSection().getCourse().getTitle()
           );
           return property;
-        } 
+        }
     );
     sectionColumn.setCellValueFactory(
         conflict -> {
           SimpleStringProperty property = new SimpleStringProperty();
           property.setValue(
-                  conflict.getValue().getSection().toString()
+              conflict.getValue().getCourseSection().toString()
           );
           return property;
-        } 
+        }
     );
-    reasonColumn.setCellValueFactory(
-        new PropertyValueFactory<Conflict, String>("reason")
-    );
-    
+    reasonColumn.setCellValueFactory(new PropertyValueFactory<>("reason"));
+
     // Initialize the conflicts observable list and table view
     conflicts = FXCollections.observableArrayList();
     conflictTable.setItems(conflicts);
@@ -115,37 +111,18 @@ public class ConflictController implements Initializable {
 
   @FXML
   private void resolveManuallyButtonClick(ActionEvent event) {
-    mainController.showEditCourseSection(
-        conflictTable.getSelectionModel().getSelectedItem().getSection(),
-        "CONFLICT"
+    // Fectch course section again to populate meeting day list
+    CourseSection section = courseSectionRepository.findOne(
+        conflictTable.getSelectionModel()
+            .getSelectedItem().getCourseSection().getId()
     );
+    // Call edit course section controller to edit section stored in conflict
+    mainController.showEditCourseSection(section, "CONFLICT");
   }
-  
+
   public void buildView(Term selectedTerm) {
-    CourseSection cs1, cs2;
-    conflicts.clear();
-    
-    conflictsStr = conflictService.getConflicts(selectedTerm);
-    
-    System.out.println(conflictsStr);
-    
-    for(String conflict : conflictsStr) {
-      String[] sections = conflict.split("#");
-      
-      System.out.println(sections[0] + " " + sections[1]);
-      
-      cs1 = courseSectionRepository.findByIdWithCourse(
-          Integer.parseInt(sections[0])
-      );
-      cs2 = courseSectionRepository.findByIdWithCourse(
-          Integer.parseInt(sections[1])
-      );
-      
-      conflicts.add(new Conflict(cs1, cs2.getId().toString()));
-    }
-    
+    conflicts.setAll(conflictService.getConflicts(selectedTerm));
+
     numberLabel.setText(conflicts.size() + " Conflicts Found");
-    
-    conflictTable.setItems(conflicts);
   }
 }

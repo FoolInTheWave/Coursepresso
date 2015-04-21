@@ -115,6 +115,7 @@ public class EditCourseSectionController implements Initializable {
   private ArrayList<MeetingDay> daysToDelete;
   private CourseSection courseSection;
   private String sourcePage;
+
   /**
    * Initializes the controller class.
    */
@@ -157,10 +158,11 @@ public class EditCourseSectionController implements Initializable {
 
   @FXML
   private void backButtonClick(ActionEvent event) {
-    if(sourcePage.equals("SEARCH"))
+    if (sourcePage.equals("SEARCH")) {
       mainController.showSearchResults();
-    else if(sourcePage.equals("CONFLICT"))
+    } else if (sourcePage.equals("CONFLICT")) {
       mainController.showConflict();
+    }
   }
 
   @FXML
@@ -195,9 +197,9 @@ public class EditCourseSectionController implements Initializable {
     alert.setContentText("The course section has been saved successfully!");
     alert.showAndWait();
 
-    if(sourcePage.equals("SEARCH"))
+    if (sourcePage.equals("SEARCH")) {
       mainController.courseSearchController.searchButtonClick(event);
-    else if(sourcePage.equals("CONFLICT")) {
+    } else if (sourcePage.equals("CONFLICT")) {
       mainController.conflictController.buildView(courseSection.getTerm());
       mainController.showConflict();
     }
@@ -279,8 +281,12 @@ public class EditCourseSectionController implements Initializable {
   public void buildView(CourseSection cs, String sourcePage) {
     this.courseSection = cs;
     this.sourcePage = sourcePage;
-    
+
     // Build department combo box
+    ObservableList<Department> departments = FXCollections.observableArrayList(
+        Lists.newArrayList(departmentRepository.findAll())
+    );
+    departmentCombo.setItems(departments);
     departmentCombo.getSelectionModel().select(cs.getDepartment());
 
     // Build course number combo box
