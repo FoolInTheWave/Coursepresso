@@ -19,6 +19,6 @@ public interface RoomRepository extends CrudRepository<Room, String> {
    *
    * @return A List of Room objects.
    */
-  @Query("SELECT r FROM Room r JOIN FETCH r.meetingDayList")
+  @Query("SELECT r FROM Room r LEFT JOIN FETCH r.meetingDayList")
   public List<Room> getRoomsWithMeetingDays();
 }

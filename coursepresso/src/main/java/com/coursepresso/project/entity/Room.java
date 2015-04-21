@@ -35,6 +35,7 @@ public class Room implements Serializable {
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
   private List<Appliance> applianceList;
   @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
+  @OrderBy("startTime ASC")
   private List<MeetingDay> meetingDayList;
 
   public Room() {
