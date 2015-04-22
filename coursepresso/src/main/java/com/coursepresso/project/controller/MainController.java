@@ -30,8 +30,6 @@ public class MainController {
   @FXML
   private MenuItem closeMnu;
   @FXML
-  private MenuItem importCoursesMnu;
-  @FXML
   private MenuItem homeMnu;
 
   @Inject
@@ -95,11 +93,6 @@ public class MainController {
     alert.setContentText("I have a great message for you!");
 
     alert.showAndWait();
-  }
-
-  @FXML
-  private void importCoursesMnuClick(ActionEvent event) {
-
   }
 
   @FXML
