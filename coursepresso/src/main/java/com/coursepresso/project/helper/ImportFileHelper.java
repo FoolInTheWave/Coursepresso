@@ -30,7 +30,6 @@ public class ImportFileHelper {
     // Initialize the CSVParser object
     if (file != null) {
       CSVParser parser = new CSVParser(new FileReader(file), format);
-
       for (CSVRecord record : parser) {
         Appliance appliance = new Appliance();
         appliance.setType(record.get("type"));
@@ -42,6 +41,11 @@ public class ImportFileHelper {
       // Close the parser
       parser.close();
     }
+
+    if (appliances.isEmpty()) {
+      throw new Exception();
+    }
+
     return appliances;
   }
 
@@ -65,6 +69,11 @@ public class ImportFileHelper {
       // Close the parser
       parser.close();
     }
+
+    if (authorities.isEmpty()) {
+      throw new Exception();
+    }
+
     return authorities;
   }
 
@@ -92,6 +101,11 @@ public class ImportFileHelper {
       // Close the parser
       parser.close();
     }
+
+    if (courses.isEmpty()) {
+      throw new Exception();
+    }
+
     return courses;
   }
 
@@ -116,6 +130,11 @@ public class ImportFileHelper {
       // Close the parser
       parser.close();
     }
+
+    if (prerequisites.isEmpty()) {
+      throw new Exception();
+    }
+
     return prerequisites;
   }
 
@@ -156,6 +175,10 @@ public class ImportFileHelper {
         sections.add(section);
       }
 
+      if (sections.isEmpty()) {
+        throw new Exception();
+      }
+
       // Close the parser
       parser.close();
     }
@@ -182,6 +205,11 @@ public class ImportFileHelper {
       // Close the parser
       parser.close();
     }
+
+    if (departments.isEmpty()) {
+      throw new Exception();
+    }
+
     return departments;
   }
 
@@ -213,6 +241,11 @@ public class ImportFileHelper {
       // Close the parser
       parser.close();
     }
+
+    if (days.isEmpty()) {
+      throw new Exception();
+    }
+
     return days;
   }
 
@@ -237,6 +270,11 @@ public class ImportFileHelper {
       // Close the parser
       parser.close();
     }
+
+    if (professors.isEmpty()) {
+      throw new Exception();
+    }
+
     return professors;
   }
 
@@ -262,6 +300,11 @@ public class ImportFileHelper {
       // Close the parser
       parser.close();
     }
+
+    if (rooms.isEmpty()) {
+      throw new Exception();
+    }
+
     return rooms;
   }
 
@@ -287,6 +330,11 @@ public class ImportFileHelper {
       // Close the parser
       parser.close();
     }
+
+    if (terms.isEmpty()) {
+      throw new Exception();
+    }
+
     return terms;
   }
 
@@ -315,6 +363,11 @@ public class ImportFileHelper {
       // Close the parser
       parser.close();
     }
+
+    if (users.isEmpty()) {
+      throw new Exception();
+    }
+
     return users;
   }
 }
