@@ -196,6 +196,13 @@ public class EditCourseSectionController implements Initializable {
 
       courseSection = courseSectionRepository.save(courseSection);
 
+      // Save MeetingDays for CourseSection
+      for (MeetingDay day : meetingDays) {
+        day.setCourseSection(courseSection);
+        day.setTerm(courseSection.getTerm());
+      }
+      meetingDayRepository.save(new ArrayList<MeetingDay>(meetingDays));
+
       Alert alert = new Alert(AlertType.INFORMATION);
       alert.setTitle("Course Section Saved");
       alert.setHeaderText(null);
