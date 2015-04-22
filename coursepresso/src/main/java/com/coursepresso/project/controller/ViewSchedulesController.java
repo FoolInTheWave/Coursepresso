@@ -105,17 +105,6 @@ public class ViewSchedulesController implements Initializable {
     termRepository.save(term);
 
     buildView();
-    /*
-     for(Term oldTerm : terms) {
-     if(oldTerm.getTerm().equals(term.getTerm())) {
-     oldTerm.setStatus(newStatus);
-     break;
-     }
-     }
-    
-     scheduleTable.setItems(terms);
-            
-     */
   }
 
   @FXML
@@ -152,6 +141,8 @@ public class ViewSchedulesController implements Initializable {
 
     numberLabel.setText(Integer.toString(terms.size()));
     scheduleTable.setItems(terms);
+    
+    scheduleTable.getSelectionModel().selectFirst();
   }
 
 }

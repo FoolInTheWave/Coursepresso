@@ -65,7 +65,7 @@ public class CreateUserController implements Initializable {
   private DepartmentRepository departmentRepository;
 
   private static final Logger log = LoggerFactory.getLogger(
-      CreateUserController.class
+          CreateUserController.class
   );
 
   public Node getView() {
@@ -82,69 +82,61 @@ public class CreateUserController implements Initializable {
 
   @FXML
   private void createUserButtonClick() {
-    ArrayList<Authority> authorities = new ArrayList<>();
-    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    alert.setTitle(null);
-    alert.setHeaderText(null);
-
-    if (!usernameField.getText().equals("")) {
-      if (!passwordField.getText().equals("")) {
-        if (passwordField.getText().equals(confirmPasswordField.getText())) {
-          if (authorityCombo.getValue() != null) {
-            // Add user authorities to list
-            Authority authority = new Authority();
-            authority.setAuthority(authorityCombo.getValue());
-            authorities.add(
-                authority
-            );
-
-            // Hash the password
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String hashedPassword = passwordEncoder.encode(
-                passwordField.getText()
-            );
-
-            // Create new user
-            User user = new User();
-            user.setUsername(usernameField.getText());
-            user.setPassword(hashedPassword);
-            user.setFirstname(firstnameField.getText());
-            user.setLastname(lastnameField.getText());
-            user.setEmail(emailField.getText());
-            user.setDepartment(departmentCombo.getValue());
-            user.setEnabled(true);
-            for (Authority a : authorities) {
-              a.setUser(user);
-            }
-
-            // Call the repository to save the user
-            userRepository.save(user);
-            authorityRepository.save(authorities);
-
-            // Nofify user
-            alert.setContentText("The user account has been created successfully!");
-            alert.showAndWait();
-
-            mainController.showMenu();
-          } else {
-            // Notify user of no authority error
-            alert.setContentText("The user must have an authority!");
-            alert.showAndWait();
-          }
-        } else {
-          // Notify user of password mismatch
-          alert.setContentText("The passwords do not match!");
-          alert.showAndWait();
-        }
-      } else {
-        // Notify user of no password error
-        alert.setContentText("The new user must have a password!");
-        alert.showAndWait();
-      }
-    } else {
-      // Notify user of no username error
-      alert.setContentText("The user must have a username!");
+    StringBuilder sbErrors = validate();
+    if (!(sbErrors.toString().equals(""))) {
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setTitle("Errors");
+      alert.setHeaderText(null);
+      alert.setContentText(sbErrors.toString());
       alert.showAndWait();
+    } else {
+
+      Alert alert = new Alert(Alert.AlertType.INFORMATION);
+      alert.setTitle(null);
+      alert.setHeaderText(null);
+
+      ArrayList<Authority> authorities = new ArrayList<>();
+
+      if (!(passwordField.getText().equals(confirmPasswordField.getText()))) {
+        alert.setContentText("The passwords do not match!");
+        alert.showAndWait();
+      } else {
+        // Add user authorities to list
+        Authority authority = new Authority();
+        authority.setAuthority(authorityCombo.getValue());
+        authorities.add(
+                authority
+        );
+
+        // Hash the password
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(
+                passwordField.getText()
+        );
+
+        // Create new user
+        User user = new User();
+        user.setUsername(usernameField.getText());
+        user.setPassword(hashedPassword);
+        user.setFirstname(firstnameField.getText());
+        user.setLastname(lastnameField.getText());
+        user.setEmail(emailField.getText());
+        user.setDepartment(departmentCombo.getValue());
+        user.setEnabled(true);
+        for (Authority a : authorities) {
+          a.setUser(user);
+        }
+
+        // Call the repository to save the user
+        userRepository.save(user);
+        authorityRepository.save(authorities);
+
+        // Nofify user
+        alert.setContentText("The user account has been created successfully!");
+        alert.showAndWait();
+
+        mainController.showViewUsers();
+      }
     }
   }
 
@@ -153,16 +145,54 @@ public class CreateUserController implements Initializable {
     mainController.showViewUsers();
   }
 
+  public StringBuilder validate() {
+    ArrayList<String> errors = new ArrayList();
+    StringBuilder sbErrors = new StringBuilder();
+    sbErrors.append("");
+
+    if (usernameField.getText().equals("")) {
+      errors.add("Username");
+    }
+    if (passwordField.getText().equals("")) {
+      errors.add("Password");
+    }
+    if (authorityCombo.getSelectionModel().getSelectedItem() == null) {
+      errors.add("Authority");
+    }
+    if (firstnameField.getText().equals("")) {
+      errors.add("First Name");
+    }
+    if (lastnameField.getText().equals("")) {
+      errors.add("Last Name");
+    }
+    if (emailField.getText().equals("")) {
+      errors.add("Email Address");
+    }
+    if (departmentCombo.getSelectionModel().getSelectedItem() == null) {
+      errors.add("Department");
+    }
+
+    if (!errors.isEmpty()) {
+      sbErrors.append("Please enter the following before submitting: " + '\n');
+
+      for (String error : errors) {
+        sbErrors.append('\t').append(error).append('\n');
+      }
+    }
+
+    return sbErrors;
+  }
+
   public void buildView() {
     // Build authority combo box
     ObservableList<String> authorities = FXCollections.observableArrayList(
-        "ADMIN", "CHAIR", "DEAN", "PROFESSOR", "SCHEDULING STAFF", "USER"
+            "ADMIN", "CHAIR", "DEAN", "PROFESSOR", "SCHEDULING STAFF", "USER"
     );
     authorityCombo.setItems(authorities);
 
     // Build department combo box
     ObservableList<Department> departments = FXCollections.observableArrayList(
-        Lists.newArrayList(departmentRepository.findAll())
+            Lists.newArrayList(departmentRepository.findAll())
     );
     departmentCombo.setItems(departments);
 

@@ -59,7 +59,7 @@ public class ViewUsersController implements Initializable {
   private ObservableList<User> users;
 
   private static final Logger log = LoggerFactory.getLogger(
-      ViewUsersController.class
+          ViewUsersController.class
   );
 
   public Node getView() {
@@ -75,20 +75,20 @@ public class ViewUsersController implements Initializable {
 
     // setCellValueFactory to display a delimited string of user authorities
     authorityColumn.setCellValueFactory(
-        user -> {
-          SimpleStringProperty property = new SimpleStringProperty();
-          List<String> authorities = new ArrayList<>();
+            user -> {
+              SimpleStringProperty property = new SimpleStringProperty();
+              List<String> authorities = new ArrayList<>();
 
-          for (Authority authority : user.getValue().getAuthorityList()) {
-            authorities.add(authority.getAuthority());
-          }
+              for (Authority authority : user.getValue().getAuthorityList()) {
+                authorities.add(authority.getAuthority());
+              }
 
-          // Generate delimited string of authorities at the cell value
-          property.setValue(
-              Joiner.on(", ").join(authorities)
-          );
-          return property;
-        }
+              // Generate delimited string of authorities at the cell value
+              property.setValue(
+                      Joiner.on(", ").join(authorities)
+              );
+              return property;
+            }
     );
 
     // Initialize the observable list and table view
@@ -100,7 +100,7 @@ public class ViewUsersController implements Initializable {
   void editUserButtonClick(ActionEvent event) {
     if (userTable.getSelectionModel().getSelectedItem() != null) {
       mainController.showEditUser(
-          userTable.getSelectionModel().getSelectedItem()
+              userTable.getSelectionModel().getSelectedItem()
       );
     }
   }
@@ -116,7 +116,7 @@ public class ViewUsersController implements Initializable {
 
     if (result.get() == ButtonType.OK) {
       userRepository.delete(
-          userTable.getSelectionModel().getSelectedItem().getUsername()
+              userTable.getSelectionModel().getSelectedItem().getUsername()
       );
       users.remove(userTable.getSelectionModel().getSelectedItem());
 
@@ -142,5 +142,7 @@ public class ViewUsersController implements Initializable {
   public void buildView() {
     users.clear();
     users.addAll(userRepository.findAllWithAuthorities());
+
+    userTable.getSelectionModel().selectFirst();
   }
 }

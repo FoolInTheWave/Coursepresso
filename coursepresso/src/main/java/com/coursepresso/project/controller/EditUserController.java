@@ -67,7 +67,7 @@ public class EditUserController implements Initializable {
   private User user;
 
   private static final Logger log = LoggerFactory.getLogger(
-      EditUserController.class
+          EditUserController.class
   );
 
   public Node getView() {
@@ -84,71 +84,68 @@ public class EditUserController implements Initializable {
 
   @FXML
   private void createUserButtonClick() {
-    ArrayList<Authority> authorities = new ArrayList<>();
-    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    alert.setTitle(null);
-    alert.setHeaderText(null);
-
-    if (!usernameField.getText().equals("")) {
-      if (!passwordField.getText().equals("")) {
-        if (passwordField.getText().equals(confirmPasswordField.getText())) {
-          if (authorityCombo.getValue() != null) {
-            // Add user authorities to list
-            Authority authority = new Authority();
-            authority.setAuthority(authorityCombo.getValue());
-            authorities.add(
-                authority
-            );
-
-            // Hash the password
-            BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-            String hashedPassword = passwordEncoder.encode(
-                passwordField.getText()
-            );
-
-            // Save user changes
-            user.setUsername(usernameField.getText());
-            user.setPassword(hashedPassword);
-            user.setFirstname(firstnameField.getText());
-            user.setLastname(lastnameField.getText());
-            user.setEmail(emailField.getText());
-            user.setDepartment(departmentCombo.getValue());
-            for (Authority a : authorities) {
-              a.setUser(user);
-            }
-
-            // Call the repository to save the user
-            userRepository.save(user);
-            for (Authority a : user.getAuthorityList()) {
-              authorityRepository.delete(a.getId());
-            }
-            authorityRepository.save(authorities);
-
-            // Nofify user
-            alert
-                .setContentText("The user account has been saved successfully!");
-            alert.showAndWait();
-
-            mainController.showMenu();
-          } else {
-            // Notify user of no authority error
-            alert.setContentText("The user must have an authority!");
-            alert.showAndWait();
-          }
-        } else {
-          // Notify user of password mismatch
-          alert.setContentText("The passwords do not match!");
-          alert.showAndWait();
-        }
-      } else {
-        // Notify user of no password error
-        alert.setContentText("The user must have a password!");
-        alert.showAndWait();
-      }
-    } else {
-      // Notify user of no username error
-      alert.setContentText("The user must have a username!");
+    StringBuilder sbErrors = validate();
+    if (!(sbErrors.toString().equals(""))) {
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setTitle("Errors");
+      alert.setHeaderText(null);
+      alert.setContentText(sbErrors.toString());
       alert.showAndWait();
+    } else {
+
+      ArrayList<Authority> authorities = new ArrayList<>();
+      Alert alert = new Alert(Alert.AlertType.INFORMATION);
+      alert.setTitle(null);
+      alert.setHeaderText(null);
+
+      if (!(passwordField.getText().equals("")
+              && confirmPasswordField.getText().equals(""))
+              && (!passwordField.getText().equals(confirmPasswordField.getText()))) {
+        alert.setContentText("The passwords do not match!");
+        alert.showAndWait();
+      } else {
+        // Add user authorities to list
+        Authority authority = new Authority();
+        authority.setAuthority(authorityCombo.getValue());
+        authorities.add(
+                authority
+        );
+
+        // Only update the password if password and confirm password were entered
+        if (!passwordField.getText().equals("")
+                && !confirmPasswordField.getText().equals("")) {
+          // Hash the password
+          BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+          String hashedPassword = passwordEncoder.encode(
+                  passwordField.getText()
+          );
+
+          user.setPassword(hashedPassword);
+        }
+
+        // Save user changes
+        user.setUsername(usernameField.getText());
+        user.setFirstname(firstnameField.getText());
+        user.setLastname(lastnameField.getText());
+        user.setEmail(emailField.getText());
+        user.setDepartment(departmentCombo.getValue());
+        for (Authority a : authorities) {
+          a.setUser(user);
+        }
+
+        // Call the repository to save the user
+        userRepository.save(user);
+        for (Authority a : user.getAuthorityList()) {
+          authorityRepository.delete(a.getId());
+        }
+        authorityRepository.save(authorities);
+
+        // Nofify user
+        alert.setContentText("The user account has been saved successfully!");
+        alert.showAndWait();
+
+        mainController.showViewUsers();
+      }
     }
   }
 
@@ -157,17 +154,52 @@ public class EditUserController implements Initializable {
     mainController.showViewUsers();
   }
 
+  public StringBuilder validate() {
+    ArrayList<String> errors = new ArrayList();
+    StringBuilder sbErrors = new StringBuilder();
+    sbErrors.append("");
+
+    if (usernameField.getText().equals("")) {
+      errors.add("Username");
+    }
+    if (authorityCombo.getSelectionModel().getSelectedItem() == null) {
+      errors.add("Authority");
+    }
+    if (firstnameField.getText().equals("")) {
+      errors.add("First Name");
+    }
+    if (lastnameField.getText().equals("")) {
+      errors.add("Last Name");
+    }
+    if (emailField.getText().equals("")) {
+      errors.add("Email Address");
+    }
+    if (departmentCombo.getSelectionModel().getSelectedItem() == null) {
+      errors.add("Department");
+    }
+
+    if (!errors.isEmpty()) {
+      sbErrors.append("Please enter the following before submitting: " + '\n');
+
+      for (String error : errors) {
+        sbErrors.append('\t').append(error).append('\n');
+      }
+    }
+
+    return sbErrors;
+  }
+
   public void buildView(User user) {
     // Build username text field
     usernameField.setText(user.getUsername());
 
     // Build authority combo box
     ObservableList<String> authorities = FXCollections.observableArrayList(
-        "ADMIN", "CHAIR", "DEAN", "PROFESSOR", "SCHEDULING STAFF", "USER"
+            "ADMIN", "CHAIR", "DEAN", "PROFESSOR", "SCHEDULING STAFF", "USER"
     );
     authorityCombo.setItems(authorities);
     authorityCombo.getSelectionModel().select(
-        user.getAuthorityList().get(0).getAuthority()
+            user.getAuthorityList().get(0).getAuthority()
     );
 
     // Populate other fields
@@ -179,11 +211,11 @@ public class EditUserController implements Initializable {
 
     // Build department combo box
     ObservableList<Department> departments = FXCollections.observableArrayList(
-        Lists.newArrayList(departmentRepository.findAll())
+            Lists.newArrayList(departmentRepository.findAll())
     );
     departmentCombo.setItems(departments);
     departmentCombo.getSelectionModel().select(
-        user.getDepartment()
+            user.getDepartment()
     );
 
     this.user = user;

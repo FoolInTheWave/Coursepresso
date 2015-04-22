@@ -95,6 +95,8 @@ public class ScheduleSelectionController implements Initializable {
 
     numberLabel.setText(terms.size() + " Schedules Found");
     scheduleTable.setItems(terms);
+    
+    scheduleTable.getSelectionModel().selectFirst();
   }
 
 }

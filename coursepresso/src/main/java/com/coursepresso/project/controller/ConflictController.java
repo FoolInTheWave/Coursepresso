@@ -130,5 +130,7 @@ public class ConflictController implements Initializable {
     conflicts.setAll(conflictService.getConflicts(selectedTerm));
 
     numberLabel.setText(conflicts.size() + " Conflicts Found");
+    
+    conflictTable.getSelectionModel().selectFirst();
   }
 }

@@ -87,7 +87,7 @@ public class NewScheduleController implements Initializable {
   ObservableList<Integer> years;
 
   private static final org.slf4j.Logger log = LoggerFactory.getLogger(
-      NewScheduleController.class
+          NewScheduleController.class
   );
 
   public Node getView() {
@@ -144,45 +144,55 @@ public class NewScheduleController implements Initializable {
 
   @FXML
   private void createScheduleButtonClick(ActionEvent event) {
-    StringBuilder termName = new StringBuilder();
+    StringBuilder sbErrors = validate();
+    if (!(sbErrors.toString().equals(""))) {
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setTitle("Errors");
+      alert.setHeaderText(null);
+      alert.setContentText(sbErrors.toString());
+      alert.showAndWait();
+    } else {
 
-    // Build term object
-    Term term = new Term();
-    term.setYear(yearCombo.getValue());
-    term.setSeason(semesterCombo.getValue());
+      StringBuilder termName = new StringBuilder();
 
-    // Get last two digits of year integer
-    termName.append(Integer.toString(yearCombo.getValue() % 100));
-    termName.append("/");
-    termName.append(semesterCombo.getValue().substring(0, 2).toUpperCase());
+      // Build term object
+      Term term = new Term();
+      term.setYear(yearCombo.getValue());
+      term.setSeason(semesterCombo.getValue());
 
-    term.setTerm(termName.toString());
-    term.setStatus(statusCombo.getValue().toString());
+      // Get last two digits of year integer
+      termName.append(Integer.toString(yearCombo.getValue() % 100));
+      termName.append("/");
+      termName.append(semesterCombo.getValue().substring(0, 2).toUpperCase());
 
-    termRepository.save(term);
+      term.setTerm(termName.toString());
+      term.setStatus(statusCombo.getValue().toString());
 
-    if (importRdo.isSelected()) {
-      importService.importCourseSections(
-          ImportFileHelper.readCourseSectionFile(file, term)
-      );
-    } else if (copyRdo.isSelected()) {
-      copyPrevious(term);
+      termRepository.save(term);
+
+      if (importRdo.isSelected()) {
+        importService.importCourseSections(
+                ImportFileHelper.readCourseSectionFile(file, term)
+        );
+      } else if (copyRdo.isSelected()) {
+        copyPrevious(term);
+      }
+
+      Alert alert = new Alert(Alert.AlertType.INFORMATION);
+      alert.setTitle("Term Saved");
+      alert.setHeaderText(null);
+      alert.setContentText("The term has been saved successfully!");
+      alert.showAndWait();
+
+      mainController.showViewSchedules();
     }
-
-    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    alert.setTitle("Term Saved");
-    alert.setHeaderText(null);
-    alert.setContentText("The term has been saved successfully!");
-    alert.showAndWait();
-
-    mainController.showViewSchedules();
   }
 
   @FXML
   private void termComboClick(ActionEvent event) {
     String selectedSeason = semesterCombo.getSelectionModel().getSelectedItem();
     ObservableList<Term> terms = FXCollections.observableArrayList(
-        Lists.newArrayList(termRepository.findAll())
+            Lists.newArrayList(termRepository.findAll())
     );
 
     for (Term term : terms) {
@@ -199,7 +209,7 @@ public class NewScheduleController implements Initializable {
     int selectedYear = yearCombo.getSelectionModel().getSelectedItem();
 
     ObservableList<Term> terms = FXCollections.observableArrayList(
-        Lists.newArrayList(termRepository.findAll())
+            Lists.newArrayList(termRepository.findAll())
     );
 
     for (Term term : terms) {
@@ -211,9 +221,44 @@ public class NewScheduleController implements Initializable {
     semesterCombo.setItems(semesters);
   }
 
+  public StringBuilder validate() {
+    ArrayList<String> errors = new ArrayList();
+    StringBuilder sbErrors = new StringBuilder();
+    sbErrors.append("");
+
+    if (semesterCombo.getSelectionModel().getSelectedItem() == null) {
+      errors.add("Semester");
+    }
+    if (yearCombo.getSelectionModel().getSelectedItem() == null) {
+      errors.add("Year");
+    }
+    if (statusCombo.getSelectionModel().getSelectedItem().equals("")) {
+      errors.add("Status");
+    }
+    if (importRdo.isSelected()) {
+      if (fileNameLabel.getText().equals("")) {
+        errors.add("File to import");
+      }
+    } else if (copyRdo.isSelected()) {
+      if (termCombo.getSelectionModel().getSelectedItem() == null) {
+        errors.add("Term to copy");
+      }
+    }
+
+    if (!errors.isEmpty()) {
+      sbErrors.append("Please enter the following before submitting: " + '\n');
+
+      for (String error : errors) {
+        sbErrors.append('\t').append(error).append('\n');
+      }
+    }
+
+    return sbErrors;
+  }
+
   public void copyPrevious(Term newTerm) {
     Term prevTerm = termRepository.findByTermWithCourseSections(
-        termCombo.getSelectionModel().getSelectedItem().toString()
+            termCombo.getSelectionModel().getSelectedItem().toString()
     );
 
     copyScheduleService.copySchedule(prevTerm, newTerm);
@@ -222,7 +267,7 @@ public class NewScheduleController implements Initializable {
   public void buildView() {
     // Build type combo box
     semesters = FXCollections.observableArrayList(
-        "Fall", "Winter", "Spring", "Summer"
+            "Fall", "Winter", "Spring", "Summer"
     );
     semesterCombo.setItems(semesters);
     semesterCombo.setVisibleRowCount(4);
@@ -231,14 +276,14 @@ public class NewScheduleController implements Initializable {
     int year = Calendar.getInstance().get(Calendar.YEAR);
 
     years = FXCollections.observableArrayList(
-        year - 1, year, year + 1, year + 2, year + 3, year + 4, year + 5
+            year - 1, year, year + 1, year + 2, year + 3, year + 4, year + 5
     );
     yearCombo.setItems(years);
     yearCombo.setVisibleRowCount(4);
     yearCombo.getSelectionModel().select(null);
 
     ObservableList<String> statuses = FXCollections.observableArrayList(
-        "Open", "Closed"
+            "Open", "Closed"
     );
     statusCombo.setItems(statuses);
     statusCombo.setVisibleRowCount(4);
@@ -246,7 +291,7 @@ public class NewScheduleController implements Initializable {
 
     // Build term combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
-        Lists.newArrayList(termRepository.findAll())
+            Lists.newArrayList(termRepository.findAll())
     );
     termCombo.setItems(terms);
   }

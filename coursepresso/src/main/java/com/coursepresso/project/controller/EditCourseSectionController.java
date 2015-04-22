@@ -167,41 +167,49 @@ public class EditCourseSectionController implements Initializable {
 
   @FXML
   private void submitChangesButtonClick(ActionEvent event) {
-    courseSection.setCourse(courseNumberCombo.getValue());
-    courseSection.setSectionNumber(Integer.parseInt(sectionField.getText()));
-    courseSection.setAvailable(true);
-    courseSection.setCapacity(Integer.parseInt(capacityField.getText()));
-    courseSection.setSeatsAvailable(courseSection.getCapacity());
-    courseSection.setStatus("Open");
-    courseSection.setTerm(termCombo.getValue());
-    courseSection.setStudentCount(0);
-    courseSection.setType(typeCombo.getValue());
+    if (meetingDayTable.getSelectionModel().getTableView().getItems().isEmpty()) {
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setTitle("Errors");
+      alert.setHeaderText(null);
+      alert.setContentText("Please enter at least one meeting day.");
+      alert.showAndWait();
+    } else {
+      courseSection.setCourse(courseNumberCombo.getValue());
+      courseSection.setSectionNumber(Integer.parseInt(sectionField.getText()));
+      courseSection.setAvailable(true);
+      courseSection.setCapacity(Integer.parseInt(capacityField.getText()));
+      courseSection.setSeatsAvailable(courseSection.getCapacity());
+      courseSection.setStatus("Open");
+      courseSection.setTerm(termCombo.getValue());
+      courseSection.setStudentCount(0);
+      courseSection.setType(typeCombo.getValue());
 
-    // Save LocalDate as Date
-    courseSection.setStartDate(DateHelper.asDate(startDatePicker.getValue()));
-    courseSection.setEndDate(DateHelper.asDate(endDatePicker.getValue()));
-    courseSection.setDepartment(departmentCombo.getValue());
-    courseSection.setProfessor(instructorCombo.getValue());
+      // Save LocalDate as Date
+      courseSection.setStartDate(DateHelper.asDate(startDatePicker.getValue()));
+      courseSection.setEndDate(DateHelper.asDate(endDatePicker.getValue()));
+      courseSection.setDepartment(departmentCombo.getValue());
+      courseSection.setProfessor(instructorCombo.getValue());
 
-    for (MeetingDay dayToDel : daysToDelete) {
-      meetingDayRepository.delete(dayToDel.getId());
-    }
+      for (MeetingDay dayToDel : daysToDelete) {
+        meetingDayRepository.delete(dayToDel.getId());
+      }
 
-    courseSection.setMeetingDayList(new ArrayList<>(meetingDays));
+      courseSection.setMeetingDayList(new ArrayList<>(meetingDays));
 
-    courseSection = courseSectionRepository.save(courseSection);
+      courseSection = courseSectionRepository.save(courseSection);
 
-    Alert alert = new Alert(AlertType.INFORMATION);
-    alert.setTitle("Course Section Saved");
-    alert.setHeaderText(null);
-    alert.setContentText("The course section has been saved successfully!");
-    alert.showAndWait();
+      Alert alert = new Alert(AlertType.INFORMATION);
+      alert.setTitle("Course Section Saved");
+      alert.setHeaderText(null);
+      alert.setContentText("The course section has been saved successfully!");
+      alert.showAndWait();
 
-    if (sourcePage.equals("SEARCH")) {
-      mainController.courseSearchController.searchButtonClick(event);
-    } else if (sourcePage.equals("CONFLICT")) {
-      mainController.conflictController.buildView(courseSection.getTerm());
-      mainController.showConflict();
+      if (sourcePage.equals("SEARCH")) {
+        mainController.courseSearchController.searchButtonClick(event);
+      } else if (sourcePage.equals("CONFLICT")) {
+        mainController.conflictController.buildView(courseSection.getTerm());
+        mainController.showConflict();
+      }
     }
   }
 

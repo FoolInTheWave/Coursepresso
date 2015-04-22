@@ -244,5 +244,6 @@ public class SearchResultsController implements Initializable {
 
   public void setResults(List<CourseSection> results) {
     courseSections.setAll(results);
+    courseSectionTable.getSelectionModel().selectFirst();
   }
 }
