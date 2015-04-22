@@ -98,7 +98,9 @@ public class ConflictController implements Initializable {
         conflict -> {
           SimpleStringProperty property = new SimpleStringProperty();
           property.setValue(
-              conflict.getValue().getCourseSection().toString()
+              Integer.toString(
+                  conflict.getValue().getCourseSection().getSectionNumber()
+              )
           );
           return property;
         }
