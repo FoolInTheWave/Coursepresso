@@ -2,3 +2,4 @@
 [INFO  AutowiredAnnotationBeanPostProcessor] - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
 [INFO  AuthenticationController] - Logging in as user 'sjfoco'
 [INFO  AuthenticationController] - Successfully logged in as user 'sjfoco'
+[INFO  AuthenticationController] - Logging out as user 'sjfoco'
