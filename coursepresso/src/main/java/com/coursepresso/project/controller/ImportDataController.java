@@ -23,6 +23,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -128,76 +129,85 @@ public class ImportDataController implements Initializable {
     alert.setTitle("Data Import");
     alert.setHeaderText(null);
 
-    switch (table) {
-      case "Appliances":
-        importService.importAppliances(
-            ImportFileHelper.readApplianceFile(file)
-        );
-        alert.setContentText("Appliances have been imported successfully!");
-        break;
-      case "Authorities":
-        importService.importAuthorities(
-            ImportFileHelper.readAuthorityFile(file)
-        );
-        alert.setContentText(
-            "Authorities have been imported successfully!"
-        );
-        break;
-      case "Course Prerequisites":
-        importService.importCoursePrerequisites(
-            ImportFileHelper.readCoursePrerequisiteFile(file)
-        );
-        alert.setContentText(
-            "Course prerequisites have been imported successfully!"
-        );
-        break;
-      case "Course Sections":
-        if (!term.getTerm().equals("")) {
-          importService.importCourseSections(
-              ImportFileHelper.readCourseSectionFile(file, term)
+    try {
+      switch (table) {
+        case "Appliances":
+          importService.importAppliances(
+              ImportFileHelper.readApplianceFile(file)
+          );
+          alert.setContentText("Appliances have been imported successfully!");
+          break;
+        case "Authorities":
+          importService.importAuthorities(
+              ImportFileHelper.readAuthorityFile(file)
           );
           alert.setContentText(
-              "Course Sections have been imported successfully!"
+              "Authorities have been imported successfully!"
           );
-        }
-        break;
-      case "Courses":
-        importService.importCourses(ImportFileHelper.readCourseFile(file));
-        alert.setContentText("Courses have been imported successfully!");
-        break;
-      case "Departments":
-        departmentRepository.save(ImportFileHelper.readDepartmentFile(file));
-        alert.setContentText("Departments have been imported successfully!");
-        break;
-      case "Meeting Days":
-        if (!term.getTerm().equals("")) {
-          importService.importMeetingDays(
-              ImportFileHelper.readMeetingDayFile(file, term)
+          break;
+        case "Course Prerequisites":
+          importService.importCoursePrerequisites(
+              ImportFileHelper.readCoursePrerequisiteFile(file)
           );
-          alert.setContentText("Meeting days have been imported successfully!");
-        }
-        break;
-      case "Professors":
-        importService.importProfessors(
-            ImportFileHelper.readProfessorFile(file)
-        );
-        alert.setContentText("Professors have been imported successfully!");
-        break;
-      case "Rooms":
-        roomRepository.save(ImportFileHelper.readRoomFile(file));
-        alert.setContentText("Rooms have been imported successfully!");
-        break;
-      case "Terms":
-        termRepository.save(ImportFileHelper.readTermFile(file));
-        alert.setContentText("Terms have been imported successfully!");
-        break;
-      case "Users":
-        importService.importUsers(ImportFileHelper.readUserFile(file));
-        alert.setContentText("Users have been imported successfully!");
-        break;
-      default:
-        alert.setContentText("No data was imported!");
-        break;
+          alert.setContentText(
+              "Course prerequisites have been imported successfully!"
+          );
+          break;
+        case "Course Sections":
+          if (!term.getTerm().equals("")) {
+            importService.importCourseSections(
+                ImportFileHelper.readCourseSectionFile(file, term)
+            );
+            alert.setContentText(
+                "Course Sections have been imported successfully!"
+            );
+          }
+          break;
+        case "Courses":
+          importService.importCourses(ImportFileHelper.readCourseFile(file));
+          alert.setContentText("Courses have been imported successfully!");
+          break;
+        case "Departments":
+          departmentRepository.save(ImportFileHelper.readDepartmentFile(file));
+          alert.setContentText("Departments have been imported successfully!");
+          break;
+        case "Meeting Days":
+          if (!term.getTerm().equals("")) {
+            importService.importMeetingDays(
+                ImportFileHelper.readMeetingDayFile(file, term)
+            );
+            alert.setContentText("Meeting days have been imported successfully!");
+          }
+          break;
+        case "Professors":
+          importService.importProfessors(
+              ImportFileHelper.readProfessorFile(file)
+          );
+          alert.setContentText("Professors have been imported successfully!");
+          break;
+        case "Rooms":
+          roomRepository.save(ImportFileHelper.readRoomFile(file));
+          alert.setContentText("Rooms have been imported successfully!");
+          break;
+        case "Terms":
+          termRepository.save(ImportFileHelper.readTermFile(file));
+          alert.setContentText("Terms have been imported successfully!");
+          break;
+        case "Users":
+          importService.importUsers(ImportFileHelper.readUserFile(file));
+          alert.setContentText("Users have been imported successfully!");
+          break;
+        default:
+          alert.setContentText("No data was imported!");
+          break;
+      }
+    } catch (Exception ex) {
+      alert = new Alert(AlertType.ERROR);
+      alert.setTitle("Error");
+      alert.setHeaderText("Import File Error");
+      alert.setContentText("Could not import file! Please check logs for error!");
+
+      log.error("File import exception: ", ex);
     }
 
     alert.showAndWait();
