@@ -9,6 +9,16 @@
       <param name="ConversionPattern" value="[%-5p %c{1}] - %m%n"/>
     </layout>
   </appender>
+  
+  <appender name="file" class="org.apache.log4j.RollingFileAppender">
+    <param name="append" value="false" />
+    <param name="maxFileSize" value="10MB" />
+    <param name="maxBackupIndex" value="10" />
+    <param name="file" value="coursepresso.log" />
+    <layout class="org.apache.log4j.PatternLayout">
+      <param name="ConversionPattern" value="[%-5p %c{1}] - %m%n" />
+    </layout>
+  </appender>
 
   <logger name="com.coursepresso">
     <level value="debug"/>
@@ -17,6 +27,7 @@
   <root>
     <priority value ="info" />
     <appender-ref ref="console" />
+    <appender-ref ref="file" />
   </root>
 
 </log4j:configuration>

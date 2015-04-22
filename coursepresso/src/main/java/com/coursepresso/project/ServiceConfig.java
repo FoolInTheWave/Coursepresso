@@ -46,11 +46,6 @@ public class ServiceConfig {
   }
 
   @Bean
-  public ImportScheduleService importScheduleService() {
-    return createService("import-schedule.service", ImportScheduleService.class);
-  }
-
-  @Bean
   public ApplianceRepository applianceRepository() {
     return createService("appliance.repository", ApplianceRepository.class);
   }
