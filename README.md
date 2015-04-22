@@ -3,8 +3,9 @@ Coursepresso
 
 Course schedule management software built using the following technologies:
 
-Java
+Java 8
 JavaFX
+Maven
 Spring
 Spring Data JPA
 Spring Security
@@ -12,7 +13,6 @@ Hibernate
 Guava Collections
 Apache Commons
 Simple Logging Facade for Java (SLF4J)
-Tomcat 8
 
 You MUST have Java 8 update 40 or higher to run this program!
 
@@ -53,3 +53,5 @@ To delete the certificate in the JDK keystore:
 cd "C:\Program Files\Java\jdk1.8.0_40\jre\bin"
 keytool -delete -alias coursepresso-server -keystore "C:\Program Files\Java\jdk1.8.0_40\jre\lib\security\cacerts"
 Enter keystore password: changeit
+
+Now you are ready to run Coursepresso!  To execute the program click on the coursepresso-1.0-SNAPSHOT.jar file!
