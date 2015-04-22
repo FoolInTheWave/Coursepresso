@@ -12,6 +12,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -20,12 +21,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javax.inject.Inject;
-import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -222,12 +225,14 @@ public class SearchResultsController implements Initializable {
 
   @FXML
   void deleteSectionButtonClick(ActionEvent event) {
-    int dialogResult = JOptionPane.showConfirmDialog(
-        null, "Are you sure you want to delete this section?",
-        "Warning", JOptionPane.YES_NO_OPTION
-    );
+    Alert alert = new Alert(AlertType.CONFIRMATION);
+    alert.setTitle(null);
+    alert.setHeaderText("Warning");
+    alert.setContentText("Are you sure you want to delete this section?");
 
-    if (dialogResult == JOptionPane.YES_OPTION) {
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.get() == ButtonType.OK) {
       courseSectionRepository.delete(
           courseSectionTable.getSelectionModel().getSelectedItem().getId()
       );
@@ -235,10 +240,12 @@ public class SearchResultsController implements Initializable {
           courseSectionTable.getSelectionModel().getSelectedItem()
       );
 
-      JOptionPane.showMessageDialog(null, "Course section deleted successfully!");
+      alert = new Alert(AlertType.INFORMATION);
+      alert.setTitle(null);
+      alert.setHeaderText(null);
+      alert.setContentText("Course section deleted successfully!");
 
-    } else {
-      //Do Nothing
+      alert.showAndWait();
     }
   }
 

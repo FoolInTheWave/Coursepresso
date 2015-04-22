@@ -192,7 +192,7 @@ public class EditCourseSectionController implements Initializable {
         meetingDayRepository.delete(dayToDel.getId());
       }
 
-      courseSection.setMeetingDayList(new ArrayList<MeetingDay>());
+      courseSection.setMeetingDayList(new ArrayList<>());
       courseSection = courseSectionRepository.save(courseSection);
 
       // Save MeetingDays for CourseSection

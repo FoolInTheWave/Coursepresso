@@ -4,17 +4,18 @@ import com.coursepresso.project.entity.CourseSection;
 import com.coursepresso.project.Main;
 import com.coursepresso.project.entity.User;
 import com.coursepresso.project.service.SecurityService;
+import java.util.Optional;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javax.inject.Inject;
-import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,8 +37,7 @@ public class MainController {
   private Menu quickNavTopMnu;
   @FXML
   private Menu logoutTopMnu;
-          
-  
+
   @Inject
   private NewCourseSectionController newCourseSectionController;
   @Inject
@@ -103,20 +103,21 @@ public class MainController {
 
   @FXML
   private void closeMnuClick(ActionEvent event) {
-    int dialogResult = JOptionPane.showConfirmDialog(
-        null, "Are you sure you want to logout and close Coursepresso?",
-        "Warning", JOptionPane.YES_NO_OPTION
+    Alert alert = new Alert(AlertType.CONFIRMATION);
+    alert.setTitle(null);
+    alert.setHeaderText("Warning");
+    alert.setContentText(
+        "Are you sure you want to logout and close Coursepresso?"
     );
 
-    if (dialogResult == JOptionPane.YES_OPTION) {
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.get() == ButtonType.OK) {
       authenticationController.logout();
       // get a handle to the stage
       Stage stage = (Stage) Main.getScene().getWindow();
       // close the stage
       stage.close();
-
-    } else {
-      //Do Nothing
     }
   }
 
@@ -133,7 +134,7 @@ public class MainController {
   public void showAuthentication() {
     quickNavTopMnu.setDisable(true);
     logoutTopMnu.setDisable(true);
-    
+
     contentArea.setCenter(authenticationController.getView());
   }
 
@@ -142,7 +143,7 @@ public class MainController {
 
     quickNavTopMnu.setDisable(false);
     logoutTopMnu.setDisable(false);
-    
+
     if (auth.equals("[ADMIN]")) {
       showAdminMenu();
     } else {

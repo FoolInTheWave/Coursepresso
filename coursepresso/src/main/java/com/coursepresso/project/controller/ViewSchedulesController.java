@@ -4,19 +4,21 @@ import com.coursepresso.project.entity.Term;
 import com.coursepresso.project.repository.TermRepository;
 import com.google.common.collect.Lists;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javax.inject.Inject;
-import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -109,12 +111,16 @@ public class ViewSchedulesController implements Initializable {
 
   @FXML
   public void deleteButtonClick() {
-    int dialogResult = JOptionPane.showConfirmDialog(
-        null, "Are you sure? All course sections in the term will be deleted as well.",
-        "Warning", JOptionPane.YES_NO_OPTION
+    Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    alert.setTitle(null);
+    alert.setHeaderText("Warning");
+    alert.setContentText(
+        "Are you sure? All course sections in the term will be deleted as well."
     );
 
-    if (dialogResult == JOptionPane.YES_OPTION) {
+    Optional<ButtonType> result = alert.showAndWait();
+
+    if (result.get() == ButtonType.OK) {
       numberLabel.setText(
           Integer.toString(Integer.parseInt(numberLabel.getText()) - 1)
       );
@@ -126,10 +132,12 @@ public class ViewSchedulesController implements Initializable {
           scheduleTable.getSelectionModel().getSelectedItem()
       );
 
-      JOptionPane.showMessageDialog(null, "Term deleted successfully!");
+      alert = new Alert(Alert.AlertType.INFORMATION);
+      alert.setTitle(null);
+      alert.setHeaderText(null);
+      alert.setContentText("Term deleted successfully!");
 
-    } else {
-      //Do Nothing
+      alert.showAndWait();
     }
   }
 
@@ -141,7 +149,7 @@ public class ViewSchedulesController implements Initializable {
 
     numberLabel.setText(Integer.toString(terms.size()));
     scheduleTable.setItems(terms);
-    
+
     scheduleTable.getSelectionModel().selectFirst();
   }
 
