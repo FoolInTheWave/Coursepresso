@@ -72,9 +72,9 @@ public class EditCourseSectionController implements Initializable {
   @FXML
   private TableColumn<MeetingDay, String> dayColumn;
   @FXML
-  private ComboBox<MeetingTime> startTimeCombo;
+  private TextField startTimeField;
   @FXML
-  private ComboBox<MeetingTime> endTimeCombo;
+  private TextField endTimeField;
   @FXML
   private ComboBox<Room> roomCombo;
   @FXML
@@ -98,8 +98,6 @@ public class EditCourseSectionController implements Initializable {
   private DepartmentRepository departmentRepository;
   @Inject
   private MeetingDayRepository meetingDayRepository;
-  @Inject
-  private MeetingTimeRepository meetingTimeRepository;
   @Inject
   private RoomRepository roomRepository;
   @Inject
@@ -227,32 +225,44 @@ public class EditCourseSectionController implements Initializable {
     MeetingDay day = new MeetingDay();
 
     try {
-      day.setStartTime(df.parse(startTimeCombo.getValue().toString()));
-      day.setEndTime(df.parse(endTimeCombo.getValue().toString()));
+      day.setStartTime(df.parse(startTimeField.getText()));
+      day.setEndTime(df.parse(endTimeField.getText()));
+
+      day.setRoom(roomCombo.getValue());
+      day.setDay(dayCombo.getValue());
+
+      meetingDays.add(day);
+
+      // Set the capacity field to the room with the lowest capacity
+      capacityField.setText(
+          Integer.toString(
+              // Find the room with the lowest capacity from the current day list
+              meetingDays.stream()
+              .min((m1, m2) -> Integer.compare(m1.getRoom().getCapacity(),
+                      m2.getRoom().getCapacity()
+                  )).get().getRoom().getCapacity()
+          )
+      );
+
+      // Clear the combo boxes for meeting day
+      startTimeField.clear();
+      endTimeField.clear();
+      roomCombo.getSelectionModel().clearSelection();
+      dayCombo.getSelectionModel().clearSelection();
     } catch (ParseException ex) {
-      log.error("Date parse error: ", ex);
+      Alert alert = new Alert(AlertType.ERROR);
+      alert.setTitle("Error");
+      alert.setHeaderText("Parse Exception");
+      alert.setContentText(
+          "The meeting day start or end time format is invalid!"
+      );
+      alert.showAndWait();
+      log.error("Parse exception: ", ex);
     }
-    day.setRoom(roomCombo.getValue());
-    day.setDay(dayCombo.getValue());
-    day.setCourseSection(courseSection);
-    day.setTerm(termCombo.getValue());
-
-    meetingDays.add(day);
-
-    // Set the capacity field to the room with the lowest capacity
-    capacityField.setText(
-        Integer.toString(
-            // Find the room with the lowest capacity from the current day list
-            meetingDays.stream()
-            .min((m1, m2) -> Integer.compare(m1.getRoom().getCapacity(),
-                    m2.getRoom().getCapacity()
-                )).get().getRoom().getCapacity()
-        )
-    );
 
     // Clear the combo boxes for meeting day
-    startTimeCombo.getSelectionModel().clearSelection();
-    endTimeCombo.getSelectionModel().clearSelection();
+    startTimeField.clear();
+    endTimeField.clear();
     roomCombo.getSelectionModel().clearSelection();
     dayCombo.getSelectionModel().clearSelection();
   }
@@ -340,13 +350,6 @@ public class EditCourseSectionController implements Initializable {
     );
     termCombo.setItems(terms);
     termCombo.getSelectionModel().select(cs.getTerm());
-
-    // Build time combo boxes
-    ObservableList<MeetingTime> meetingTimes = FXCollections.observableArrayList(
-        Lists.newArrayList(meetingTimeRepository.findAll())
-    );
-    startTimeCombo.setItems(meetingTimes);
-    endTimeCombo.setItems(meetingTimes);
 
     // Build room combo box
     ObservableList<Room> roomNumbers = FXCollections.observableArrayList(

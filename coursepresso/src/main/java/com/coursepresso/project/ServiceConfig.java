@@ -85,11 +85,6 @@ public class ServiceConfig {
   }
 
   @Bean
-  public MeetingTimeRepository meetingTimeRepository() {
-    return createService("meeting-time.repository", MeetingTimeRepository.class);
-  }
-
-  @Bean
   public ProfessorRepository professorRepository() {
     return createService("professor.repository", ProfessorRepository.class);
   }

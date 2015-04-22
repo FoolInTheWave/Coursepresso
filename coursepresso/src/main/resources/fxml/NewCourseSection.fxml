@@ -159,8 +159,16 @@
                                        </font>
                                     </Label>
                                     <ComboBox fx:id="dayCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="180.0" visibleRowCount="4" GridPane.rowIndex="1" />
-                                    <ComboBox fx:id="startTimeCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="180.0" visibleRowCount="4" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <ComboBox fx:id="endTimeCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="180.0" visibleRowCount="4" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                                    <TextField fx:id="startTimeField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" promptText="hh:mm am/pm" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </TextField>
+                                    <TextField fx:id="endTimeField" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="30.0" promptText="hh:mm am/pm" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                                       <font>
+                                          <Font size="13.0" />
+                                       </font>
+                                    </TextField>
                                     <ComboBox fx:id="roomCombo" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="180.0" visibleRowCount="4" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                     <Button fx:id="addDayButton" maxHeight="-Infinity" maxWidth="Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addDayButtonClick" prefHeight="30.0" prefWidth="180.0" text="Add Day" GridPane.columnIndex="4" GridPane.rowIndex="1">
                                        <font>
