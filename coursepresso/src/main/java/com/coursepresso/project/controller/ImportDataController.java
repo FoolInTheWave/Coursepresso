@@ -415,9 +415,9 @@ public class ImportDataController implements Initializable {
         for (CSVRecord record : parser) {
           MeetingDay day = new MeetingDay();
           day.setCourseSection(new CourseSection(
-              Integer.parseInt(record.get("course_section"))
+              Integer.parseInt(record.get("course_section_id"))
           ));
-          day.setRoom(new Room(record.get("room")));
+          day.setRoom(new Room(record.get("room_number")));
           day.setDay(record.get("day"));
           day.setStartTime(timeFormat.parse(record.get("start_time")));
           day.setEndTime(timeFormat.parse(record.get("end_time")));
@@ -430,7 +430,7 @@ public class ImportDataController implements Initializable {
         parser.close();
       } catch (IOException ex) {
         log.error("IO failure: ", ex);
-      } catch (ParseException ex) {
+      } catch (IllegalArgumentException | ParseException ex) {
         log.error("Parse failure: ", ex);
       }
     }
