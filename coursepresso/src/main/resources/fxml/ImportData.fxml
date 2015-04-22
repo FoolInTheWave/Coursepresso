@@ -44,6 +44,11 @@
                                     <Font size="13.0" />
                                  </font>
                               </Button>
+                              <Label fx:id="fileNameLabel" prefHeight="19.0" prefWidth="591.0">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Label>
                               <Label text="Preview">
                                  <font>
                                     <Font size="13.0" />

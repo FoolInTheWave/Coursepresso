@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
@@ -58,7 +59,7 @@ public class ExportDataController implements Initializable {
   private String data;
 
   private static final Logger log = LoggerFactory.getLogger(
-      ExportDataController.class
+          ExportDataController.class
   );
 
   public Node getView() {
@@ -77,7 +78,7 @@ public class ExportDataController implements Initializable {
   void getExportData(ActionEvent event) {
     String table = (tableCombo.getValue() != null) ? tableCombo.getValue() : "";
     String term = (termCombo.getValue() != null)
-        ? termCombo.getValue().getTerm() : "";
+            ? termCombo.getValue().getTerm() : "";
     data = "";
 
     switch (table) {
@@ -121,20 +122,29 @@ public class ExportDataController implements Initializable {
 
   @FXML
   void exportButtonClick(ActionEvent event) {
-    FileChooser fileChooser = new FileChooser();
-    Stage stage = (Stage) Main.getScene().getWindow();
+    StringBuilder sbErrors = validate();
+    if (!(sbErrors.toString().equals(""))) {
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setTitle("Errors");
+      alert.setHeaderText(null);
+      alert.setContentText(sbErrors.toString());
+      alert.showAndWait();
+    } else {
+      FileChooser fileChooser = new FileChooser();
+      Stage stage = (Stage) Main.getScene().getWindow();
 
-    // Set extension filters
-    ArrayList<ExtensionFilter> extensions = new ArrayList<>();
-    extensions.add(new ExtensionFilter("CSV (*.csv)", "*.csv"));
-    extensions.add(new ExtensionFilter("Text (*.txt)", "*.txt"));
-    fileChooser.getExtensionFilters().addAll(extensions);
+      // Set extension filters
+      ArrayList<ExtensionFilter> extensions = new ArrayList<>();
+      extensions.add(new ExtensionFilter("CSV (*.csv)", "*.csv"));
+      extensions.add(new ExtensionFilter("Text (*.txt)", "*.txt"));
+      fileChooser.getExtensionFilters().addAll(extensions);
 
-    // Show save file dialog
-    File file = fileChooser.showSaveDialog(stage);
+      // Show save file dialog
+      File file = fileChooser.showSaveDialog(stage);
 
-    if (file != null) {
-      SaveFile(data, file);
+      if (file != null) {
+        SaveFile(data, file);
+      }
     }
   }
 
@@ -143,10 +153,32 @@ public class ExportDataController implements Initializable {
     mainController.showMenu();
   }
 
+  public StringBuilder validate() {
+    ArrayList<String> errors = new ArrayList();
+    StringBuilder sbErrors = new StringBuilder();
+    sbErrors.append("");
+
+    if (tableCombo.getSelectionModel().getSelectedItem() == null) {
+      errors.add("Dataset");
+    }
+    if (termCombo.getSelectionModel().getSelectedItem() == null) {
+      errors.add("Term");
+    }
+    if (!errors.isEmpty()) {
+      sbErrors.append("Please enter the following before submitting: " + '\n');
+
+      for (String error : errors) {
+        sbErrors.append('\t').append(error).append('\n');
+      }
+    }
+
+    return sbErrors;
+  }
+
   public void buildView() {
     // Build terms combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
-        Lists.newArrayList(termRepository.findAll())
+            Lists.newArrayList(termRepository.findAll())
     );
     terms.add(0, new Term(""));
     termCombo.setItems(terms);
@@ -159,7 +191,7 @@ public class ExportDataController implements Initializable {
       tableNames.add(name);
     }
     ObservableList<String> tables = FXCollections.observableArrayList(
-        tableNames
+            tableNames
     );
     tableCombo.setItems(tables);
 

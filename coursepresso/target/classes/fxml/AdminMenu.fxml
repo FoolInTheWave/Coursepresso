@@ -42,12 +42,12 @@
                         <Separator prefHeight="3.0" prefWidth="1022.0" />
                         <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
                            <children>
-                              <Button fx:id="newCourseButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newCourseButtonClick" prefHeight="50.0" prefWidth="240.0" text="Add New Course">
+                              <Button fx:id="newCourseButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#newCourseButtonClick" prefHeight="50.0" prefWidth="240.0" text="New Course Section">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
                               </Button>
-                              <Label prefHeight="40.0" prefWidth="748.0" text="Add a new course or course section to an existing schedule.">
+                              <Label prefHeight="40.0" prefWidth="748.0" text="Add a new course section to an existing schedule.">
                                  <font>
                                     <Font size="18.0" />
                                  </font>

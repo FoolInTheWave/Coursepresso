@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [INFO  AnnotationConfigApplicationContext] - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@46c63fdb: startup date [Wed Apr 22 11:07:13 EDT 2015]; root of context hierarchy
 [INFO  AutowiredAnnotationBeanPostProcessor] - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
 [INFO  AuthenticationController] - Logging in as user 'crmiller'
@@ -67,3 +68,10 @@ java.lang.Exception
 	at com.sun.glass.ui.win.WinApplication$$Lambda$36/2117255219.run(Unknown Source)
 	at java.lang.Thread.run(Thread.java:745)
 [INFO  AuthenticationController] - Logging out as user 'crmiller'
+=======
+[INFO  AnnotationConfigApplicationContext] - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@180c13ed: startup date [Wed Apr 22 10:51:31 EDT 2015]; root of context hierarchy
+[INFO  AutowiredAnnotationBeanPostProcessor] - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
+[INFO  AuthenticationController] - Logging in as user 'sjfoco'
+[INFO  AuthenticationController] - Successfully logged in as user 'sjfoco'
+[INFO  AuthenticationController] - Logging out as user 'sjfoco'
+>>>>>>> origin/master
