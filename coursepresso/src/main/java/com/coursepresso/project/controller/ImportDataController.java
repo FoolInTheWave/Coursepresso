@@ -26,6 +26,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -54,6 +55,8 @@ public class ImportDataController implements Initializable {
   private Button chooseFileButton;
   @FXML
   private Button importButton;
+  @FXML
+  private Label fileNameLabel;
 
   @Inject
   private MainController mainController;
@@ -71,7 +74,7 @@ public class ImportDataController implements Initializable {
   private File file;
 
   private static final Logger log = LoggerFactory.getLogger(
-      ImportDataController.class
+          ImportDataController.class
   );
 
   public Node getView() {
@@ -105,14 +108,15 @@ public class ImportDataController implements Initializable {
     File chosenFile = fileChooser.showOpenDialog(stage);
     if (chosenFile != null) {
       file = chosenFile;
+      fileNameLabel.setText(file.toString());
 
       try {
         previewArea.setText(
-            Joiner.on('\n').join(
-                Files.readAllLines(
-                    Paths.get(file.getAbsolutePath())
+                Joiner.on('\n').join(
+                        Files.readAllLines(
+                                Paths.get(file.getAbsolutePath())
+                        )
                 )
-            )
         );
       } catch (IOException ex) {
         log.error("IO failure: ", ex);
@@ -122,101 +126,136 @@ public class ImportDataController implements Initializable {
 
   @FXML
   void importButtonClick(ActionEvent event) {
-    String table = (tableCombo.getValue() != null) ? tableCombo.getValue() : "";
-    Term term = termCombo.getValue();
+    StringBuilder sbErrors = validate();
+    if (!(sbErrors.toString().equals(""))) {
+      Alert alert = new Alert(Alert.AlertType.ERROR);
+      alert.setTitle("Errors");
+      alert.setHeaderText(null);
+      alert.setContentText(sbErrors.toString());
+      alert.showAndWait();
+    } else {
 
-    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-    alert.setTitle("Data Import");
-    alert.setHeaderText(null);
+      String table = (tableCombo.getValue() != null) ? tableCombo.getValue() : "";
+      Term term = termCombo.getValue();
 
-    try {
-      switch (table) {
-        case "Appliances":
-          importService.importAppliances(
-              ImportFileHelper.readApplianceFile(file)
-          );
-          alert.setContentText("Appliances have been imported successfully!");
-          break;
-        case "Authorities":
-          importService.importAuthorities(
-              ImportFileHelper.readAuthorityFile(file)
-          );
-          alert.setContentText(
-              "Authorities have been imported successfully!"
-          );
-          break;
-        case "Course Prerequisites":
-          importService.importCoursePrerequisites(
-              ImportFileHelper.readCoursePrerequisiteFile(file)
-          );
-          alert.setContentText(
-              "Course prerequisites have been imported successfully!"
-          );
-          break;
-        case "Course Sections":
-          if (!term.getTerm().equals("")) {
-            importService.importCourseSections(
-                ImportFileHelper.readCourseSectionFile(file, term)
+      Alert alert = new Alert(Alert.AlertType.INFORMATION);
+      alert.setTitle("Data Import");
+      alert.setHeaderText(null);
+
+      try {
+        switch (table) {
+          case "Appliances":
+            importService.importAppliances(
+                    ImportFileHelper.readApplianceFile(file)
+            );
+            alert.setContentText("Appliances have been imported successfully!");
+            break;
+          case "Authorities":
+            importService.importAuthorities(
+                    ImportFileHelper.readAuthorityFile(file)
             );
             alert.setContentText(
-                "Course Sections have been imported successfully!"
+                    "Authorities have been imported successfully!"
             );
-          }
-          break;
-        case "Courses":
-          importService.importCourses(ImportFileHelper.readCourseFile(file));
-          alert.setContentText("Courses have been imported successfully!");
-          break;
-        case "Departments":
-          departmentRepository.save(ImportFileHelper.readDepartmentFile(file));
-          alert.setContentText("Departments have been imported successfully!");
-          break;
-        case "Meeting Days":
-          if (!term.getTerm().equals("")) {
-            importService.importMeetingDays(
-                ImportFileHelper.readMeetingDayFile(file, term)
+            break;
+          case "Course Prerequisites":
+            importService.importCoursePrerequisites(
+                    ImportFileHelper.readCoursePrerequisiteFile(file)
             );
-            alert.setContentText("Meeting days have been imported successfully!");
-          }
-          break;
-        case "Professors":
-          importService.importProfessors(
-              ImportFileHelper.readProfessorFile(file)
-          );
-          alert.setContentText("Professors have been imported successfully!");
-          break;
-        case "Rooms":
-          roomRepository.save(ImportFileHelper.readRoomFile(file));
-          alert.setContentText("Rooms have been imported successfully!");
-          break;
-        case "Terms":
-          termRepository.save(ImportFileHelper.readTermFile(file));
-          alert.setContentText("Terms have been imported successfully!");
-          break;
-        case "Users":
-          importService.importUsers(ImportFileHelper.readUserFile(file));
-          alert.setContentText("Users have been imported successfully!");
-          break;
-        default:
-          alert.setContentText("No data was imported!");
-          break;
-      }
-    } catch (Exception ex) {
-      alert = new Alert(AlertType.ERROR);
-      alert.setTitle("Error");
-      alert.setHeaderText("Import File Error");
-      alert.setContentText("Could not import file! Please check logs for error!");
+            alert.setContentText(
+                    "Course prerequisites have been imported successfully!"
+            );
+            break;
+          case "Course Sections":
+            if (!term.getTerm().equals("")) {
+              importService.importCourseSections(
+                      ImportFileHelper.readCourseSectionFile(file, term)
+              );
+              alert.setContentText(
+                      "Course Sections have been imported successfully!"
+              );
+            }
+            break;
+          case "Courses":
+            importService.importCourses(ImportFileHelper.readCourseFile(file));
+            alert.setContentText("Courses have been imported successfully!");
+            break;
+          case "Departments":
+            departmentRepository.save(ImportFileHelper.readDepartmentFile(file));
+            alert.setContentText("Departments have been imported successfully!");
+            break;
+          case "Meeting Days":
+            if (!term.getTerm().equals("")) {
+              importService.importMeetingDays(
+                      ImportFileHelper.readMeetingDayFile(file, term)
+              );
+              alert.setContentText("Meeting days have been imported successfully!");
+            }
+            break;
+          case "Professors":
+            importService.importProfessors(
+                    ImportFileHelper.readProfessorFile(file)
+            );
+            alert.setContentText("Professors have been imported successfully!");
+            break;
+          case "Rooms":
+            roomRepository.save(ImportFileHelper.readRoomFile(file));
+            alert.setContentText("Rooms have been imported successfully!");
+            break;
+          case "Terms":
+            termRepository.save(ImportFileHelper.readTermFile(file));
+            alert.setContentText("Terms have been imported successfully!");
+            break;
+          case "Users":
+            importService.importUsers(ImportFileHelper.readUserFile(file));
+            alert.setContentText("Users have been imported successfully!");
+            break;
+          default:
+            alert.setContentText("No data was imported!");
+            break;
+        }
+      } catch (Exception ex) {
+        alert = new Alert(AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Import File Error");
+        alert.setContentText("Could not import file! Please check logs for error!");
 
-      log.error("File import exception: ", ex);
+        log.error("File import exception: ", ex);
+      }
+
+      alert.showAndWait();
+    }
+  }
+
+  public StringBuilder validate() {
+    ArrayList<String> errors = new ArrayList();
+    StringBuilder sbErrors = new StringBuilder();
+    sbErrors.append("");
+
+    if (tableCombo.getSelectionModel().getSelectedItem() == null) {
+      errors.add("Dataset");
+    }
+    if (termCombo.getSelectionModel().getSelectedItem() == null) {
+      errors.add("Term");
+    }
+    if (fileNameLabel.getText().equals("")) {
+      errors.add("File to import");
+    }
+    if (!errors.isEmpty()) {
+      sbErrors.append("Please enter the following before submitting: " + '\n');
+
+      for (String error : errors) {
+        sbErrors.append('\t').append(error).append('\n');
+      }
     }
 
-    alert.showAndWait();
+    return sbErrors;
   }
 
   public void buildView() {
     // Build rooms combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
-        Lists.newArrayList(termRepository.findAll())
+            Lists.newArrayList(termRepository.findAll())
     );
     terms.add(0, new Term(""));
     termCombo.setItems(terms);
@@ -229,7 +268,7 @@ public class ImportDataController implements Initializable {
       tableNames.add(name);
     }
     ObservableList<String> tables = FXCollections.observableArrayList(
-        tableNames
+            tableNames
     );
     tableCombo.setItems(tables);
 

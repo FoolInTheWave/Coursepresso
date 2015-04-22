@@ -9,6 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -31,6 +32,11 @@ public class MainController {
   private MenuItem closeMnu;
   @FXML
   private MenuItem homeMnu;
+  @FXML
+  private Menu quickNavTopMnu;
+  @FXML
+  private Menu logoutTopMnu;
+          
   
   @Inject
   private NewCourseSectionController newCourseSectionController;
@@ -125,12 +131,18 @@ public class MainController {
   }
 
   public void showAuthentication() {
+    quickNavTopMnu.setDisable(true);
+    logoutTopMnu.setDisable(true);
+    
     contentArea.setCenter(authenticationController.getView());
   }
 
   public void showMenu() {
     String auth = securityService.getAuthority();
 
+    quickNavTopMnu.setDisable(false);
+    logoutTopMnu.setDisable(false);
+    
     if (auth.equals("[ADMIN]")) {
       showAdminMenu();
     } else {

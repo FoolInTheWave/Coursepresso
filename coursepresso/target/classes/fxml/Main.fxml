@@ -15,12 +15,12 @@
               <MenuItem fx:id="closeMnu" mnemonicParsing="false" onAction="#closeMnuClick" text="Close" />
             </items>
           </Menu>
-            <Menu mnemonicParsing="false" text="Quick Navigation">
+            <Menu fx:id="quickNavTopMnu" mnemonicParsing="false" text="Quick Navigation">
               <items>
                 <MenuItem fx:id="homeMnu" mnemonicParsing="false" onAction="#homeMnuClick" text="Home" />
               </items>
             </Menu>
-          <Menu mnemonicParsing="false" text="Logout">
+          <Menu fx:id="logoutTopMnu" mnemonicParsing="false" text="Logout">
             <items>
               <MenuItem fx:id="logoutMnu" mnemonicParsing="false" onAction="#logoutMnuClick" text="Logout" />
             </items>
