@@ -252,7 +252,7 @@ public class EditCourseSectionController implements Initializable {
   @FXML
   private void courseNumberComboSelect(ActionEvent event) {
     Course course = courseRepository.findByCourseNumberWithCourseSections(
-        courseNumberCombo.getValue().getCourseNumber()
+        courseSection.getCourse().getCourseNumber()
     );
 
     if (course != null) {
