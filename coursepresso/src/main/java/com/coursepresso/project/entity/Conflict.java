@@ -36,7 +36,7 @@ public class Conflict implements Serializable {
   @Override
   public int hashCode() {
     int hash = 0;
-    hash += (courseSection != null ? courseSection.hashCode() : 0);
+    hash += (reason != null ? reason.hashCode() : 0);
     return hash;
   }
 
@@ -47,8 +47,8 @@ public class Conflict implements Serializable {
       return false;
     }
     Conflict other = (Conflict) object;
-    if ((this.courseSection == null && other.courseSection != null)
-        || (this.courseSection != null && !this.courseSection.equals(other.courseSection))) {
+    if ((this.reason == null && other.reason != null)
+        || (this.reason != null && !this.reason.equals(other.reason))) {
       return false;
     }
     return true;

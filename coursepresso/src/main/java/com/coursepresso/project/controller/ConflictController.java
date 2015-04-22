@@ -76,15 +76,7 @@ public class ConflictController implements Initializable {
    */
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-    lineNoColumn.setCellValueFactory(
-        conflict -> {
-          SimpleStringProperty property = new SimpleStringProperty();
-          property.setValue(
-              conflict.getValue().getCourseSection().getId().toString()
-          );
-          return property;
-        }
-    );
+    lineNoColumn.setCellValueFactory(new PropertyValueFactory<>("courseSection"));
     courseColumn.setCellValueFactory(
         conflict -> {
           SimpleStringProperty property = new SimpleStringProperty();
@@ -132,7 +124,7 @@ public class ConflictController implements Initializable {
     conflicts.setAll(conflictService.getConflicts(selectedTerm));
 
     numberLabel.setText(conflicts.size() + " Conflicts Found");
-    
+
     conflictTable.getSelectionModel().selectFirst();
   }
 }

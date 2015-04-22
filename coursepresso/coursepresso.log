@@ -1,9 +1,5 @@
-[INFO  AnnotationConfigApplicationContext] - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@72f34dfa: startup date [Wed Apr 22 13:56:28 EDT 2015]; root of context hierarchy
+[INFO  AnnotationConfigApplicationContext] - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@e7d08b6: startup date [Wed Apr 22 19:05:16 EDT 2015]; root of context hierarchy
 [INFO  AutowiredAnnotationBeanPostProcessor] - JSR-330 'javax.inject.Inject' annotation found and supported for autowiring
-[INFO  AuthenticationController] - Logging in as user 'sjfoco'
-[INFO  AuthenticationController] - Successfully logged in as user 'sjfoco'
-[INFO  CourseSearchController] - Performing course section search
-[INFO  CourseSearchController] - Successfully retrieved search results
-[INFO  AuthenticationController] - Logging out as user 'sjfoco'
-[INFO  AuthenticationController] - Successfully logged out user 'sjfoco'
-[INFO  AuthenticationController] - Logging out as user 'null'
+[INFO  AuthenticationController] - Logging in as user 'crmiller'
+[INFO  AuthenticationController] - Successfully logged in as user 'crmiller'
+[INFO  AuthenticationController] - Logging out as user 'crmiller'
