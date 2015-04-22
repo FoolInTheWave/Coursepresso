@@ -121,6 +121,8 @@ public class ConflictController implements Initializable {
   }
 
   public void buildView(Term selectedTerm) {
+    conflicts.clear();
+    
     conflicts.setAll(conflictService.getConflicts(selectedTerm));
 
     numberLabel.setText(conflicts.size() + " Conflicts Found");
