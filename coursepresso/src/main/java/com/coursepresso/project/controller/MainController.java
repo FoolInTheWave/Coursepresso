@@ -31,7 +31,7 @@ public class MainController {
   private MenuItem closeMnu;
   @FXML
   private MenuItem homeMnu;
-
+  
   @Inject
   private NewCourseSectionController newCourseSectionController;
   @Inject
