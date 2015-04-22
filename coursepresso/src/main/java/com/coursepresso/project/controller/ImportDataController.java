@@ -17,7 +17,6 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -67,6 +66,10 @@ public class ImportDataController implements Initializable {
   private ExportService exportService;
   @Inject
   private ImportService importService;
+  @Inject
+  private DepartmentRepository departmentRepository;
+  @Inject
+  private RoomRepository roomRepository;
   @Inject
   private TermRepository termRepository;
 
@@ -138,13 +141,16 @@ public class ImportDataController implements Initializable {
 
     switch (table) {
       case "Appliances":
+        importService.importAppliances(readApplianceFile());
         alert.setContentText("Appliances have been imported successfully!");
         break;
       case "Authorities":
+        importService.importAuthorities(readAuthorityFile());
         alert.setContentText("Authorities have been imported successfully!");
         break;
       case "Course Prerequisites":
-        alert.setContentText("Course Prerequisites have been imported successfully!");
+        importService.importCoursePrerequisites(readCoursePrerequisiteFile());
+        alert.setContentText("Course prerequisites have been imported successfully!");
         break;
       case "Course Sections":
         if (!term.getTerm().equals("")) {
@@ -153,24 +159,33 @@ public class ImportDataController implements Initializable {
         }
         break;
       case "Courses":
+        importService.importCourses(readCourseFile());
         alert.setContentText("Courses have been imported successfully!");
         break;
       case "Departments":
+        departmentRepository.save(readDepartmentFile());
         alert.setContentText("Departments have been imported successfully!");
         break;
       case "Meeting Days":
-        alert.setContentText("Meeting Days have been imported successfully!");
+        if (!term.getTerm().equals("")) {
+          importService.importMeetingDays(readMeetingDayFile(term));
+          alert.setContentText("Meeting days have been imported successfully!");
+        }
         break;
       case "Professors":
+        importService.importProfessors(readProfessorFile());
         alert.setContentText("Professors have been imported successfully!");
         break;
       case "Rooms":
+        roomRepository.save(readRoomFile());
         alert.setContentText("Rooms have been imported successfully!");
         break;
       case "Terms":
+        termRepository.save(readTermFile());
         alert.setContentText("Terms have been imported successfully!");
         break;
       case "Users":
+        importService.importUsers(readUserFile());
         alert.setContentText("Users have been imported successfully!");
         break;
       default:
@@ -182,7 +197,7 @@ public class ImportDataController implements Initializable {
   }
 
   public void buildView() {
-    // Build terms combo box
+    // Build rooms combo box
     ObservableList<Term> terms = FXCollections.observableArrayList(
         Lists.newArrayList(termRepository.findAll())
     );
@@ -447,6 +462,34 @@ public class ImportDataController implements Initializable {
       }
     }
     return professors;
+  }
+
+  private List<Room> readRoomFile() {
+    // Create the CSVFormat object
+    CSVFormat format = CSVFormat.DEFAULT.withHeader().withDelimiter(';');
+    List<Room> rooms = new ArrayList<>();
+
+    // Initialize the CSVParser object
+    if (file != null) {
+      try (CSVParser parser = new CSVParser(new FileReader(file), format)) {
+
+        for (CSVRecord record : parser) {
+          Room room = new Room();
+          room.setRoomNumber(record.get("room_number"));
+          room.setBuilding(record.get("building"));
+          room.setCapacity(Integer.parseInt(record.get("capacity")));
+          room.setType(record.get("type"));
+
+          rooms.add(room);
+        }
+
+        // Close the parser
+        parser.close();
+      } catch (IOException ex) {
+        log.error("IO failure: ", ex);
+      }
+    }
+    return rooms;
   }
 
   private List<Term> readTermFile() {
