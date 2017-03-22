@@ -22,7 +22,7 @@ The client connects to the Tomcat instance using HTTPS, and thus requires that y
 
 Please note that the aforementioned step is not necessary if your Tomcat instance uses an SSL certificate from a trusted CA (Certificate Authority) such as Comodo or Symantec.
 
-The steps to install this certificate in both the Java Runtime Environment (JRE), when running the JAR file, and the Java Development Kit, when running this program within an IDE, are outlined below:
+The steps to install this certificate in both the Java Runtime Environment (JRE), when running the JAR file, and the Java Development Kit (JDK), when running this program within an IDE, are outlined below:
 
 To install the certificate in the JRE keystore:
 Run Command Prompt as Admin
