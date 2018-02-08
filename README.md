@@ -3,16 +3,16 @@ Coursepresso
 
 Course schedule management software built using the following technologies:
 
-Java 8
-JavaFX
-Maven
-Spring
-Spring Data JPA
-Spring Security
-Hibernate
-Guava Collections
-Apache Commons
-Simple Logging Facade for Java (SLF4J)
+* Java 8
+* JavaFX
+* Maven
+* Spring
+* Spring Data JPA
+* Spring Security
+* Hibernate
+* Guava Collections
+* Apache Commons
+* Simple Logging Facade for Java (SLF4J)
 
 You MUST have Java 8 update 40 or higher to run this program!
 
